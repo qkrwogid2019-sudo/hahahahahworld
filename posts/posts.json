@@ -1,1 +1,21 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "Hello, Tech Blog",
+    "date": "2025-12-24",
+    "summary": "GitHub Pages에 올리는 초간단 정적 기술블로그. 빌드툴 0개.",
+    "tags": ["setup", "github-pages"],
+    "readingTime": 3,
+    "file": "hello-world.html"
+  },
+  {
+    "slug": "second-post",
+    "title": "왜 기록이 쌓이면 실력이 되는가",
+    "date": "2025-12-23",
+    "summary": "뇌가 까먹기 전에 적어두면, 미래의 내가 나를 살려준다.",
+    "tags": ["thinking", "workflow"],
+    "readingTime": 4,
+    "file": "second-post.html"
+  }
+]
 
