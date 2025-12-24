@@ -40,10 +40,19 @@ body{
 }
 .top-nav .active{background:var(--primary);color:#fff}
 
-.search input{
-  width:100%;padding:14px;border-radius:var(--radius);
-  border:2px solid var(--line);margin-bottom:20px;
+.search{
+  max-width: 720px;
+  margin: 0 auto 20px;
 }
+
+.search input{
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  font-size: 15px;
+}
+
 
 .post-link{
   display:block;padding:20px;margin-bottom:18px;
