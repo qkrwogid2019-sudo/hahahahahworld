@@ -29,9 +29,12 @@ function uniqueTags(posts){
 /* ---------- index ---------- */
 
 function renderPostCard(p){
-  const chips = (p.tags || []).slice(0,3).map(t => `<span class="chip">#${t}</span>`).join("");
+  const chips = (p.tags || []).slice(0,3)
+    .map(t => `<span class="chip">#${t}</span>`).join("");
+
   return `
-    <a class="post-card" href="post.html?slug=${encodeURIComponent(p.slug)}">
+    <a class="post-card" data-type="${p.type || "tech"}"
+       href="post.html?slug=${encodeURIComponent(p.slug)}">
       <p class="kicker">${fmtDate(p.date)} · ${p.readingTime || "—"} min</p>
       <h2 class="post-title">${p.title}</h2>
       <p class="post-summary">${p.summary || ""}</p>
@@ -43,6 +46,7 @@ function renderPostCard(p){
   `;
 }
 
+
 function mountIndex(posts){
   const postsEl = $("#posts");
   const emptyEl = $("#empty");
@@ -52,6 +56,13 @@ function mountIndex(posts){
   $("#year").textContent = new Date().getFullYear();
 
   const tags = uniqueTags(posts);
+const pinned = posts.filter(p => p.pinned);
+const normal = posts.filter(p => !p.pinned);
+
+const pinnedEl = document.getElementById("pinnedPosts");
+if (pinnedEl){
+  pinnedEl.innerHTML = pinned.map(renderPostCard).join("");
+}
 
   // tag filter options
   tags.forEach(t => {
