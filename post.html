@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post • 향의 기술블로그</title>
+  <meta name="description" content="향의 기술블로그 글" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="./">
+        <span class="brand__dot"></span>
+        <span class="brand__name">향의 기술블로그</span>
+      </a>
+      <nav class="nav">
+        <a href="./" class="nav__link">← Back</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="article">
+      <header class="article__head">
+        <p class="kicker" id="meta"></p>
+        <h1 class="article__title" id="title"></h1>
+        <p class="article__desc" id="summary"></p>
+        <div class="chips" id="chips"></div>
+      </header>
+
+      <div class="divider"></div>
+
+      <div id="content" class="prose" aria-live="polite"></div>
+
+      <div class="divider"></div>
+
+      <footer class="article__foot">
+        <a class="btn" href="./">목록으로</a>
+      </footer>
+    </article>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Hyang.</p>
+    </footer>
+  </main>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
