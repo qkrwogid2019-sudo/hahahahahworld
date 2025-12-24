@@ -3,33 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Post • 향의 기술블로그</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>Tech – blog</title>
 
-  <!-- highlight.js -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
+
   <header class="site-header">
-    <div class="container">
-      <a href="./">← Back</a>
-    </div>
+    <span class="brand">Tech – blog</span>
+    <div class="header-icon"></div>
   </header>
 
   <main class="container">
-    <article>
-      <h1 id="title"></h1>
-      <div id="content"></div>
-    </article>
+
+    <div class="top-nav">
+      <button id="tab-posts" class="active">Posts</button>
+      <button id="tab-app">App</button>
+    </div>
+
+    <div class="search">
+      <input id="search" type="text" placeholder="Search…" />
+    </div>
+
+    <section id="posts"></section>
+
+    <section id="apps" class="hidden">
+      <div class="app-card">
+        <h2>My App</h2>
+        <p>내가 만든 앱을 소개하는 영역.</p>
+      </div>
+    </section>
 
     <footer class="footer">
-      <p>© <span id="year"></span> Hyang.</p>
+      © <span id="year"></span> HYANG
     </footer>
+
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
