@@ -1,5 +1,5 @@
 const $ = (s) => document.querySelector(s);
-const BASE = location.pathname.includes("/post.html") ? ".." : ".";
+
 
 async function fetchJSON(url){
   const r = await fetch(url, { cache: "no-store" });
@@ -34,14 +34,15 @@ async function mountPost(){
   $("#year").textContent = new Date().getFullYear();
 
   const slug = new URLSearchParams(location.search).get("slug");
-  const posts = await fetchJSON(`${BASE}/posts/posts.json`);
+  const posts = await fetchJSON("/posts/posts.json");
   const post = posts.find(p => p.slug === slug);
 
   $("#title").textContent = post.title;
-  $("#content").innerHTML = await fetchText(`${BASE}/posts/${post.file}`);
+  $("#content").innerHTML = await fetchText(`/posts/${post.file}`);
 
   if (window.hljs) hljs.highlightAll();
 }
+
 
 if (location.pathname.endsWith("post.html")){
   mountPost();
