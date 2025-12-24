@@ -7,7 +7,9 @@
     "tags": ["setup", "github-pages"],
     "readingTime": 3,
     "file": "hello-world.html"
-  },
+  "pinned": true,
+  "type": "tech"
+},
   {
     "slug": "second-post",
     "title": "왜 기록이 쌓이면 실력이 되는가",
@@ -16,6 +18,7 @@
     "tags": ["thinking", "workflow"],
     "readingTime": 4,
     "file": "second-post.html"
+    "pinned": true,
+  "type": "design"
   }
-]
 
