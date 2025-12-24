@@ -226,6 +226,22 @@ a{ color: inherit; text-decoration: none; }
   font-size: 12px;
   font-family: var(--mono);
 }
+.section-title{
+  margin: 40px 0 16px;
+  font-size: 20px;
+  font-weight: 650;
+}
+
+.post-card[data-type="design"]{
+  border-left: 3px solid #ff2d55;
+}
+.post-card[data-type="tech"]{
+  border-left: 3px solid #5ac8fa;
+}
+.post-card[data-type="hybrid"]{
+  border-left: 3px solid #af52de;
+}
+
 
 .empty{ padding: 20px 0 40px; color: var(--muted); }
 .hidden{ display:none !important; }
