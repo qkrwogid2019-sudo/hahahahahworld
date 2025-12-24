@@ -13,7 +13,7 @@ function fmtDate(iso){
 }
 
 async function loadPosts(){
-  const res = await fetch(`./posts/${post.file}`, { cache: "no-store" });
+  const res = await fetch(`/qkrwogid2019/posts/${post.file}`, { cache: "no-store" });
   if (!res.ok) throw new Error("posts.json 로드 실패");
   const data = await res.json();
   // 최신순
