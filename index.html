@@ -1,1 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>향의 기술블로그</title>
+  <meta name="description" content="향의 기술블로그 — 기록은 무기다." />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="./">
+        <span class="brand__dot"></span>
+        <span class="brand__name">향의 기술블로그</span>
+      </a>
+
+      <nav class="nav">
+        <a href="./" class="nav__link is-active">Posts</a>
+        <a href="#about" class="nav__link">About</a>
+        <a href="#tags" class="nav__link">Tags</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1 class="hero__title">기록은 무기다. 단, 잘 정렬된 기록만.</h1>
+      <p class="hero__subtitle">
+        잡생각을 코드로, 시행착오를 글로. 가끔은 웃기게.
+      </p>
+
+      <div class="controls">
+        <input id="search" class="input" type="search" placeholder="검색: 제목/태그/요약" aria-label="검색" />
+        <select id="tagFilter" class="select" aria-label="태그 필터">
+          <option value="">All tags</option>
+        </select>
+      </div>
+    </section>
+
+    <section>
+      <div id="posts" class="post-grid" aria-live="polite"></div>
+      <div id="empty" class="empty hidden">
+        <p>조건에 맞는 글이 없네… (블로그가 나를 거절함)</p>
+      </div>
+    </section>
+
+    <section id="about" class="card">
+      <h2 class="card__title">About</h2>
+      <p class="card__text">
+        <!-- 향이 건드릴 부분: 소개글 -->
+        데이터·디자인·만화·기록을 섞어 살아남는 사람.
+      </p>
+    </section>
+
+    <section id="tags" class="card">
+      <h2 class="card__title">Tags</h2>
+      <p class="card__text" id="tagChips"></p>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Hyang. Built for GitHub Pages.</p>
+    </footer>
+  </main>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
 
