@@ -15,29 +15,29 @@
    Intro Toggle
 ========================= */
 
-button {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  box-shadow: none;
-  appearance: none;
-  -webkit-appearance: none;
+.intro-btn {
+  all: unset;                /* 버튼 기본 스타일 제거 */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  font-weight: 600;          /* 볼드 */
+  font-size: 13px;
+
+  color: var(--primary);     /* UI 파란색 */
+  border: 2px solid var(--primary);
+  background: transparent;
+
   cursor: pointer;
+  transition: background .15s ease, color .15s ease;
 }
 
-.intro-toggle{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-
-  padding:6px 12px;
-  border:2px solid var(--line);
-  border-radius:999px;
-  background:#fff;
-
-  font-size:13px;
-  cursor:pointer;
+.intro-btn:hover {
+  background: var(--primary);
+  color: #fff;
 }
 
 .intro{
