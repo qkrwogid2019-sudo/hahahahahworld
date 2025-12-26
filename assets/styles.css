@@ -12,74 +12,6 @@
 }
 
 /* =========================
-   Intro Toggle
-========================= */
-
-.intro-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  padding: 6px 12px;
-  border-radius: 999px;
-
-  font-family: Inter, system-ui, -apple-system, sans-serif;
-  font-weight: 700;          /* ← 여기서 확실히 */
-  font-size: 13px;
-
-  color: var(--primary);
-  border: 2px solid var(--primary);
-  background: transparent;
-
-  cursor: pointer;
-  transition: background .15s ease, color .15s ease;
-}
-
-
-.intro-btn:hover {
-  background: var(--primary);
-  color: #fff;
-}
-
-.intro{
-  margin-top:16px;
-  padding:16px;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  background:#fff;
-}
-
-.hidden{
-  display:none;
-}
-
-#posts{
-  outline:2px dashed red;
-  min-height:50px;
-}
-
-
-
-.intro{
-  background:#fff;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  padding:24px;
-  margin-bottom:32px;
-}
-.intro p{
-  line-height:1.6;
-}
-.more-posts{
-  text-align:center;
-  margin-top:24px;
-  opacity:.7;
-}
-.more-posts a:hover{
-  opacity:1;
-}
-
-/* =========================
    Base
 ========================= */
 *{
@@ -124,54 +56,12 @@ a{
 }
 
 /* =========================
-   🔥 IMAGE CONTROL (FINAL)
-========================= */
-
-/* 이미지가 어디에 있든 무조건 가둔다 */
-article img,
-article figure,
-article figure img{
-  max-width:100% !important;
-  width:auto !important;
-  height:auto !important;
-}
-
-/* 실제 화면에서 보이는 최대 폭 */
-article img,
-article figure{
-  max-width:720px;
-  margin:32px auto;
-  display:block;
-}
-
-/* figure 기본 여백 제거 */
-article figure{
-  padding:0;
-}
-
-/* 캡션 스타일 */
-article figcaption{
-  font-size:13px;
-  opacity:.6;
-  margin-top:8px;
-  text-align:center;
-}
-
-/* 모바일에서 더 줄이기 */
-@media (max-width:600px){
-  article img,
-  article figure{
-    max-width:100%;
-  }
-}
-
-/* =========================
-   Navigation Tabs
+   Top Navigation
 ========================= */
 .top-nav{
   display:flex;
   gap:12px;
-  margin-bottom:20px;
+  margin-bottom:24px;
 }
 
 .tab-link{
@@ -190,11 +80,41 @@ article figcaption{
 }
 
 /* =========================
+   Intro (설명 박스)
+========================= */
+.intro-wrapper{
+  margin-bottom:32px; /* posts와 확실히 분리 */
+}
+
+.intro-toggle{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  color:var(--primary);
+  cursor:pointer;
+  margin-bottom:12px;
+}
+
+.intro-panel{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px;
+  display:block;
+}
+
+/* hidden 공통 */
+.hidden{
+  display:none;
+}
+
+/* =========================
    Search
 ========================= */
 .search{
   max-width:720px;
-  margin:0 auto 20px;
+  margin:0 auto 24px;
 }
 
 .search input{
@@ -206,8 +126,12 @@ article figcaption{
 }
 
 /* =========================
-   Post List
+   Posts List
 ========================= */
+#posts{
+  padding-top:8px; /* margin 병합 완전 차단 */
+}
+
 .post-link{
   display:block;
   padding:20px;
@@ -238,135 +162,26 @@ article figcaption{
 }
 
 /* =========================
-   Post Layout
-========================= */
-
-/* Prev / Next navigation */
-.post-nav{
-  display:flex;
-  gap:16px;
-  margin-top:32px;
-}
-
-.nav-link{
-  font-family: Inter, system-ui, -apple-system, sans-serif;
-  flex:1;
-  padding:14px 18px;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  background:#fff;
-  font-weight:600;
-}
-
-/* visibility control */
-.hidden{
-  display:none;
-}
-
-
-.post-layout{
-  display:grid;
-  grid-template-columns:220px 1fr;
-  gap:32px;
-}
-
-.post-list{
-  font-size:14px;
-  opacity:.7;
-  position:sticky;
-  top:24px;
-}
-
-.post-list a{
-  display:block;
-  padding:6px 0;
-}
-
-.post-list a.active{
-  font-weight:600;
-  opacity:1;
-}
-
-@media (max-width:800px){
-  .post-layout{
-    grid-template-columns:1fr;
-  }
-  .post-list{
-    display:none;
-  }
-}
-
-/* =========================
-   Post Content
-========================= */
-article{
-  background:#fff;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  padding:32px;
-}
-
-/* =========================
-   Code Block
-========================= */
-pre{
-  background:#111;
-  color:#fff;
-  padding:18px;
-  border-radius:12px;
-  overflow-x:auto;
-}
-/* =========================
-   Prev / Next Navigation (FIX)
-========================= */
-.post-nav{
-  display:flex;
-  gap:16px;
-  margin-top:32px;
-}
-
-.nav-link{
-  flex:1;
-  padding:14px 18px;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  background:#fff;
-  font-weight:600;
-}
-
-/* visibility control */
-.hidden{
-  display:none;
-}
-/* =========================
    Scroll To Top Button
 ========================= */
 #scrollTopBtn{
   position:fixed;
   right:20px;
   bottom:20px;
-  width:44px;
-  height:44px;
-  border-radius:50%;
+  padding:12px 14px;
+  border-radius:999px;
   border:2px solid var(--line);
   background:#fff;
-  color:var(--ink);
-  font-size:18px;
   font-weight:600;
   cursor:pointer;
-
   opacity:0;
   pointer-events:none;
-  transition:opacity .2s ease, transform .2s ease;
+  transition:opacity .2s ease;
 }
 
 #scrollTopBtn.show{
   opacity:1;
   pointer-events:auto;
-}
-
-#scrollTopBtn:hover{
-  transform:translateY(-3px);
 }
 
 /* =========================
@@ -377,5 +192,4 @@ pre{
   margin-top:48px;
   opacity:.6;
 }
-
 
