@@ -53,22 +53,52 @@ a{
 .brand{
   font-family:DotGothic16;
   font-size:28px;
-  display:inline-block;
 }
-#content img,
-#content figure,
-#content figure img{
-  max-width:720px !important;
-  width:100% !important;
-  height:auto !important;
-  display:block;
-  margin:24px auto;
-}
-
-
 
 /* =========================
-   Navigation Tabs (Page links)
+   🔥 IMAGE CONTROL (FINAL)
+========================= */
+
+/* 이미지가 어디에 있든 무조건 가둔다 */
+article img,
+article figure,
+article figure img{
+  max-width:100% !important;
+  width:auto !important;
+  height:auto !important;
+}
+
+/* 실제 화면에서 보이는 최대 폭 */
+article img,
+article figure{
+  max-width:720px;
+  margin:32px auto;
+  display:block;
+}
+
+/* figure 기본 여백 제거 */
+article figure{
+  padding:0;
+}
+
+/* 캡션 스타일 */
+article figcaption{
+  font-size:13px;
+  opacity:.6;
+  margin-top:8px;
+  text-align:center;
+}
+
+/* 모바일에서 더 줄이기 */
+@media (max-width:600px){
+  article img,
+  article figure{
+    max-width:100%;
+  }
+}
+
+/* =========================
+   Navigation Tabs
 ========================= */
 .top-nav{
   display:flex;
@@ -84,7 +114,6 @@ a{
   background:#fff;
   font-weight:600;
   text-align:center;
-  transition:background .15s ease, color .15s ease;
 }
 
 .tab-link.active{
@@ -109,21 +138,7 @@ a{
 }
 
 /* =========================
-   Animations
-========================= */
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(12px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-/* =========================
-   Post List (index)
+   Post List
 ========================= */
 .post-link{
   display:block;
@@ -132,20 +147,12 @@ a{
   background:#fff;
   border:2px solid var(--line);
   border-radius:var(--radius);
-  animation:fadeUp .35s ease both;
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-
-.post-link:hover{
-  transform:translateY(-4px);
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
 
 .post-meta{
   font-size:12px;
   opacity:.6;
   margin-bottom:6px;
-  letter-spacing:.02em;
 }
 
 .tags{
@@ -163,7 +170,7 @@ a{
 }
 
 /* =========================
-   Post Page Layout
+   Post Layout
 ========================= */
 .post-layout{
   display:grid;
@@ -171,13 +178,11 @@ a{
   gap:32px;
 }
 
-/* Left list */
 .post-list{
   font-size:14px;
   opacity:.7;
   position:sticky;
   top:24px;
-  align-self:start;
 }
 
 .post-list a{
@@ -190,7 +195,6 @@ a{
   opacity:1;
 }
 
-/* Mobile */
 @media (max-width:800px){
   .post-layout{
     grid-template-columns:1fr;
@@ -208,31 +212,6 @@ article{
   border:2px solid var(--line);
   border-radius:var(--radius);
   padding:32px;
-  animation:fadeUp .4s ease both;
-}
-
-/* =========================
-   Prev / Next Navigation
-========================= */
-.post-nav{
-  display:flex;
-  gap:16px;
-  margin-top:32px;
-}
-
-.nav-link{
-  flex:1;
-  padding:14px 18px;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  background:#fff;
-  font-weight:600;
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-
-.nav-link:hover{
-  transform:translateY(-3px);
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
 }
 
 /* =========================
