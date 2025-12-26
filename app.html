@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apps – TECH POST</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- =========================
+    Header
+  ========================= -->
+  <header class="site-header">
+    <a href="index.html" class="brand">T E C H P O S T</a>
+  </header>
+
+  <!-- =========================
+    Main
+  ========================= -->
+  <main class="container">
+
+    <section>
+      <h1>Apps</h1>
+      <p>
+        개인 프로젝트와 실험적인 앱들을 정리한 공간.
+        기능보다 구조와 지속성을 우선한다.
+      </p>
+    </section>
+
+    <!-- =========================
+      App List
+    ========================= -->
+    <section class="app-list">
+
+      <a class="post-link" href="apps/budget/index.html">
+        <h2>Emotion-based Budget App</h2>
+        <p>
+          기존 가계부의 복잡성과 노잼 문제를 해결하기 위해
+          감정을 중심으로 다시 설계한 가계부.
+        </p>
+        <div class="tags">
+          <span class="tag">UX</span>
+          <span class="tag">Figma</span>
+          <span class="tag">API</span>
+        </div>
+      </a>
+
+      <!-- 나중에 앱 추가 시 여기 복붙 -->
+      <!--
+      <a class="post-link" href="apps/another/index.html">
+        <h2>Another App</h2>
+        <p>설명</p>
+      </a>
+      -->
+
+    </section>
+
+    <!-- =========================
+      Footer
+    ========================= -->
+    <footer class="footer">
+      © <span id="year"></span> HYANG
+    </footer>
+
+  </main>
+
+  <!-- =========================
+    Script
+  ========================= -->
+  <script>
+    const year = document.querySelector("#year");
+    if (year) year.textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
