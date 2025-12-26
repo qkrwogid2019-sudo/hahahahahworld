@@ -1,3 +1,5 @@
+console.log("🔥 app.js 로드됨");
+
 /* =========================
    Helpers
 ========================= */
@@ -151,6 +153,7 @@ function renderPostNav(posts, current){
     nextEl.classList.remove("hidden");
   }
 }
+console.log("🔥 mountIndex 실행");
 
 /* =========================
    BOOT (중요)
