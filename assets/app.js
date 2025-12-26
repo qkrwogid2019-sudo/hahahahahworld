@@ -158,6 +158,24 @@ function renderPostNav(posts, current){
   }
 }
 console.log("🔥 mountIndex 실행");
+const scrollTopBtn = document.querySelector("#scrollTopBtn");
+
+if (scrollTopBtn) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      scrollTopBtn.classList.add("show");
+    } else {
+      scrollTopBtn.classList.remove("show");
+    }
+  });
+
+  scrollTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+}
 
 /* =========================
    BOOT (중요)
