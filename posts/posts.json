@@ -4,6 +4,7 @@
     "title": "Hello, Tech Blog",
     "summary": "GitHub Pages 기반 초간단 정적 블로그.",
     "tags": ["setup", "github"],
+    "date": "2025-12-24",
     "file": "hello-world.html"
   },
   {
