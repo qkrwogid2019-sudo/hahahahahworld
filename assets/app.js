@@ -74,18 +74,15 @@ async function mountIndex(){
 
   if (tabPosts && tabApp && apps){
     tabPosts.onclick = () => {
-      postsContainer.classList.remove("hidden");
-      apps.classList.add("hidden");
-      tabPosts.classList.add("active");
-      tabApp.classList.remove("active");
-    };
+  apps.classList.add("hidden");
+  postsContainer.classList.remove("hidden");
+};
 
-    tabApp.onclick = () => {
-      postsContainer.classList.add("hidden");
-      apps.classList.remove("hidden");
-      tabApp.classList.add("active");
-      tabPosts.classList.remove("active");
-    };
+tabApp.onclick = () => {
+  postsContainer.classList.add("hidden");
+  apps.classList.remove("hidden");
+};
+
   }
 }
 
