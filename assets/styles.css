@@ -54,7 +54,7 @@ a{
 }
 
 /* =========================
-   Navigation
+   Navigation Tabs
 ========================= */
 .top-nav{
   display:flex;
@@ -92,30 +92,6 @@ a{
   border:2px solid var(--line);
   font-size:15px;
 }
-/* =========================
-   Post Navigation
-========================= */
-.post-nav{
-  display:flex;
-  justify-content:space-between;
-  gap:16px;
-  margin-top:32px;
-}
-
-.nav-link{
-  flex:1;
-  padding:14px 18px;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  background:#fff;
-  font-weight:600;
-  transition:transform .2s ease, box-shadow .2s ease;
-}
-
-.nav-link:hover{
-  transform:translateY(-3px);
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-}
 
 /* =========================
    Animations
@@ -129,6 +105,26 @@ a{
     opacity:1;
     transform:translateY(0);
   }
+}
+
+/* =========================
+   Tabs Content (IMPORTANT)
+   - 레이아웃은 display:none으로 끊음
+   - 애니메이션은 등장할 때만
+========================= */
+#posts,
+#apps{
+  animation:none;
+}
+
+.hidden{
+  display:none;
+}
+
+/* 등장할 때만 애니메이션 */
+#posts:not(.hidden),
+#apps:not(.hidden){
+  animation:fadeUp .25s ease both;
 }
 
 /* =========================
@@ -180,23 +176,29 @@ article{
 }
 
 /* =========================
-   Tabs
+   Post Navigation (Prev / Next)
 ========================= */
-#posts,
-#apps{
-  opacity:1;
-  height:auto;
-  transition:opacity .25s ease;
+.post-nav{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:32px;
 }
 
-
-.hidden{
-  opacity:0;
-  pointer-events:none;
-  height:0;
-  overflow:hidden;
+.nav-link{
+  flex:1;
+  padding:14px 18px;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
+  font-weight:600;
+  transition:transform .2s ease, box-shadow .2s ease;
 }
 
+.nav-link:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
 
 /* =========================
    Code Block
