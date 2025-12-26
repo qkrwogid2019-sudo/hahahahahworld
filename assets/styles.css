@@ -14,6 +14,10 @@
 /* =========================
    Base
 ========================= */
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   font-family:Inter,sans-serif;
@@ -43,18 +47,23 @@ a{
   color:#fff;
   padding:18px 24px;
   border-radius:var(--radius);
-  display:flex;
-  justify-content:space-between;
   margin-bottom:24px;
 }
 
 .brand{
   font-family:DotGothic16;
   font-size:28px;
+  display:inline-block;
 }
 
-/*========================
-tab link ==============*/
+/* =========================
+   Navigation Tabs (Page links)
+========================= */
+.top-nav{
+  display:flex;
+  gap:12px;
+  margin-bottom:20px;
+}
 
 .tab-link{
   flex:1;
@@ -64,32 +73,13 @@ tab link ==============*/
   background:#fff;
   font-weight:600;
   text-align:center;
+  transition:background .15s ease, color .15s ease;
 }
 
-/* =========================
-   Navigation Tabs
-========================= */
-.top-nav{
-  display:flex;
-  gap:12px;
-  margin-bottom:20px;
-}
-
-.top-nav a{
-  flex:1;
-  padding:14px;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  background:#fff;
-  font-weight:600;
-  text-align:center;
-}
-
-.top-nav .active{
+.tab-link.active{
   background:var(--primary);
   color:#fff;
 }
-
 
 /* =========================
    Search
@@ -105,13 +95,6 @@ tab link ==============*/
   border-radius:999px;
   border:2px solid var(--line);
   font-size:15px;
-}
-.post-meta{
-  font-size:12px;
-  opacity:.6;
-  margin-bottom:6px;
-     letter-spacing:.02em;
-
 }
 
 /* =========================
@@ -129,68 +112,7 @@ tab link ==============*/
 }
 
 /* =========================
-   Tabs Content (IMPORTANT)
-   - 레이아웃은 display:none으로 끊음
-   - 애니메이션은 등장할 때만
-========================= */
-#posts,
-#apps{
-  animation:none;
-}
-
-.hidden{
-  display:none;
-}
-
-/* 등장할 때만 애니메이션 */
-#posts:not(.hidden),
-#apps:not(.hidden){
-  animation:fadeUp .25s ease both;
-}
-
-/*==========================
-post left
-==============================*/
-
-.post-layout{
-  display:grid;
-  grid-template-columns:220px 1fr;
-  gap:32px;
-}
-.post-list{
-  position:sticky;
-  top:24px;
-  align-self:start;
-}
-
-
-.post-list{
-  font-size:14px;
-  opacity:.7;
-}
-
-.post-list a{
-  display:block;
-  padding:6px 0;
-}
-
-.post-list .active{
-  font-weight:600;
-  opacity:1;
-}
-
-/* 모바일 */
-@media (max-width: 800px){
-  .post-layout{
-    grid-template-columns:1fr;
-  }
-  .post-list{
-    display:none;
-  }
-}
-
-/* =========================
-   Post List
+   Post List (index)
 ========================= */
 .post-link{
   display:block;
@@ -199,7 +121,6 @@ post left
   background:#fff;
   border:2px solid var(--line);
   border-radius:var(--radius);
-
   animation:fadeUp .35s ease both;
   transition:transform .2s ease, box-shadow .2s ease;
 }
@@ -207,6 +128,13 @@ post left
 .post-link:hover{
   transform:translateY(-4px);
   box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.post-meta{
+  font-size:12px;
+  opacity:.6;
+  margin-bottom:6px;
+  letter-spacing:.02em;
 }
 
 .tags{
@@ -224,25 +152,59 @@ post left
 }
 
 /* =========================
-   Post Page
+   Post Page Layout
 ========================= */
-#content{
-  animation:fadeUp .4s ease both;
+.post-layout{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:32px;
 }
 
+/* Left list */
+.post-list{
+  font-size:14px;
+  opacity:.7;
+  position:sticky;
+  top:24px;
+  align-self:start;
+}
+
+.post-list a{
+  display:block;
+  padding:6px 0;
+}
+
+.post-list a.active{
+  font-weight:600;
+  opacity:1;
+}
+
+/* Mobile */
+@media (max-width:800px){
+  .post-layout{
+    grid-template-columns:1fr;
+  }
+  .post-list{
+    display:none;
+  }
+}
+
+/* =========================
+   Post Content
+========================= */
 article{
   background:#fff;
   border:2px solid var(--line);
   border-radius:var(--radius);
   padding:32px;
+  animation:fadeUp .4s ease both;
 }
 
 /* =========================
-   Post Navigation (Prev / Next)
+   Prev / Next Navigation
 ========================= */
 .post-nav{
   display:flex;
-  justify-content:space-between;
   gap:16px;
   margin-top:32px;
 }
