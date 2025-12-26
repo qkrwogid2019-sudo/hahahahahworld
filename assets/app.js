@@ -147,18 +147,39 @@ async function mountPost(){
 
   titleEl.textContent = post.title;
 
+  // ✅ 좌측 목록
+  renderSideList(posts, post);
+
   try {
     contentEl.innerHTML = await fetchText(`posts/${post.file}`);
   } catch {
     contentEl.innerHTML = "<p>앗, 오류야</p>";
   }
 
+  // ✅ 이전 / 다음 글
   renderPostNav(posts, post);
 
   if (window.hljs) hljs.highlightAll();
 }
 
-/* ---- Post Navigation ---- */
+/* =========================
+   Side List
+========================= */
+function renderSideList(posts, currentPost){
+  const listEl = document.querySelector(".post-list");
+  if (!listEl) return;
+
+  listEl.innerHTML = posts.map(p => `
+    <a href="post.html?slug=${p.slug}"
+       class="${p.slug === currentPost.slug ? "active" : ""}">
+      ${p.title}
+    </a>
+  `).join("");
+}
+
+/* =========================
+   Post Navigation
+========================= */
 function renderPostNav(posts, currentPost){
   const prevEl = $("#prev-post");
   const nextEl = $("#next-post");
@@ -182,6 +203,7 @@ function renderPostNav(posts, currentPost){
     nextEl.classList.remove("hidden");
   }
 }
+
 
 /* =========================
    BOOT
