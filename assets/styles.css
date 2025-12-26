@@ -184,6 +184,7 @@ article{
 ========================= */
 #posts,
 #apps{
+  opacity:1;
   transition:opacity .25s ease;
 }
 
@@ -191,6 +192,7 @@ article{
   display:none;
   opacity:0;
 }
+
 
 /* =========================
    Code Block
