@@ -172,6 +172,11 @@ article figcaption{
 /* =========================
    Post Layout
 ========================= */
+
+.nav-link{
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+}
+
 .post-layout{
   display:grid;
   grid-template-columns:220px 1fr;
