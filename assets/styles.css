@@ -213,10 +213,14 @@ a{
   margin:0; /* 기존 중앙 정렬 제거 */
 }
 
-.more-posts{
-  margin-bottom:12px;
+
+.more-posts.global{
+  width:100%;
+  padding:0 24px;
+  margin-bottom:16px;
   text-align:left;
 }
+
 
 /* =========================
    Footer
