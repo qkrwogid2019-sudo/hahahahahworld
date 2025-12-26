@@ -10,6 +10,47 @@
   --line:#3b2bd6;
   --radius:14px;
 }
+
+/* =========================
+   Intro Toggle
+========================= */
+.intro-toggle{
+  max-width:720px;
+  margin:0 auto 24px;
+}
+
+.intro-toggle button{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:none;
+  border:none;
+  font-size:14px;
+  opacity:.6;
+  cursor:pointer;
+  padding:4px 0;
+}
+
+.intro-toggle button:hover{
+  opacity:1;
+}
+
+/* Panel */
+.intro-panel{
+  margin-top:12px;
+  padding:16px 20px;
+  border-left:3px solid var(--line);
+  background:rgba(255,255,255,.6);
+  font-size:14px;
+  line-height:1.6;
+
+  animation:fadeUp .25s ease both;
+}
+
+.intro-panel.hidden{
+  display:none;
+}
+
 .intro{
   background:#fff;
   border:2px solid var(--line);
