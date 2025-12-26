@@ -5,7 +5,7 @@
   <h2>문제 상황</h2>
   <p>
     Posts / App 탭 전환 시,
-    App 영역이 Posts 하단에 붙어서 나타났다.
+    App 영역이 Posts 하단에 붙어서 나타났다. 이미지 크기가 조절 불가
   </p>
 
   <h2>처음 세운 가설</h2>
@@ -28,6 +28,7 @@
   </p>
 
   <h2>해결 방법</h2>
+  
   <pre><code class="language-css">
 .hidden{
   display:none;
@@ -38,6 +39,12 @@
   <ul>
     <li>탭 UI에서는 display 상태를 명확히 관리해야 한다</li>
     <li>애니메이션은 상태 관리 수단이 아니다</li>
+    <li>### Image Rules
+- 모든 이미지는 <figure>로 감싼다
+- article 내부에만 배치한다
+- max-width: 720px
+- figcaption 필수
+</li>
   </ul>
 
   <hr />
