@@ -142,6 +142,31 @@ async function mountPost(){
 
   if (window.hljs) hljs.highlightAll();
 }
+renderPostNav(posts, post);
+
+function renderPostNav(posts, currentPost){
+  const prevEl = $("#prev-post");
+  const nextEl = $("#next-post");
+
+  if (!prevEl || !nextEl) return;
+
+  const index = posts.findIndex(p => p.slug === currentPost.slug);
+
+  const prev = posts[index - 1];
+  const next = posts[index + 1];
+
+  if (prev){
+    prevEl.href = `post.html?slug=${prev.slug}`;
+    prevEl.textContent = `← ${prev.title}`;
+    prevEl.classList.remove("hidden");
+  }
+
+  if (next){
+    nextEl.href = `post.html?slug=${next.slug}`;
+    nextEl.textContent = `${next.title} →`;
+    nextEl.classList.remove("hidden");
+  }
+}
 
 /* =========================
    BOOT
