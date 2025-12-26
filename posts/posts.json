@@ -15,6 +15,14 @@
         "date": "2025-12-24",
     "file": "second-post.html"
   }
+  {
+  "slug": "css-hidden-bug",
+  "title": "think",
+  "summary": "탭 UI에서 opacity를 쓰면 안 되는 이유",
+  "tags": ["css", "ui", "debug"],
+  "file": "css-hidden-bug.html"
+}
+
 ]
 
 
