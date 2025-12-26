@@ -1,6 +1,14 @@
 console.log("🔥 app.js 로드됨");
 
 /* =========================
+   CONFIG / STATE
+========================= */
+const PAGE_SIZE = 4;
+let currentPage = 1;
+let currentMode = "card"; // "card" | "list"
+let allPostsCache = [];
+
+/* =========================
    Helpers
 ========================= */
 const $ = (s) => document.querySelector(s);
@@ -37,75 +45,167 @@ async function mountIndex(){
   const postsEl = $("#posts");
   if (!postsEl) return;
 
-  let posts;
-  try {
-    posts = await fetchJSON("posts/posts.json");
+  try{
+    allPostsCache = await fetchJSON("posts/posts.json");
   } catch {
     postsEl.innerHTML = "<p>포스트를 불러오지 못했어</p>";
     return;
   }
 
-  // 기본: 최신 4개 카드
-  const latestPosts = posts.slice(0, 4);
-  renderPosts(postsEl, latestPosts, false);
-
-  bindSearch(postsEl, posts);
-  bindArchiveToggle(postsEl, posts);
+  renderCardPage(1);
+  bindSearch();
+  bindArchiveToggle();
+  bindBackToCards();
 }
 
 /* =========================
-   Render
+   Render (공통)
 ========================= */
 function renderPosts(container, posts, listMode){
-  if (listMode){
-    container.classList.add("list-mode");
-  } else {
-    container.classList.remove("list-mode");
-  }
+  container.classList.toggle("list-mode", listMode);
 
   container.innerHTML = posts.map(p => `
     <a class="post-link" href="post.html?slug=${p.slug}">
       ${p.date ? `<div class="post-meta">${p.date}</div>` : ""}
       <h2 class="post-title">${p.title}</h2>
-      ${p.summary ? `<p>${p.summary}</p>` : ""}
-      <div class="tags">
-        ${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
-      </div>
+      ${!listMode && p.summary ? `<p>${p.summary}</p>` : ""}
+      ${!listMode ? `
+        <div class="tags">
+          ${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
+        </div>
+      ` : ""}
     </a>
   `).join("");
 }
 
 /* =========================
-   Search (항상 전체 기준)
+   CARD MODE (페이지네이션)
 ========================= */
-function bindSearch(container, posts){
+function renderCardPage(page){
+  currentMode = "card";
+  currentPage = page;
+
+  const postsEl = $("#posts");
+  const controls = $("#postsControls");
+  const pagination = $("#pagination");
+
+  controls.classList.add("hidden");
+
+  const start = (page - 1) * PAGE_SIZE;
+  const slice = allPostsCache.slice(start, start + PAGE_SIZE);
+
+  renderPosts(postsEl, slice, false);
+  renderPagination(allPostsCache.length, page);
+
+  pagination.classList.toggle(
+    "hidden",
+    allPostsCache.length <= PAGE_SIZE
+  );
+}
+
+/* =========================
+   ARCHIVE MODE (텍스트 리스트)
+========================= */
+function renderArchive(){
+  currentMode = "list";
+  currentPage = 1;
+
+  const postsEl = $("#posts");
+  const controls = $("#postsControls");
+  const pagination = $("#pagination");
+
+  controls.classList.remove("hidden");
+  pagination.classList.add("hidden");
+
+  renderPosts(postsEl, allPostsCache, true);
+  postsEl.scrollIntoView({ behavior: "smooth" });
+}
+
+/* =========================
+   Pagination UI
+========================= */
+function renderPagination(totalCount, current){
+  const pagination = $("#pagination");
+  if (!pagination) return;
+
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  if (totalPages <= 1){
+    pagination.innerHTML = "";
+    return;
+  }
+
+  let html = `
+    <button class="page-btn" data-page="1">«</button>
+    <button class="page-btn" data-page="${Math.max(1, current - 1)}">‹</button>
+  `;
+
+  for (let i = 1; i <= totalPages; i++){
+    html += `
+      <button
+        class="page-btn ${i === current ? "active" : ""}"
+        data-page="${i}">
+        ${i}
+      </button>
+    `;
+  }
+
+  html += `
+    <button class="page-btn" data-page="${Math.min(totalPages, current + 1)}">›</button>
+    <button class="page-btn" data-page="${totalPages}">»</button>
+  `;
+
+  pagination.innerHTML = html;
+
+  pagination.querySelectorAll(".page-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const page = Number(btn.dataset.page);
+      if (currentMode === "card"){
+        renderCardPage(page);
+      }
+    });
+  });
+}
+
+/* =========================
+   Bindings
+========================= */
+function bindArchiveToggle(){
+  const btn = $("#allPostsBtn");
+  if (!btn) return;
+
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    renderArchive();
+  });
+}
+
+function bindBackToCards(){
+  const btn = $("#backToCards");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    renderCardPage(1);
+  });
+}
+
+function bindSearch(){
   const search = $("#search");
   if (!search) return;
 
   search.addEventListener("input", e => {
     const q = e.target.value.toLowerCase();
 
-    const filtered = posts.filter(p =>
+    const filtered = allPostsCache.filter(p =>
       p.title.toLowerCase().includes(q) ||
       (p.summary || "").toLowerCase().includes(q) ||
       (p.tags || []).some(t => t.toLowerCase().includes(q))
     );
 
-    renderPosts(container, filtered, false);
-  });
-}
+    const postsEl = $("#posts");
+    renderPosts(postsEl, filtered, false);
 
-/* =========================
-   Archive (텍스트 리스트 모드)
-========================= */
-function bindArchiveToggle(container, posts){
-  const btn = $("#allPostsBtn");
-  if (!btn) return;
-
-  btn.addEventListener("click", e => {
-    e.preventDefault();
-    renderPosts(container, posts, true);
-    container.scrollIntoView({ behavior: "smooth" });
+    $("#pagination")?.classList.add("hidden");
+    $("#postsControls")?.classList.add("hidden");
   });
 }
 
@@ -122,7 +222,7 @@ async function mountPost(){
   if (!slug || !titleEl || !contentEl) return;
 
   let posts;
-  try {
+  try{
     posts = await fetchJSON("posts/posts.json");
   } catch {
     contentEl.innerHTML = "<p>글 목록을 불러오지 못했어</p>";
@@ -137,7 +237,7 @@ async function mountPost(){
 
   titleEl.textContent = post.title;
 
-  try {
+  try{
     contentEl.innerHTML = await fetchText(`posts/${post.file}`);
   } catch {
     contentEl.innerHTML = "<p>본문을 불러오지 못했어</p>";
@@ -163,7 +263,7 @@ function renderSideList(posts, current){
 }
 
 /* =========================
-   Prev / Next Nav
+   Prev / Next
 ========================= */
 function renderPostNav(posts, current){
   const prevEl = $("#prev-post");
@@ -191,8 +291,7 @@ function renderPostNav(posts, current){
 /* =========================
    Scroll To Top
 ========================= */
-const scrollTopBtn = document.querySelector("#scrollTopBtn");
-
+const scrollTopBtn = $("#scrollTopBtn");
 if (scrollTopBtn){
   window.addEventListener("scroll", () => {
     scrollTopBtn.classList.toggle("show", window.scrollY > 300);
@@ -206,14 +305,12 @@ if (scrollTopBtn){
 /* =========================
    Intro Toggle
 ========================= */
-const introBtn = document.querySelector("#introBtn");
-const introPanel = document.querySelector("#introPanel");
+const introBtn = $("#introBtn");
+const introPanel = $("#introPanel");
 
 if (introBtn && introPanel){
   introBtn.addEventListener("click", () => {
-    const isOpen = !introPanel.classList.contains("hidden");
     introPanel.classList.toggle("hidden");
-    introBtn.setAttribute("aria-expanded", String(!isOpen));
   });
 }
 
