@@ -114,12 +114,15 @@ function renderArchive(){
   const controls = $("#postsControls");
   const pagination = $("#pagination");
 
+  // 🔥 이 줄이 핵심
   controls.classList.remove("hidden");
+
   pagination.classList.add("hidden");
 
   renderPosts(postsEl, allPostsCache, true);
   postsEl.scrollIntoView({ behavior: "smooth" });
 }
+
 
 /* =========================
    Pagination UI
