@@ -1,10 +1,10 @@
 /* =========================
-   helpers
+   Helpers
 ========================= */
 const $ = (s) => document.querySelector(s);
 
 /* =========================
-   fetch utils (상대경로만 사용)
+   Fetch Utils (relative path only)
 ========================= */
 async function fetchJSON(path){
   const res = await fetch(path, { cache: "no-store" });
@@ -22,105 +22,122 @@ async function fetchText(path){
    INDEX
 ========================= */
 async function mountIndex(){
+  setYear();
+
+  const postsEl = $("#posts");
+  if (!postsEl) return;
+
+  const posts = await loadPosts(postsEl);
+  if (!posts) return;
+
+  renderPosts(postsEl, posts);
+  bindSearch(postsEl, posts);
+  bindTabs(postsEl);
+}
+
+/* ---- helpers (index) ---- */
+
+function setYear(){
   const year = $("#year");
   if (year) year.textContent = new Date().getFullYear();
+}
 
-  const postsContainer = $("#posts");
-  if (!postsContainer) return;
-
-  let posts = [];
-
+async function loadPosts(container){
   try {
-    posts = await fetchJSON("posts/posts.json");
+    return await fetchJSON("posts/posts.json");
   } catch (e) {
     console.error(e);
-    postsContainer.innerHTML = "<p>포스트를 불러올 수 없습니다.</p>";
-    return;
+    container.innerHTML = "<p>미안해.다음기회에 또 봐</p>";
+    return null;
   }
+}
 
-  function render(list){
-    postsContainer.innerHTML = list.map(p => `
-      <a class="post-link" href="post.html?slug=${p.slug}">
-        <h2>${p.title}</h2>
-        <p>${p.summary}</p>
-        <div class="tags">
-          ${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
-        </div>
-      </a>
-    `).join("");
-  }
+function renderPosts(container, list){
+  container.innerHTML = list.map(p => `
+    <a class="post-link" href="post.html?slug=${p.slug}">
+      <h2>${p.title}</h2>
+      <p>${p.summary}</p>
+      <div class="tags">
+        ${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
+      </div>
+    </a>
+  `).join("");
+}
 
-  render(posts);
-
-  /* ---- search ---- */
+function bindSearch(container, posts){
   const search = $("#search");
-  if (search){
-    search.addEventListener("input", e => {
-      const q = e.target.value.toLowerCase();
-      render(
-        posts.filter(p =>
-          p.title.toLowerCase().includes(q) ||
-          p.summary.toLowerCase().includes(q) ||
-          (p.tags || []).some(t => t.toLowerCase().includes(q))
-        )
-      );
-    });
-  }
+  if (!search) return;
 
-  /* ---- tabs ---- */
+  search.addEventListener("input", e => {
+    const q = e.target.value.toLowerCase();
+    renderPosts(
+      container,
+      posts.filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        p.summary.toLowerCase().includes(q) ||
+        (p.tags || []).some(t => t.toLowerCase().includes(q))
+      )
+    );
+  });
+}
+
+function bindTabs(postsEl){
   const tabPosts = $("#tab-posts");
-  const tabApp = $("#tab-app");
-  const apps = $("#apps");
+  const tabApp   = $("#tab-app");
+  const appsEl   = $("#apps");
 
-  if (tabPosts && tabApp && apps){
-    tabPosts.onclick = () => {
-  apps.classList.add("hidden");
-  postsContainer.classList.remove("hidden");
-};
+  if (!tabPosts || !tabApp || !appsEl) return;
 
-tabApp.onclick = () => {
-  postsContainer.classList.add("hidden");
-  apps.classList.remove("hidden");
-};
+  tabPosts.onclick = () => {
+    appsEl.classList.add("hidden");
+    postsEl.classList.remove("hidden");
+    tabPosts.classList.add("active");
+    tabApp.classList.remove("active");
+  };
 
-  }
+  tabApp.onclick = () => {
+    postsEl.classList.add("hidden");
+    appsEl.classList.remove("hidden");
+    tabApp.classList.add("active");
+    tabPosts.classList.remove("active");
+  };
 }
 
 /* =========================
    POST
 ========================= */
 async function mountPost(){
-  const year = $("#year");
-  if (year) year.textContent = new Date().getFullYear();
+  setYear();
 
   const slug = new URLSearchParams(location.search).get("slug");
-  const content = $("#content");
+  const titleEl = $("#title");
+  const contentEl = $("#content");
 
-  if (!slug || !content){
-    content.innerHTML = "<p>잘못된 접근</p>";
+  if (!slug || !titleEl || !contentEl){
+    if (contentEl) contentEl.innerHTML = "<p>잘못찾아왔어</p>";
     return;
   }
 
-  let posts = [];
+  let posts;
   try {
     posts = await fetchJSON("posts/posts.json");
-  } catch (e) {
-    content.innerHTML = "<p>글 목록을 불러오지 못했습니다.</p>";
+  } catch {
+    contentEl.innerHTML = "<p>앗.오류야</p>";
     return;
   }
 
   const post = posts.find(p => p.slug === slug);
   if (!post){
-    content.innerHTML = "<p>글 없음</p>";
+    contentEl.innerHTML = "<p>텅 비었어</p>";
     return;
   }
 
-  $("#title").textContent = post.title;
+  titleEl.textContent = post.title;
 
   try {
-    content.innerHTML = await fetchText(`posts/${post.file}`);
-  } catch (e) {
-    content.innerHTML = "<p>본문을 불러오지 못했습니다.</p>";
+    contentEl.innerHTML = await fetchText(`posts/${post.file}`);
+  } catch {
+    contentEl.innerHTML = "<p>앗 오류야</p>";
   }
 
   if (window.hljs) hljs.highlightAll();
@@ -134,5 +151,6 @@ if (location.pathname.endsWith("post.html")){
 } else {
   mountIndex();
 }
+
 
 
