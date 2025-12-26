@@ -1,3 +1,6 @@
+/* =========================
+   Design Tokens
+========================= */
 :root{
   --bg:#f6e9ff;
   --dot:rgba(160,90,200,.25);
@@ -8,22 +11,32 @@
   --radius:14px;
 }
 
+/* =========================
+   Base
+========================= */
 body{
   margin:0;
   font-family:Inter,sans-serif;
+  color:var(--ink);
   background:
     radial-gradient(var(--dot) 1.2px,transparent 1.2px),
     var(--bg);
   background-size:16px 16px;
-  color:var(--ink);
 }
 
-.site-header a{
+a{
   color:inherit;
   text-decoration:none;
 }
 
-.container{width:min(860px,92%);margin:auto;padding:24px 0;}
+/* =========================
+   Layout
+========================= */
+.container{
+  width:min(860px,92%);
+  margin:auto;
+  padding:24px 0;
+}
 
 .site-header{
   background:var(--primary);
@@ -35,53 +48,144 @@ body{
   margin-bottom:24px;
 }
 
-.brand{font-family:DotGothic16;font-size:28px}
-
-.top-nav{display:flex;gap:12px;margin-bottom:20px}
-.top-nav button{
-  flex:1;padding:14px;border:2px solid var(--line);
-  background:#fff;border-radius:var(--radius);
-  font-weight:600;cursor:pointer;
+.brand{
+  font-family:DotGothic16;
+  font-size:28px;
 }
-.top-nav .active{background:var(--primary);color:#fff}
 
+/* =========================
+   Navigation
+========================= */
+.top-nav{
+  display:flex;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.top-nav button{
+  flex:1;
+  padding:14px;
+  border:2px solid var(--line);
+  background:#fff;
+  border-radius:var(--radius);
+  font-weight:600;
+  cursor:pointer;
+}
+
+.top-nav .active{
+  background:var(--primary);
+  color:#fff;
+}
+
+/* =========================
+   Search
+========================= */
 .search{
-  max-width: 720px;
-  margin: 0 auto 20px;
+  max-width:720px;
+  margin:0 auto 20px;
 }
 
 .search input{
-  width: 100%;
-  padding: 14px 18px;
-  border-radius: 999px;
-  border: 2px solid var(--line);
-  font-size: 15px;
+  width:100%;
+  padding:14px 18px;
+  border-radius:999px;
+  border:2px solid var(--line);
+  font-size:15px;
 }
 
+/* =========================
+   Animations
+========================= */
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(12px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
 
+/* =========================
+   Post List
+========================= */
 .post-link{
-  display:block;padding:20px;margin-bottom:18px;
-  background:#fff;border:2px solid var(--line);
-  border-radius:var(--radius);color:inherit;text-decoration:none;
+  display:block;
+  padding:20px;
+  margin-bottom:18px;
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+
+  animation:fadeUp .35s ease both;
+  transition:transform .2s ease, box-shadow .2s ease;
 }
 
-.tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.post-link:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.tags{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
 .tag{
-  padding:6px 12px;border-radius:999px;
-  border:2px solid var(--line);font-size:13px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:2px solid var(--line);
+  font-size:13px;
 }
 
-.hidden{display:none}
+/* =========================
+   Post Page
+========================= */
+#content{
+  animation:fadeUp .4s ease both;
+}
 
 article{
-  background:#fff;border:2px solid var(--line);
-  border-radius:var(--radius);padding:32px;
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:32px;
 }
 
+/* =========================
+   Tabs
+========================= */
+#posts,
+#apps{
+  transition:opacity .25s ease;
+}
+
+.hidden{
+  display:none;
+  opacity:0;
+}
+
+/* =========================
+   Code Block
+========================= */
 pre{
-  background:#111;color:#fff;
-  padding:18px;border-radius:12px;
+  background:#111;
+  color:#fff;
+  padding:18px;
+  border-radius:12px;
+  overflow-x:auto;
 }
 
-.footer{text-align:center;margin-top:48px;opacity:.6}
+/* =========================
+   Footer
+========================= */
+.footer{
+  text-align:center;
+  margin-top:48px;
+  opacity:.6;
+}
+
 
