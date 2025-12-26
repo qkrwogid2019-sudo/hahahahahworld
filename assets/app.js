@@ -176,6 +176,17 @@ if (scrollTopBtn) {
     });
   });
 }
+const introBtn = document.querySelector("#introBtn");
+const introPanel = document.querySelector("#introPanel");
+
+if (introBtn && introPanel) {
+  introBtn.addEventListener("click", () => {
+    const isOpen = !introPanel.classList.contains("hidden");
+
+    introPanel.classList.toggle("hidden");
+    introBtn.setAttribute("aria-expanded", String(!isOpen));
+  });
+}
 
 /* =========================
    BOOT (중요)
