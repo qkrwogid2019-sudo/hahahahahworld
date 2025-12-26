@@ -14,6 +14,18 @@
 /* =========================
    Intro Toggle
 ========================= */
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
 .intro-toggle{
   display:inline-flex;
   align-items:center;
