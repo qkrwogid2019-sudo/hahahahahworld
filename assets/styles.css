@@ -204,6 +204,19 @@ a{
 .all-posts-link:hover{
   text-decoration: underline;
 }
+.search-area{
+  max-width:720px;
+  margin:0 auto 24px;
+}
+
+.search{
+  margin:0; /* 기존 중앙 정렬 제거 */
+}
+
+.more-posts{
+  margin-bottom:12px;
+  text-align:left;
+}
 
 /* =========================
    Footer
