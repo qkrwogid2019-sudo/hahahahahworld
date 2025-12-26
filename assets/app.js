@@ -53,9 +53,15 @@ async function loadPosts(container){
   }
 }
 
+function formatDate(dateStr){
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()}`;
+}
+
 function renderPosts(container, list){
   container.innerHTML = list.map(p => `
     <a class="post-link" href="post.html?slug=${p.slug}">
+      <div class="post-meta">${formatDate(p.date)}</div>
       <h2>${p.title}</h2>
       <p>${p.summary}</p>
       <div class="tags">
@@ -64,7 +70,6 @@ function renderPosts(container, list){
     </a>
   `).join("");
 }
-
 function bindSearch(container, posts){
   const search = $("#search");
   if (!search) return;
