@@ -194,6 +194,16 @@ a{
   opacity:1;
   pointer-events:auto;
 }
+.all-posts-link{
+  display: inline-block;
+  margin: 4px 0 16px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.all-posts-link:hover{
+  text-decoration: underline;
+}
 
 /* =========================
    Footer
