@@ -18,6 +18,11 @@ body{
   color:var(--ink);
 }
 
+.site-header a{
+  color:inherit;
+  text-decoration:none;
+}
+
 .container{width:min(860px,92%);margin:auto;padding:24px 0;}
 
 .site-header{
