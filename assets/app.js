@@ -317,7 +317,7 @@ const introPanel = $("#introPanel");
 
 if (introBtn && introPanel){
   introBtn.addEventListener("click", () => {
-    introPanel.classList.toggle("hidden");
+    introPanel.classList.toggle("is-hidden");
   });
 }
 
