@@ -89,7 +89,7 @@ function renderCardPage(page){
   const controls = $("#postsControls");
   const pagination = $("#pagination");
 
-  controls.classList.add("hidden");
+  controls.classList.add("is-hidden");
 
   const start = (page - 1) * PAGE_SIZE;
 const slice = allPostsCache.slice(start, start + PAGE_SIZE);
@@ -102,7 +102,7 @@ pagination.classList.toggle(
   allPostsCache.length <= PAGE_SIZE
 );
 
-
+}
 /* =========================
    ARCHIVE MODE (텍스트 리스트)
 ========================= */
@@ -115,9 +115,9 @@ function renderArchive(){
   const pagination = $("#pagination");
 
   // 🔥 이 줄이 핵심
-  controls.classList.remove("hidden");
+  controls.classList.remove("is-hidden");
 
-  pagination.classList.add("hidden");
+  pagination.classList.add("is-hidden");
 
   renderPosts(postsEl, allPostsCache, true);
   postsEl.scrollIntoView({ behavior: "smooth" });
@@ -205,12 +205,16 @@ function bindSearch(){
     );
 
     const postsEl = $("#posts");
+    const pagination = $("#pagination");
+    const controls = $("#postsControls");
+
     renderPosts(postsEl, filtered, false);
 
-    $("#pagination")?.classList.add("hidden");
-    $("#postsControls")?.classList.add("hidden");
+    pagination?.classList.add("is-hidden");
+    controls?.classList.add("is-hidden");
   });
 }
+
 
 /* =========================
    POST PAGE
@@ -281,13 +285,13 @@ function renderPostNav(posts, current){
   if (prev){
     prevEl.href = `post.html?slug=${prev.slug}`;
     prevEl.textContent = `← ${prev.title}`;
-    prevEl.classList.remove("hidden");
+    prevEl.classList.remove("is-hidden");
   }
 
   if (next){
     nextEl.href = `post.html?slug=${next.slug}`;
     nextEl.textContent = `${next.title} →`;
-    nextEl.classList.remove("hidden");
+    nextEl.classList.remove("is-hidden");
   }
 }
 
