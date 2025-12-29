@@ -33,8 +33,12 @@ a{
   text-decoration:none;
 }
 
+.is-hidden{
+  display:none;
+}
+
 /* =========================
-   Layout
+   Layout (공통)
 ========================= */
 .container{
   width:min(860px,92%);
@@ -56,7 +60,7 @@ a{
 }
 
 /* =========================
-   Archive Trigger (페이지 기준 왼쪽)
+   Archive Trigger
 ========================= */
 .archive-trigger{
   width:100%;
@@ -100,15 +104,11 @@ a{
 }
 
 /* =========================
-   Search (중앙)
+   Search
 ========================= */
 .search-area{
   max-width:720px;
   margin:0 auto 32px;
-}
-
-.search{
-  margin:0;
 }
 
 .search input{
@@ -150,16 +150,8 @@ a{
   padding:24px;
 }
 
-.is-hidden{
-  display:none;
-}
-
-#posts{
-  display:block !important;
-}
-
 /* =========================
-   Posts List (기본 카드 모드)
+   Posts List – Card Mode
 ========================= */
 #posts{
   padding-top:8px;
@@ -200,7 +192,7 @@ a{
 }
 
 /* =========================
-   Posts List (아카이브 텍스트 모드)
+   Posts List – Archive Mode
 ========================= */
 #posts.list-mode .post-link{
   background:none;
@@ -225,7 +217,111 @@ a{
 }
 
 /* =========================
-   Scroll To Top Button
+   Posts Controls
+========================= */
+.posts-controls{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:16px;
+}
+
+.control-btn{
+  padding:14px;
+  min-width:120px;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.control-btn:hover{
+  background:rgba(59,43,214,.08);
+}
+
+/* =========================
+   Pagination
+========================= */
+.pagination{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  margin-top:24px;
+}
+
+.page-btn{
+  padding:8px 12px;
+  border-radius:8px;
+  border:2px solid var(--line);
+  background:#fff;
+  cursor:pointer;
+}
+
+.page-btn.active{
+  background:var(--primary);
+  color:#fff;
+}
+
+/* =========================
+   Post Page Layout
+========================= */
+.post-layout{
+  display:flex;
+  gap:32px;
+  align-items:flex-start;
+}
+
+.post-list{
+  flex:0 0 200px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.post-list a{
+  display:block;
+  padding:6px 0;
+  opacity:.6;
+}
+
+.post-list a.active{
+  opacity:1;
+  font-weight:600;
+}
+
+.post-list a:hover{
+  text-decoration:underline;
+}
+
+.post-content{
+  flex:1;
+  min-width:0;
+}
+
+.post-content h1{
+  margin-top:0;
+}
+
+/* =========================
+   Prev / Next Nav
+========================= */
+.post-nav{
+  display:flex;
+  justify-content:space-between;
+  margin-top:48px;
+}
+
+.nav-link{
+  font-weight:600;
+  opacity:.7;
+}
+
+.nav-link:hover{
+  text-decoration:underline;
+  opacity:1;
+}
+
+/* =========================
+   Scroll To Top
 ========================= */
 #scrollTopBtn{
   position:fixed;
@@ -246,29 +342,6 @@ a{
   opacity:1;
   pointer-events:auto;
 }
-/* =========================
-   Posts Controls (Tab Style)
-========================= */
-.posts-controls{
-  display:flex;
-  justify-content:flex-end;
-  margin-bottom:16px;
-}
-
-.control-btn{
-  padding:14px;
-  min-width:120px;
-  border:2px solid var(--line);
-  border-radius:var(--radius);
-  background:#fff;
-  font-weight:600;
-  text-align:center;
-  cursor:pointer;
-}
-
-.control-btn:hover{
-  background:rgba(59,43,214,.08);
-}
 
 /* =========================
    Footer
@@ -278,4 +351,18 @@ a{
   margin-top:48px;
   opacity:.6;
 }
+
+/* =========================
+   Responsive (Mobile)
+========================= */
+@media (max-width: 720px){
+  .post-layout{
+    flex-direction:column;
+  }
+
+  .post-list{
+    display:none;
+  }
+}
+
 
