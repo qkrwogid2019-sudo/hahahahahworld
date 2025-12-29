@@ -321,6 +321,14 @@ if (introBtn && introPanel){
   });
 }
 
+document.querySelectorAll(".tab-link").forEach(a => {
+  if (a.href === location.href) {
+    a.classList.add("active");
+  } else {
+    a.classList.remove("active");
+  }
+});
+
 /* =========================
    BOOT
 ========================= */
