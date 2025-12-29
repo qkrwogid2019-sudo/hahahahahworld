@@ -375,4 +375,16 @@ a{
   height:auto;
   display:block;
 }
+/* =========================
+   FORCE CONTENT MEDIA FIT
+========================= */
+.post-content img,
+.post-content video,
+.post-content iframe{
+  max-width:100% !important;
+  width:100% !important;
+  height:auto !important;
+  display:block;
+}
+
 
