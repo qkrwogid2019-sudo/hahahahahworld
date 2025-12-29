@@ -365,4 +365,14 @@ a{
   }
 }
 
+/* =========================
+   Post Content Media Fix
+========================= */
+.post-content img,
+.post-content video,
+.post-content iframe{
+  max-width:100%;
+  height:auto;
+  display:block;
+}
 
