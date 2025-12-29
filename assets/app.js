@@ -92,16 +92,16 @@ function renderCardPage(page){
   controls.classList.add("hidden");
 
   const start = (page - 1) * PAGE_SIZE;
-  const slice = allPostsCache.slice(start, start + PAGE_SIZE);
+const slice = allPostsCache.slice(start, start + PAGE_SIZE);
 
-  renderPosts(postsEl, slice, false);
-  renderPagination(allPostsCache.length, page);
+renderPosts(postsEl, slice, false);
+renderPagination(allPostsCache.length, page);
 
-  pagination.classList.toggle(
-    "hidden",
-    allPostsCache.length <= PAGE_SIZE
-  );
-}
+pagination.classList.toggle(
+  "is-hidden",
+  allPostsCache.length <= PAGE_SIZE
+);
+
 
 /* =========================
    ARCHIVE MODE (텍스트 리스트)
