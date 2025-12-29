@@ -153,6 +153,11 @@ a{
 .is-hidden{
   display:none;
 }
+
+#posts{
+  display:block !important;
+}
+
 /* =========================
    Posts List (기본 카드 모드)
 ========================= */
