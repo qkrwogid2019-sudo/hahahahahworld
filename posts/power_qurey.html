@@ -54,5 +54,25 @@ otherwise false
     판단만 필요하면 if 없이 비교식만 사용하고,<br />
     표시용 값이 필요할 때만 if 문을 사용한다.
   </p>
+    <pre><code>
+| ----------    | ------------------------- |
+| 데이터 품질 점검  | `otherwise null`          |
+| 실험 / 리서치    | `otherwise null`          |
+| 탐색적 분석      | `otherwise null`          |
+| 운영 KPI       | `otherwise false`         |
+| 필터 / 조건 분기 | `otherwise false`         |
+| 대시보드 최종 수치 | `otherwise false` (의도 명시)|
+</code></pre>
+
+    <p>
+      <strong>정리2</strong><br />
+      try Number.From([Total Spent]) > 100000
+otherwise false
+    </p>
+    <pre><code>
+      try … otherwise 구문은 Power Query에서 데이터 변환 중 발생하는 에러를 흡수하여
+쿼리 전체가 중단되는 걸 방지한다.
+숫자&문자 혼합컬럼이나 null 값이 포함된 경우에 특히 유용함
+    </code></pre>
 </section>
 
