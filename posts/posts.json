@@ -38,8 +38,17 @@
   "tags": ["excel","sumifs"],
     "date": "2025-12-29",
   "file": "excel_check.html"
-}
+},
   
+ { 
+ "slug": "혼돈의 엑셀기초2",
+  "title": "열추가",
+  "summary": "if선언",
+  "tags": ["excel","query"],
+    "date": "2025-12-30",
+  "file": "power_qurey.html"
+},
+
 ]
 
 
