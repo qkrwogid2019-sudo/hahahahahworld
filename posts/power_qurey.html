@@ -1,8 +1,8 @@
 
-<section>
+<section class="tech-block">
 <h2>데이터형식 열추가</h2>
 <p>
-<code>if [weekday] = 0 then "일"
+<pre><code>if [weekday] = 0 then "일"
 else if [weekday] = 1 then "월"
 else if [weekday] = 2 then "화"
 else if [weekday] = 3 then "수"
@@ -10,11 +10,49 @@ else if [weekday] = 4 then "목"
 else if [weekday] = 5 then "금"
 else if [weekday] = 6 then "토"
 else null
-</code>
+</code></pre>
 </p>
-<p>
-if [Total Spent] > 100000 then "High"
+
+  <section class="tech-block">
+  <h2>Total Spent 기준 컬럼 만들기</h2>
+
+  <p>
+    Power Query에서는 <strong>비교식 자체가 Boolean 컬럼</strong>이 될 수 있다.
+    목적에 따라 아래 세 가지 패턴을 사용한다.
+  </p>
+
+  <h3>1. 필터 / 조건 분기 (Boolean 컬럼)</h3>
+  <pre><code class="language-m">
+[Total Spent] &gt; 100000
+  </code></pre>
+  <p class="note">
+    true / false 값을 반환하며, 필터링이나 후속 조건 분기에 적합하다.
+  </p>
+
+  <h3>2. 레이블 표시 (Text 컬럼)</h3>
+  <pre><code class="language-m">
+if [Total Spent] &gt; 100000 then "High"
 else "Normal"
-</p>
-</code>
+  </code></pre>
+  <p class="note">
+    숫자 기준을 사람이 읽을 수 있는 상태 값으로 변환할 때 사용한다.
+  </p>
+
+  <h3>3. 데이터가 더러운 경우 (안전 변환)</h3>
+  <pre><code class="language-m">
+try Number.From([Total Spent]) &gt; 100000
+otherwise false
+  </code></pre>
+  <p class="note">
+    숫자/문자 혼합, null 값이 있어도 쿼리가 중단되지 않는다.
+  </p>
+
+  <hr />
+
+  <p>
+    <strong>정리</strong><br />
+    판단만 필요하면 if 없이 비교식만 사용하고,<br />
+    표시용 값이 필요할 때만 if 문을 사용한다.
+  </p>
 </section>
+
