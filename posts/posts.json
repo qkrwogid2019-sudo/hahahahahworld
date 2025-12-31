@@ -47,6 +47,15 @@
   "tags": ["excel","query"],
     "date": "2025-12-30",
   "file": "power_qurey.html"
+  },
+  
+ { 
+ "slug": "혼돈의 엑셀기초3",
+  "title": "스크리닝의 중요성",
+  "summary": "피벗테이블-값요약기준",
+  "tags": ["excel","RFM"],
+    "date": "2025-12-30",
+  "file": "rfm.html"
 }
 
 ]
