@@ -1,35 +1,60 @@
-<section class="RFM">
-<h2>오늘의 실수</h2>
-
-<pre><code>
-같은 사람 중복값을 제외 했어야함.
-피벗테이블에서 값요약기준 부터 수정 후 데이터 작업
-</code></pre>
-
-
-  <section class="RFM">
-  <h2>실수</h2>
-
-  <p>
-    인보이스를 갯수로 가져왔어야 내림차순 정렬이 잘됐을 것이다.
-  </p>
-
-  <h3>PERCENTRANK.EXC</h3>
-  <pre><code class="round&percentrank.exc">
-최솟값 = 0
-최댓값 = 1
-을 제외(EXC) 한다
-그래서:
-항상 0과 1 사이의 값
-끝값 왜곡 방지용
-    
-  </code></pre>
-    
-  <p class="note">
-   <pre> 만약 1을 안 쓰면?
-    → 엑셀이 기본 자릿수(보통 3) 로 반환
-    → 필요 이상으로 정밀함
-    → 대부분의 분석/대시보드에선 과함
-  </p></pre>
-
-</section>
+<body>
+    <div class="container">
+        <header>
+            <h1>데이터 분석 실수 노트</h1>
+            <p class="meta">2026.01.02</p>
+        </header>
+        
+        <article>
+            <div class="intro">
+                오늘 데이터 작업하면서 한 실수들 기록.
+            </div>
+            
+            <h2>1. 중복값 제거 안 함</h2>
+            
+            <div class="mistake-box">
+                <div class="mistake-label">뭐가 문제였나</div>
+                <p>같은 사람 중복값을 제외했어야 했는데 안 했음.</p>
+                <p>→ 피벗테이블에서 값 요약 기준부터 먼저 수정하고 데이터 작업했어야 했음.</p>
+            </div>
+            
+            <h2>2. 인보이스를 합계로 가져옴</h2>
+            
+            <div class="mistake-box">
+                <div class="mistake-label">뭐가 문제였나</div>
+                <p>인보이스를 <strong>개수</strong>로 가져왔어야 내림차순 정렬이 제대로 됐을 것.</p>
+                <p>합계로 하니까 의미 없는 결과만 나옴.</p>
+            </div>
+            
+            <h2>3. PERCENTRANK.EXC 함수</h2>
+            
+            <div class="code-block">
+=PERCENTRANK.EXC(array, x, [significance])
+            </div>
+            
+            <div class="lesson-box">
+                <div class="lesson-label">이해한 것</div>
+                <p><strong>EXC = Exclusive</strong></p>
+                <ul>
+                    <li>최솟값 = 0, 최댓값 = 1을 <strong>제외(EXC)</strong>한다</li>
+                    <li>그래서 항상 0과 1 사이의 값만 나옴</li>
+                    <li>끝값 왜곡 방지용</li>
+                </ul>
+                
+                <p style="margin-top: 20px;"><strong>마지막 파라미터 (significance):</strong></p>
+                <ul>
+                    <li>1을 쓰면 → 0.1, 0.2, 0.3... (소수점 첫째 자리)</li>
+                    <li>1을 안 쓰면 → 엑셀 기본값(보통 3)으로 반환 → 0.234 이런 식</li>
+                    <li>대부분 분석/대시보드에서는 1이면 충분함</li>
+                </ul>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 40px;">
+                <p style="margin: 0; color: #555;">
+                    <strong>다음부터:</strong> 중복 확인 먼저 → 값 요약 기준 설정 → 그다음 작업
+                </p>
+            </div>
+        </article>
+    </div>
+</body>
+</html>
