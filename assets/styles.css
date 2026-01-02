@@ -391,5 +391,11 @@ figure img {
   margin: 0 auto;
   display: block;
 }
+.experiment figure img{
+  width: auto !important;
+  max-width: 640px !important;
+  margin: 0 auto;
+  display: block;
+}
 
 
