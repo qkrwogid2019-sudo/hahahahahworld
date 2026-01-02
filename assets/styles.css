@@ -386,5 +386,10 @@ a{
   height:auto !important;
   display:block;
 }
+figure img {
+  max-width: 640px;
+  margin: 0 auto;
+  display: block;
+}
 
 
