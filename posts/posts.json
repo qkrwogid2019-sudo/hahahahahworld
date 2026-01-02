@@ -56,8 +56,17 @@
   "tags": ["excel","RFM"],
     "date": "2025-12-30",
   "file": "rfm.html"
-}
-
+},
+  
+{
+"slug": "ai 활용하기",
+  "title": "의도의 중요성",
+  "summary": "프롬프트 잘 짜기",
+  "tags": ["AI","meaning"],
+    "date": "2026-01-02",
+  "file": "ai_conjugation.html",
+  }
+  
 ]
 
 
