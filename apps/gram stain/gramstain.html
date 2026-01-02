@@ -1,1 +1,181 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Gram Stain as Emotional Interface</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      background: #fafafa;
+      color: #111;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem;
+    }
+
+    /* language toggle */
+    .lang-toggle {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .lang-toggle button {
+      border: 1px solid #ccc;
+      background: #fff;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .lang-toggle button.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+
+    /* language blocks */
+    [data-lang] {
+      display: none;
+    }
+
+    [data-lang].active {
+      display: block;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    blockquote {
+      margin: 1.5rem 0;
+      padding-left: 1rem;
+      border-left: 3px solid #ccc;
+      color: #555;
+    }
+
+    video {
+      width: 100%;
+      margin-top: 1rem;
+      border-radius: 8px;
+      background: #000;
+    }
+  </style>
+</head>
+
+<body>
+<main>
+
+  <!-- language toggle -->
+  <div class="lang-toggle">
+    <button data-set-lang="en" class="active">EN</button>
+    <button data-set-lang="ko">KO</button>
+  </div>
+
+  <!-- INTRO -->
+  <section>
+    <h1>Gram Stain as Emotional Interface</h1>
+
+    <div data-lang="en" class="active">
+      <p>
+        This project reinterprets Gram staining and classical defense
+        mechanisms as an emotional interaction model.
+      </p>
+    </div>
+
+    <div data-lang="ko">
+      <p>
+        이 프로젝트는 그람염색과 고전적 방어기제를
+        감정 인터랙션 모델로 재해석한 실험이다.
+      </p>
+    </div>
+  </section>
+
+  <!-- CONCEPT -->
+  <section>
+    <h2>Concept</h2>
+
+    <div data-lang="en" class="active">
+      <p>
+        Color represents emotion. Retention and loss reflect different
+        emotional coping strategies.
+      </p>
+    </div>
+
+    <div data-lang="ko">
+      <p>
+        색은 감정을 의미하며, 남음과 탈색은
+        각기 다른 감정 처리 전략을 나타낸다.
+      </p>
+    </div>
+  </section>
+
+  <!-- DEMO -->
+  <section>
+    <h2>Demo</h2>
+
+    <div data-lang="en" class="active">
+      <p>This interaction only works through user engagement.</p>
+    </div>
+
+    <div data-lang="ko">
+      <p>이 인터랙션은 사용자의 개입이 있을 때만 작동한다.</p>
+    </div>
+
+    <video controls muted playsinline>
+      <source src="/assets/demo/gram-stain-demo.mp4" type="video/mp4" />
+    </video>
+
+    <blockquote>
+      This only works when someone interacts.<br />
+      Just like emotions.
+    </blockquote>
+  </section>
+
+  <video controls autoplay muted loop playsinline>
+  <source src="demo/gramstain.mp4" type="video/mp4">
+</video>
+  
+</main>
+
+<script>
+  const buttons = document.querySelectorAll("[data-set-lang]");
+  const blocks = document.querySelectorAll("[data-lang]");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lang = btn.dataset.setLang;
+
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      blocks.forEach(block => {
+        block.classList.toggle("active", block.dataset.lang === lang);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
