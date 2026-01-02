@@ -8,90 +8,114 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  >
 
-  <!-- 공용 스타일 그대로 사용 -->
+  <!-- Shared Styles -->
   <link rel="stylesheet" href="../../assets/styles.css" />
 </head>
+
 <body>
 
-  <!-- =========================
-    Header
-  ========================= -->
-  <header class="site-header">
-    <a href="../../app.html" class="brand">← Apps</a>
-  </header>
+<!-- =========================
+  Header
+========================= -->
+<header class="site-header">
+  <a href="../../app.html" class="brand">← Apps</a>
+</header>
 
-  <!-- =========================
-    Main
-  ========================= -->
-  <main class="container">
-  <article>
-    <section>
-      <h1>Emotion-based Budget App</h1>
-      <p class="post-meta">Personal Project · UX / API</p>
-    </section>
+<!-- =========================
+  Main
+========================= -->
+<main class="container">
+<article class="experiment">
 
-    <section>
-      <h2>Overview</h2>
-      <p>
-        감정 기반으로 지출을 기록하는 가계부 실험 프로젝트.
-        기존 가계부의 복잡성과 지속성 문제에서 출발했다.
-      </p>
-    </section>
+  <!-- INTRO -->
+  <section class="intro">
+    <h1>Emotion-based Budget App</h1>
+    <p class="post-meta">Personal Project · UX / API</p>
+    <p>
+      감정을 먼저 기록하는 가계부 실험.
+      숫자가 아니라 반응을 중심으로 지출을 관찰한다.
+    </p>
+  </section>
 
-    <section>
-      <h2>Why I Built This</h2>
-      <p>
-        대부분의 가계부는 기능은 많지만 오래 쓰기 어렵다.
-        문제는 의지가 아니라 구조라고 판단했다.
-      </p>
-    </section>
+  <!-- OVERVIEW -->
+  <section>
+    <h2>Overview</h2>
+    <p>
+      이 프로젝트는 기존 가계부가 가진
+      <strong>복잡성</strong>과 <strong>지속성 부족</strong> 문제에서 출발했다.
+      문제는 의지가 아니라 구조라고 판단했다.
+    </p>
+  </section>
 
-    <section>
-      <h2>Key Idea</h2>
-      <ul>
-        <li>금액보다 감정을 먼저 기록</li>
-        <li>분류보다 반응 중심</li>
-        <li>초등학생도 쓸 수 있는 UI</li>
-      </ul>
-    </section>
-<figure>
-  <img src="images/ui01.png" alt="">
-  <figcaption>Figma 초기 UI</figcaption>
-</figure>
-  
-    <section>
-      <h2>Tech</h2>
-      <ul>
-        <li>Frontend: HTML / CSS / Vanilla JS</li>
-        <li>Backend: API 기반 서버</li>
-      </ul>
-    </section>
+  <!-- MOTIVATION -->
+  <section>
+    <h2>Why I Built This</h2>
+    <p>
+      대부분의 가계부는 오래 쓰기 어렵다.
+      입력 피로도보다 더 큰 문제는,
+      지출이 감정과 분리되어 있다는 점이었다.
+    </p>
+  </section>
 
-    <section>
-      <h2>Next</h2>
-      <p>
-        감정 데이터의 흐름을 시각화하는 방향으로 확장 예정.
-      </p>
-    </section>
-    
+  <!-- CORE IDEA -->
+  <section>
+    <h2>Core Ideas</h2>
+    <ul>
+      <li>금액보다 감정을 먼저 기록</li>
+      <li>분류보다 반응 중심 설계</li>
+      <li>초등학생도 쓸 수 있는 UI</li>
+    </ul>
+  </section>
+
+  <!-- FIGURE : UI -->
   <figure>
-  <img src="images/mvp01.png" alt="">
-  <figcaption>프로토타입 MVP</figcaption>
-</figure>
-     </article>
-    <footer class="footer">
-      © <span id="year"></span> HYANG
-    </footer>
+    <img src="images/ui01.png" alt="Initial Figma UI" />
+    <figcaption>Figma 초기 UI 스케치</figcaption>
+  </figure>
 
-  </main>
+  <!-- TECH -->
+  <section>
+    <h2>Tech Stack</h2>
+    <ul>
+      <li>Frontend: HTML / CSS / Vanilla JS</li>
+      <li>Backend: API 기반 서버</li>
+    </ul>
+  </section>
 
-  <script>
-    const year = document.querySelector("#year");
-    if (year) year.textContent = new Date().getFullYear();
-  </script>
+  <!-- NEXT -->
+  <section>
+    <h2>Next Steps</h2>
+    <p>
+      감정 데이터의 흐름과 반복 패턴을
+      시각화하는 방향으로 확장할 예정이다.
+    </p>
+  </section>
+
+  <!-- FIGURE : MVP -->
+  <figure>
+    <img src="images/mvp01.png" alt="MVP Prototype" />
+    <figcaption>프로토타입 MVP</figcaption>
+  </figure>
+
+</article>
+
+<footer class="footer">
+  © <span id="year"></span> HYANG
+</footer>
+
+</main>
+
+<script>
+  const year = document.querySelector("#year");
+  if (year) year.textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
+
 
