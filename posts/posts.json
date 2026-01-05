@@ -12,61 +12,55 @@
     "title": "왜 기록이 쌓이면 실력이 되는가",
     "summary": "기록은 가장 현실적인 성장 방식이다.",
     "tags": ["thinking"],
-        "date": "2025-12-24",
+    "date": "2025-12-24",
     "file": "second-post.html"
   },
   {
-  "slug": "css-hidden-bug",
-  "title": "think",
-  "summary": "탭 UI에서 opacity를 쓰면 안 되는 이유",
-  "tags": ["css", "ui", "debug"],
+    "slug": "css-hidden-bug",
+    "title": "think",
+    "summary": "탭 UI에서 opacity를 쓰면 안 되는 이유",
+    "tags": ["css", "ui", "debug"],
     "date": "2025-12-26",
-  "file": "css-hidden-bug.html"
-},
- {
-  "slug": "cashcash",
-  "title": "cash",
-  "summary": "문제는 코드가 아니라 캐시였다",
-  "tags": ["css","debug"],
-    "date": "2025-12-26",
-  "file": "cashcash.html"
-},
-{
-  "slug": "혼돈의 엑셀기초",
-  "title": "순서",
-  "summary": "순서와 지정",
-  "tags": ["excel","sumifs"],
-    "date": "2025-12-29",
-  "file": "excel_check.html"
-},
-  
- { 
- "slug": "혼돈의 엑셀기초2",
-  "title": "열추가",
-  "summary": "if선언",
-  "tags": ["excel","query"],
-    "date": "2025-12-30",
-  "file": "power_qurey.html"
+    "file": "css-hidden-bug.html"
   },
-  
- { 
- "slug": "혼돈의 엑셀기초3",
-  "title": "스크리닝의 중요성",
-  "summary": "피벗테이블-값요약기준",
-  "tags": ["excel","RFM"],
+  {
+    "slug": "cache-issue",
+    "title": "cash",
+    "summary": "문제는 코드가 아니라 캐시였다",
+    "tags": ["css", "debug"],
+    "date": "2025-12-26",
+    "file": "cashcash.html"
+  },
+  {
+    "slug": "excel-basics-1",
+    "title": "순서",
+    "summary": "순서와 지정",
+    "tags": ["excel", "sumifs"],
+    "date": "2025-12-29",
+    "file": "excel_check.html"
+  },
+  {
+    "slug": "excel-basics-2",
+    "title": "열추가",
+    "summary": "if선언",
+    "tags": ["excel", "query"],
     "date": "2025-12-30",
-  "file": "rfm.html"
-},
-  
-{
-"slug": "ai 활용하기",
-  "title": "의도의 중요성",
-  "summary": "프롬프트 잘 짜기",
-  "tags": ["AI","meaning"],
+    "file": "power_qurey.html"
+  },
+  {
+    "slug": "excel-basics-3",
+    "title": "스크리닝의 중요성",
+    "summary": "피벗테이블-값요약기준",
+    "tags": ["excel", "RFM"],
+    "date": "2025-12-30",
+    "file": "rfm.html"
+  },
+  {
+    "slug": "ai-prompt-tips",
+    "title": "의도의 중요성",
+    "summary": "프롬프트 잘 짜기",
+    "tags": ["AI", "prompt"],
     "date": "2026-01-02",
-  "file": "ai_conjugation.html"
+    "file": "ai_conjugation.html"
   }
-  
 ]
-
-

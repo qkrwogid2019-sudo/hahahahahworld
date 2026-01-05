@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Works – TECH POST</title>
+
+  <!-- SEO -->
+  <meta name="description" content="HYANG의 창작 작업물. 만화, 일러스트, 그리고 실험적인 비주얼 프로젝트." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Works – TECH POST" />
+  <meta property="og:description" content="HYANG의 창작 작업물." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="brand">T E C H P O S T</a>
+  </header>
+
+  <!-- Main -->
+  <main class="container">
+
+    <!-- Tabs -->
+    <nav class="top-nav">
+      <a href="index.html" class="tab-link">Posts</a>
+      <a href="app.html" class="tab-link">Apps</a>
+      <a href="works.html" class="tab-link active">Works</a>
+    </nav>
+
+    <section>
+      <h1>Works</h1>
+      <p>
+        코드만 치는 사람이 아닙니다.<br>
+        만화를 그리고, 이야기를 만듭니다.
+      </p>
+    </section>
+
+    <!-- Works List -->
+    <section class="app-list">
+
+      <!-- 여기에 만화 작품 추가 -->
+      <a class="post-link" href="#">
+        <h2>작품 제목</h2>
+        <p>
+          작품 설명을 여기에 적으세요.
+        </p>
+        <div class="tags">
+          <span class="tag">Comic</span>
+          <span class="tag">Webtoon</span>
+        </div>
+      </a>
+
+      <!-- 예시: 추가 작품 -->
+      <!--
+      <a class="post-link" href="works/your-comic/index.html">
+        <h2>Your Comic Title</h2>
+        <p>작품 설명</p>
+        <div class="tags">
+          <span class="tag">Comic</span>
+        </div>
+      </a>
+      -->
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      © <span id="year"></span> HYANG
+    </footer>
+
+  </main>
+
+  <script>
+    const year = document.querySelector("#year");
+    if (year) year.textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

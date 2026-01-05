@@ -33,8 +33,9 @@ a{
   text-decoration:none;
 }
 
+.hidden,
 .is-hidden{
-  display:none;
+  display:none !important;
 }
 
 /* =========================
@@ -366,36 +367,27 @@ a{
 }
 
 /* =========================
-   Post Content Media Fix
+   Post Content Media
 ========================= */
 .post-content img,
 .post-content video,
 .post-content iframe{
   max-width:100%;
+  width:100%;
   height:auto;
   display:block;
+  margin:16px 0;
 }
-/* =========================
-   FORCE CONTENT MEDIA FIT
-========================= */
-.post-content img,
-.post-content video,
-.post-content iframe{
-  max-width:100% !important;
-  width:100% !important;
-  height:auto !important;
+
+figure img{
+  max-width:640px;
+  margin:0 auto;
   display:block;
 }
-figure img {
-  max-width: 640px;
-  margin: 0 auto;
-  display: block;
-}
+
 .experiment figure img{
-  width: auto !important;
-  max-width: 640px !important;
-  margin: 0 auto;
-  display: block;
+  width:auto;
+  max-width:640px;
 }
 
 
