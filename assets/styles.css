@@ -82,23 +82,71 @@ a{
   background:#fff;
   border:2px solid var(--line);
   border-radius:var(--radius);
-  padding:16px 20px;
+  padding:12px 16px;
   margin-bottom:12px;
 }
 
-.archive-list a{
-  display:block;
-  padding:8px 0;
-  color:var(--primary);
-  font-weight:500;
-  border-bottom:1px solid var(--line);
+/* 카테고리 아코디언 */
+.archive-category{
+  margin-bottom:8px;
 }
 
-.archive-list a:last-child{
+.archive-category:last-child{
+  margin-bottom:0;
+}
+
+.archive-category-btn{
+  all:unset;
+  display:flex;
+  align-items:center;
+  width:100%;
+  padding:10px 12px;
+  background:rgba(59,43,214,.06);
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  color:var(--ink);
+}
+
+.archive-category-btn:hover{
+  background:rgba(59,43,214,.12);
+}
+
+.archive-category-btn span:first-child{
+  flex:1;
+}
+
+.archive-count{
+  font-size:12px;
+  background:var(--primary);
+  color:#fff;
+  padding:2px 8px;
+  border-radius:999px;
+  margin-right:8px;
+}
+
+.archive-arrow{
+  font-size:10px;
+  opacity:.6;
+}
+
+.archive-category-list{
+  padding:8px 0 0 16px;
+}
+
+.archive-category-list a{
+  display:block;
+  padding:6px 0;
+  color:var(--primary);
+  font-weight:500;
+  border-bottom:1px solid rgba(59,43,214,.15);
+}
+
+.archive-category-list a:last-child{
   border-bottom:none;
 }
 
-.archive-list a:hover{
+.archive-category-list a:hover{
   text-decoration:underline;
 }
 

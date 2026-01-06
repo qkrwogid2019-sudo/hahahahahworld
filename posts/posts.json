@@ -5,7 +5,8 @@
     "summary": "GitHub Pages 기반 초간단 정적 블로그.",
     "tags": ["setup", "github"],
     "date": "2025-12-24",
-    "file": "hello-world.html"
+    "file": "hello-world.html",
+    "category": "블로그 만들기"
   },
   {
     "slug": "second-post",
@@ -13,7 +14,8 @@
     "summary": "기록은 가장 현실적인 성장 방식이다.",
     "tags": ["thinking"],
     "date": "2025-12-24",
-    "file": "second-post.html"
+    "file": "second-post.html",
+    "category": "인사이트"
   },
   {
     "slug": "css-hidden-bug",
@@ -21,7 +23,8 @@
     "summary": "탭 UI에서 opacity를 쓰면 안 되는 이유",
     "tags": ["css", "ui", "debug"],
     "date": "2025-12-26",
-    "file": "css-hidden-bug.html"
+    "file": "css-hidden-bug.html",
+    "category": "블로그 만들기"
   },
   {
     "slug": "cache-issue",
@@ -29,7 +32,8 @@
     "summary": "문제는 코드가 아니라 캐시였다",
     "tags": ["css", "debug"],
     "date": "2025-12-26",
-    "file": "cashcash.html"
+    "file": "cashcash.html",
+    "category": "블로그 만들기"
   },
   {
     "slug": "excel-basics-1",
@@ -37,7 +41,8 @@
     "summary": "순서와 지정",
     "tags": ["excel", "sumifs"],
     "date": "2025-12-29",
-    "file": "excel_check.html"
+    "file": "excel_check.html",
+    "category": "수업"
   },
   {
     "slug": "excel-basics-2",
@@ -45,7 +50,8 @@
     "summary": "if선언",
     "tags": ["excel", "query"],
     "date": "2025-12-30",
-    "file": "power_qurey.html"
+    "file": "power_qurey.html",
+    "category": "수업"
   },
   {
     "slug": "excel-basics-3",
@@ -53,7 +59,8 @@
     "summary": "피벗테이블-값요약기준",
     "tags": ["excel", "RFM"],
     "date": "2025-12-30",
-    "file": "rfm.html"
+    "file": "rfm.html",
+    "category": "수업"
   },
   {
     "slug": "ai-prompt-tips",
@@ -61,7 +68,8 @@
     "summary": "프롬프트 잘 짜기: 의도가 먼저다",
     "tags": ["AI", "prompt"],
     "date": "2026-01-02",
-    "file": "ai_conjugation.html"
+    "file": "ai_conjugation.html",
+    "category": "수업"
   },
   {
     "slug": "stats-notes-01",
@@ -69,7 +77,8 @@
     "summary": "데이터 분석을 위한 통계 손필기 노트",
     "tags": ["statistics", "data-analysis", "study"],
     "date": "2026-01-06",
-    "file": "stats-notes-01.html"
+    "file": "stats-notes-01.html",
+    "category": "공부"
   },
   {
     "slug": "folder-org-0001",
@@ -77,7 +86,8 @@
     "summary": "Claude Code로 아이클라우드 10분 만에 정리하기",
     "tags": ["automation", "claude", "productivity"],
     "date": "2026-01-06",
-    "file": "folder-org-0001.html"
+    "file": "folder-org-0001.html",
+    "category": "자동화"
   },
   {
     "slug": "ai-art-01",
@@ -85,7 +95,8 @@
     "summary": "SAFT 2025 - 인간과 AI 진화는 DNA 상보구조",
     "tags": ["AI", "art", "forum", "thinking"],
     "date": "2026-01-06",
-    "file": "ai-art-01.html"
+    "file": "ai-art-01.html",
+    "category": "인사이트"
   },
   {
     "slug": "ai-art-02",
@@ -93,7 +104,8 @@
     "summary": "너는 사지가 없으면 사람으로 안보니?",
     "tags": ["AI", "art", "forum", "android"],
     "date": "2026-01-06",
-    "file": "ai-art-02.html"
+    "file": "ai-art-02.html",
+    "category": "인사이트"
   },
   {
     "slug": "ai-practice-02",
@@ -101,6 +113,7 @@
     "summary": "구글시트 스크립트 + 파이썬 EDA 맛보기",
     "tags": ["AI", "google-sheets", "python", "EDA"],
     "date": "2026-01-06",
-    "file": "ai-practice-02.html"
+    "file": "ai-practice-02.html",
+    "category": "수업"
   }
 ]

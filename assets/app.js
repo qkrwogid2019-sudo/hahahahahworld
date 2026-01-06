@@ -105,8 +105,10 @@ function renderCardPage(page){
   }
 }
 /* =========================
-   ARCHIVE LIST (드롭다운 토글)
+   ARCHIVE LIST (카테고리별 아코디언)
 ========================= */
+const CATEGORY_ORDER = ["수업", "인사이트", "공부", "자동화", "블로그 만들기"];
+
 function toggleArchiveList(){
   const archiveList = $("#archiveList");
   const btn = $("#allPostsBtn");
@@ -115,10 +117,47 @@ function toggleArchiveList(){
   const isHidden = archiveList.classList.contains("hidden");
 
   if (isHidden) {
-    // 리스트 렌더링
-    archiveList.innerHTML = allPostsCache.map(p => `
-      <a href="post.html?slug=${p.slug}">${p.title}</a>
+    // 카테고리별로 그룹핑
+    const grouped = {};
+    allPostsCache.forEach(p => {
+      const cat = p.category || "기타";
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(p);
+    });
+
+    // 카테고리 순서대로 정렬
+    const sortedCategories = CATEGORY_ORDER.filter(cat => grouped[cat]);
+    // 순서에 없는 카테고리도 추가
+    Object.keys(grouped).forEach(cat => {
+      if (!sortedCategories.includes(cat)) sortedCategories.push(cat);
+    });
+
+    // 아코디언 HTML 생성
+    archiveList.innerHTML = sortedCategories.map(cat => `
+      <div class="archive-category">
+        <button class="archive-category-btn" data-category="${cat}">
+          <span>${cat}</span>
+          <span class="archive-count">${grouped[cat].length}</span>
+          <span class="archive-arrow">▼</span>
+        </button>
+        <div class="archive-category-list hidden">
+          ${grouped[cat].map(p => `
+            <a href="post.html?slug=${p.slug}">${p.title}</a>
+          `).join("")}
+        </div>
+      </div>
     `).join("");
+
+    // 아코디언 클릭 이벤트
+    archiveList.querySelectorAll(".archive-category-btn").forEach(catBtn => {
+      catBtn.addEventListener("click", () => {
+        const list = catBtn.nextElementSibling;
+        const arrow = catBtn.querySelector(".archive-arrow");
+        list.classList.toggle("hidden");
+        arrow.textContent = list.classList.contains("hidden") ? "▼" : "▲";
+      });
+    });
+
     archiveList.classList.remove("hidden");
     if (btn) btn.textContent = "접기 ↑";
   } else {
