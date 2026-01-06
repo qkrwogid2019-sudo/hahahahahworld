@@ -62,5 +62,13 @@
     "tags": ["AI", "prompt"],
     "date": "2026-01-02",
     "file": "ai_conjugation.html"
+  },
+  {
+    "slug": "stats-notes-01",
+    "title": "통계 기초 노트 #1",
+    "summary": "데이터 분석을 위한 통계 손필기 노트",
+    "tags": ["statistics", "data-analysis", "study"],
+    "date": "2026-01-06",
+    "file": "stats-notes-01.html"
   }
 ]
