@@ -70,5 +70,13 @@
     "tags": ["statistics", "data-analysis", "study"],
     "date": "2026-01-06",
     "file": "stats-notes-01.html"
+  },
+  {
+    "slug": "folder-org-0001",
+    "title": "폴더 정리 자동화 #0001",
+    "summary": "Claude Code로 아이클라우드 10분 만에 정리하기",
+    "tags": ["automation", "claude", "productivity"],
+    "date": "2026-01-06",
+    "file": "folder-org-0001.html"
   }
 ]
