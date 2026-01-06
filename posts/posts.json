@@ -94,5 +94,13 @@
     "tags": ["AI", "art", "forum", "android"],
     "date": "2026-01-06",
     "file": "ai-art-02.html"
+  },
+  {
+    "slug": "ai-practice-02",
+    "title": "AI 활용 실습 #02",
+    "summary": "구글시트 스크립트 + 파이썬 EDA 맛보기",
+    "tags": ["AI", "google-sheets", "python", "EDA"],
+    "date": "2026-01-06",
+    "file": "ai-practice-02.html"
   }
 ]
