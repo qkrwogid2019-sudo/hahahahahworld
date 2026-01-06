@@ -309,18 +309,59 @@ async function mountPost(){
 }
 
 /* =========================
-   Post Side List
+   Post Side List (카테고리별 아코디언)
 ========================= */
 function renderSideList(posts, current){
   const listEl = document.querySelector(".post-list");
   if (!listEl) return;
 
-  listEl.innerHTML = posts.map(p => `
-    <a href="post.html?slug=${p.slug}"
-       class="${p.slug === current.slug ? "active" : ""}">
-      ${p.title}
-    </a>
-  `).join("");
+  // 카테고리별로 그룹핑
+  const grouped = {};
+  posts.forEach(p => {
+    const cat = p.category || "기타";
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(p);
+  });
+
+  // 카테고리 순서
+  const order = ["수업", "인사이트", "공부", "자동화", "블로그 만들기"];
+  const sortedCategories = order.filter(cat => grouped[cat]);
+  Object.keys(grouped).forEach(cat => {
+    if (!sortedCategories.includes(cat)) sortedCategories.push(cat);
+  });
+
+  // 현재 포스트의 카테고리 찾기
+  const currentCategory = current.category || "기타";
+
+  // 아코디언 HTML 생성
+  listEl.innerHTML = sortedCategories.map(cat => {
+    const isCurrentCat = cat === currentCategory;
+    return `
+      <div class="side-category">
+        <button class="side-category-btn" data-category="${cat}">
+          <span>${cat}</span>
+          <span class="side-arrow">${isCurrentCat ? "▲" : "▼"}</span>
+        </button>
+        <div class="side-category-list ${isCurrentCat ? "" : "hidden"}">
+          ${grouped[cat].map(p => `
+            <a href="post.html?slug=${p.slug}" class="${p.slug === current.slug ? "active" : ""}">
+              ${p.title}
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  // 아코디언 클릭 이벤트
+  listEl.querySelectorAll(".side-category-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const list = btn.nextElementSibling;
+      const arrow = btn.querySelector(".side-arrow");
+      list.classList.toggle("hidden");
+      arrow.textContent = list.classList.contains("hidden") ? "▼" : "▲";
+    });
+  });
 }
 
 /* =========================
