@@ -31,13 +31,6 @@
   <a href="index.html" class="brand">T E C H P O S T</a>
 </header>
 
-<!-- 페이지 기준 왼쪽 : 아카이브 트리거 -->
-<div class="archive-trigger">
-  <a href="#" id="allPostsBtn" class="all-posts-link">
-    모든 포스트 보기 →
-  </a>
-</div>
-
 <main class="container">
 
   <!-- Tabs -->
@@ -65,13 +58,24 @@
       </p>
     </section>
   </div>
-<div class="posts-controls hidden" id="postsControls">
-  <button id="backToCards" class="control-btn">카드 보기로</button>
-</div>
+
+  <!-- 모든 포스트 보기 -->
+  <div class="archive-section">
+    <a href="#" id="allPostsBtn" class="all-posts-link">
+      모든 포스트 보기 →
+    </a>
+    <div id="archiveList" class="archive-list hidden"></div>
+  </div>
 
   <!-- POSTS -->
   <section id="posts"></section>
-<div class="pagination hidden" id="pagination"></div>
+
+  <!-- Pagination with arrows -->
+  <div class="pagination-wrapper hidden" id="paginationWrapper">
+    <button class="page-arrow" id="prevPage">←</button>
+    <div class="pagination" id="pagination"></div>
+    <button class="page-arrow" id="nextPage">→</button>
+  </div>
 
   <footer class="footer">
     © <span id="year"></span> HYANG

@@ -61,22 +61,44 @@ a{
 }
 
 /* =========================
-   Archive Trigger
+   Archive Section
 ========================= */
-.archive-trigger{
-  width:100%;
-  padding:0 24px;
-  margin:12px 0 8px;
-  text-align:left;
+.archive-section{
+  margin-bottom:24px;
 }
 
 .all-posts-link{
   display:inline-block;
   font-weight:600;
   color:var(--primary);
+  margin-bottom:12px;
 }
 
 .all-posts-link:hover{
+  text-decoration:underline;
+}
+
+.archive-list{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px 20px;
+  margin-bottom:12px;
+}
+
+.archive-list a{
+  display:block;
+  padding:8px 0;
+  color:var(--primary);
+  font-weight:500;
+  border-bottom:1px solid var(--line);
+}
+
+.archive-list a:last-child{
+  border-bottom:none;
+}
+
+.archive-list a:hover{
   text-decoration:underline;
 }
 
@@ -243,11 +265,17 @@ a{
 /* =========================
    Pagination
 ========================= */
+.pagination-wrapper{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  align-items:center;
+  margin-top:24px;
+}
+
 .pagination{
   display:flex;
   gap:6px;
-  justify-content:center;
-  margin-top:24px;
 }
 
 .page-btn{
@@ -261,6 +289,25 @@ a{
 .page-btn.active{
   background:var(--primary);
   color:#fff;
+}
+
+.page-arrow{
+  padding:10px 14px;
+  border-radius:8px;
+  border:2px solid var(--line);
+  background:#fff;
+  font-weight:600;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.page-arrow:hover{
+  background:rgba(59,43,214,.08);
+}
+
+.page-arrow:disabled{
+  opacity:.4;
+  cursor:not-allowed;
 }
 
 /* =========================

@@ -53,7 +53,7 @@ async function mountIndex(){
   renderCardPage(1);
   bindSearch();
   bindArchiveToggle();
-  bindBackToCards();
+  bindPaginationArrows();
 }
 
 /* =========================
@@ -84,41 +84,47 @@ function renderCardPage(page){
   currentPage = page;
 
   const postsEl = $("#posts");
-  const controls = $("#postsControls");
-  const pagination = $("#pagination");
+  const paginationWrapper = $("#paginationWrapper");
 
-  controls.classList.add("is-hidden");
-
+  const totalPages = Math.ceil(allPostsCache.length / PAGE_SIZE);
   const start = (page - 1) * PAGE_SIZE;
-const slice = allPostsCache.slice(start, start + PAGE_SIZE);
+  const slice = allPostsCache.slice(start, start + PAGE_SIZE);
 
-renderPosts(postsEl, slice, false);
-renderPagination(allPostsCache.length, page);
+  renderPosts(postsEl, slice, false);
+  renderPagination(allPostsCache.length, page);
 
-pagination.classList.toggle(
-  "is-hidden",
-  allPostsCache.length <= PAGE_SIZE
-);
+  // 화살표 버튼 상태 업데이트
+  const prevBtn = $("#prevPage");
+  const nextBtn = $("#nextPage");
+  if (prevBtn) prevBtn.disabled = page <= 1;
+  if (nextBtn) nextBtn.disabled = page >= totalPages;
 
+  // 페이지네이션 wrapper 표시/숨김
+  if (paginationWrapper) {
+    paginationWrapper.classList.toggle("hidden", allPostsCache.length <= PAGE_SIZE);
+  }
 }
 /* =========================
-   ARCHIVE MODE (텍스트 리스트)
+   ARCHIVE LIST (드롭다운 토글)
 ========================= */
-function renderArchive(){
-  currentMode = "list";
-  currentPage = 1;
+function toggleArchiveList(){
+  const archiveList = $("#archiveList");
+  const btn = $("#allPostsBtn");
+  if (!archiveList) return;
 
-  const postsEl = $("#posts");
-  const controls = $("#postsControls");
-  const pagination = $("#pagination");
+  const isHidden = archiveList.classList.contains("hidden");
 
-  // 🔥 이 줄이 핵심
-  controls.classList.remove("is-hidden");
-
-  pagination.classList.add("is-hidden");
-
-  renderPosts(postsEl, allPostsCache, true);
-  postsEl.scrollIntoView({ behavior: "smooth" });
+  if (isHidden) {
+    // 리스트 렌더링
+    archiveList.innerHTML = allPostsCache.map(p => `
+      <a href="post.html?slug=${p.slug}">${p.title}</a>
+    `).join("");
+    archiveList.classList.remove("hidden");
+    if (btn) btn.textContent = "접기 ↑";
+  } else {
+    archiveList.classList.add("hidden");
+    if (btn) btn.textContent = "모든 포스트 보기 →";
+  }
 }
 
 
@@ -176,17 +182,30 @@ function bindArchiveToggle(){
 
   btn.addEventListener("click", e => {
     e.preventDefault();
-    renderArchive();
+    toggleArchiveList();
   });
 }
 
-function bindBackToCards(){
-  const btn = $("#backToCards");
-  if (!btn) return;
+function bindPaginationArrows(){
+  const prevBtn = $("#prevPage");
+  const nextBtn = $("#nextPage");
 
-  btn.addEventListener("click", () => {
-    renderCardPage(1);
-  });
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        renderCardPage(currentPage - 1);
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      const totalPages = Math.ceil(allPostsCache.length / PAGE_SIZE);
+      if (currentPage < totalPages) {
+        renderCardPage(currentPage + 1);
+      }
+    });
+  }
 }
 
 function bindSearch(){
@@ -203,13 +222,11 @@ function bindSearch(){
     );
 
     const postsEl = $("#posts");
-    const pagination = $("#pagination");
-    const controls = $("#postsControls");
+    const paginationWrapper = $("#paginationWrapper");
 
     renderPosts(postsEl, filtered, false);
 
-    pagination?.classList.add("is-hidden");
-    controls?.classList.add("is-hidden");
+    paginationWrapper?.classList.add("hidden");
   });
 }
 
