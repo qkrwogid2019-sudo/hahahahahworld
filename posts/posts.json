@@ -78,5 +78,21 @@
     "tags": ["automation", "claude", "productivity"],
     "date": "2026-01-06",
     "file": "folder-org-0001.html"
+  },
+  {
+    "slug": "ai-art-01",
+    "title": "AI & 예술 학술연구 #01",
+    "summary": "SAFT 2025 - 인간과 AI 진화는 DNA 상보구조",
+    "tags": ["AI", "art", "forum", "thinking"],
+    "date": "2026-01-06",
+    "file": "ai-art-01.html"
+  },
+  {
+    "slug": "ai-art-02",
+    "title": "AI & 예술 학술연구 #02",
+    "summary": "너는 사지가 없으면 사람으로 안보니?",
+    "tags": ["AI", "art", "forum", "android"],
+    "date": "2026-01-06",
+    "file": "ai-art-02.html"
   }
 ]
