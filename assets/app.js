@@ -468,36 +468,35 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* =========================
-   모바일 롱프레스 방지
+   모바일 롱프레스 방지 (이벤트 위임)
 ========================= */
-let longPressTimer;
-
 document.addEventListener('touchstart', (e) => {
+  // input, textarea는 허용
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-  longPressTimer = setTimeout(() => {
+  // 이미지는 무조건 차단
+  if (e.target.tagName === 'IMG') {
     e.preventDefault();
-  }, 500);
+    return false;
+  }
 }, { passive: false });
 
-document.addEventListener('touchend', () => {
-  clearTimeout(longPressTimer);
-});
+// 롱프레스 컨텍스트 메뉴 차단
+document.addEventListener('touchstart', (e) => {
+  if (e.target.tagName === 'IMG') {
+    e.target.style.pointerEvents = 'none';
+    setTimeout(() => {
+      e.target.style.pointerEvents = '';
+    }, 500);
+  }
+}, { passive: true });
 
-document.addEventListener('touchmove', () => {
-  clearTimeout(longPressTimer);
-});
-
-// 이미지 전용 롱프레스 완전 차단
-document.querySelectorAll('img').forEach(img => {
-  img.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-  }, { passive: false });
-
-  img.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-  });
-});
+// contextmenu 완전 차단 (이미지 포함 전체)
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  return false;
+}, true);
 
 /* =========================
    BOOT
