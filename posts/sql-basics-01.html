@@ -1,0 +1,110 @@
+<h2>오늘 배운 것</h2>
+<p>MySQL + DBeaver 설치하고 기본 쿼리 연습했다.</p>
+
+<h2>환경 세팅</h2>
+<ul>
+  <li>Homebrew로 MySQL 설치</li>
+  <li>DBeaver Community 설치</li>
+  <li>CSV 파일 인코딩 변환 (CP949 → UTF-8)</li>
+</ul>
+
+<h2>따옴표 국룰</h2>
+<table border="1" style="border-collapse: collapse; margin: 16px 0;">
+  <tr>
+    <th style="padding: 8px;">따옴표</th>
+    <th style="padding: 8px;">용도</th>
+    <th style="padding: 8px;">예시</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px;"><code>` `</code> 백틱</td>
+    <td style="padding: 8px;">테이블명, 컬럼명 (한글/예약어)</td>
+    <td style="padding: 8px;"><code>`상품`</code>, <code>`order`</code></td>
+  </tr>
+  <tr>
+    <td style="padding: 8px;"><code>' '</code> 작은따옴표</td>
+    <td style="padding: 8px;">문자열 값</td>
+    <td style="padding: 8px;"><code>'홍길동'</code>, <code>'usa'</code></td>
+  </tr>
+</table>
+
+<h2>기본 쿼리</h2>
+<pre><code>-- 데이터베이스 선택
+USE 데이터베이스명;
+
+-- 테이블 목록
+SHOW TABLES;
+
+-- 테이블 구조
+DESC 테이블명;
+
+-- 전체 조회
+SELECT * FROM 테이블명;
+
+-- 특정 컬럼 조회
+SELECT name, age FROM 테이블명;
+</code></pre>
+
+<h2>조건 검색 (WHERE)</h2>
+<pre><code>-- 같다
+SELECT * FROM sample21 WHERE country = 'usa';
+
+-- 같지 않다
+SELECT * FROM sample21 WHERE name != '홍길동';
+
+-- IS NOT은 NULL 전용!
+SELECT * FROM sample21 WHERE name IS NOT NULL;
+</code></pre>
+
+<h2>LIKE 패턴 검색</h2>
+<pre><code>-- ~로 시작
+SELECT * FROM customer WHERE name LIKE '홍%';
+
+-- ~로 끝남
+SELECT * FROM customer WHERE email LIKE '%gmail.com';
+
+-- ~포함
+SELECT * FROM customer WHERE name LIKE '%길%';
+</code></pre>
+
+<h2>기타 유용한 것들</h2>
+<pre><code>-- 정렬
+SELECT * FROM sample21 ORDER BY name DESC;
+
+-- 개수 제한
+SELECT * FROM sample21 LIMIT 10;
+
+-- 중복 제거
+SELECT DISTINCT country FROM sample21;
+
+-- 범위
+SELECT * FROM sample21 WHERE age BETWEEN 20 AND 30;
+
+-- 목록 중 하나
+SELECT * FROM sample21 WHERE country IN ('usa', 'korea');
+
+-- 집계 함수
+SELECT COUNT(*) FROM sample21;
+SELECT SUM(price), AVG(price) FROM sample21;
+</code></pre>
+
+<h2>GROUP BY</h2>
+<pre><code>-- 그룹별 집계
+SELECT country, COUNT(*) FROM sample21 GROUP BY country;
+
+-- 그룹 조건 (HAVING)
+SELECT country, COUNT(*)
+FROM sample21
+GROUP BY country
+HAVING COUNT(*) > 5;
+</code></pre>
+
+<h2>삽질 기록</h2>
+<ul>
+  <li>SQLite로 연결해놓고 왜 안 되지 함 → MySQL로 다시 연결</li>
+  <li>한글 깨짐 → CSV 인코딩 UTF-8로 변환</li>
+  <li>백틱 치는데 ₩ 나옴 → 영어 키보드로 전환 or <code>Option + ₩</code></li>
+  <li><code>IS NOT</code> 썼다가 에러 → 값 비교는 <code>!=</code> 써야 함</li>
+  <li>따옴표 안 감쌌다가 에러 → 문자열은 무조건 <code>'값'</code></li>
+</ul>
+
+<p><strong>결론: SQL은 쉬운데 문법이 깐깐하다.</strong></p>
