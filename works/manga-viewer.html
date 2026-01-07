@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Manga Viewer – TECH POST</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, sans-serif;
+      background: #111;
+      color: #fff;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .viewer-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      transition: transform .3s;
+    }
+
+    .viewer-header.hidden {
+      transform: translateY(-100%);
+    }
+
+    .back-btn {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      opacity: .7;
+      transition: opacity .2s;
+    }
+
+    .back-btn:hover { opacity: 1; }
+
+    .page-info {
+      font-size: 13px;
+      opacity: .6;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chapter-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Viewer */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: pan-y pinch-zoom;
+    }
+
+    .page-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: opacity .2s, transform .3s;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .page.prev {
+      transform: translate(-150%, -50%);
+      opacity: 0;
+    }
+
+    .page.next {
+      transform: translate(50%, -50%);
+      opacity: 0;
+    }
+
+    /* Navigation Arrows */
+    .nav-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 60px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #fff;
+      opacity: 0;
+      transition: opacity .2s;
+      cursor: pointer;
+      z-index: 50;
+      background: none;
+      border: none;
+    }
+
+    .nav-arrow:hover { opacity: .8; }
+    .nav-arrow.left { left: 10px; }
+    .nav-arrow.right { right: 10px; }
+
+    .viewer:hover .nav-arrow { opacity: .3; }
+
+    /* Page indicator dots */
+    .page-dots {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 100;
+      transition: opacity .3s;
+    }
+
+    .page-dots.hidden { opacity: 0; }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.3);
+      transition: background .2s, transform .2s;
+    }
+
+    .dot.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+
+    /* Swipe hint */
+    .swipe-hint {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      opacity: .4;
+      pointer-events: none;
+      transition: opacity .5s;
+    }
+
+    .swipe-hint.hidden { opacity: 0; }
+
+    /* Loading */
+    .loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      z-index: 200;
+      transition: opacity .3s;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading" id="loading">Loading...</div>
+
+  <header class="viewer-header" id="header">
+    <a href="../works.html" class="back-btn">← Works</a>
+    <span class="chapter-title" id="chapterTitle">EP.01 - 1화</span>
+    <span class="page-info"><span id="currentPage">1</span> / <span id="totalPages">11</span></span>
+  </header>
+
+  <div class="viewer" id="viewer">
+    <div class="page-container" id="pageContainer">
+      <img class="page" id="pageImg" src="" alt="page" />
+    </div>
+
+    <button class="nav-arrow left" id="prevBtn">←</button>
+    <button class="nav-arrow right" id="nextBtn">→</button>
+  </div>
+
+  <div class="page-dots" id="pageDots"></div>
+  <div class="swipe-hint" id="swipeHint">← 스와이프하여 넘기기 →</div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const ep = params.get('ep') || '01';
+    const ch = params.get('ch') || '01';
+
+    const pageImg = document.getElementById('pageImg');
+    const currentPageEl = document.getElementById('currentPage');
+    const totalPagesEl = document.getElementById('totalPages');
+    const chapterTitle = document.getElementById('chapterTitle');
+    const pageDots = document.getElementById('pageDots');
+    const header = document.getElementById('header');
+    const swipeHint = document.getElementById('swipeHint');
+    const loading = document.getElementById('loading');
+    const viewer = document.getElementById('viewer');
+
+    let pages = [];
+    let currentPage = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+    let headerTimeout;
+
+    // Load pages
+    async function loadPages() {
+      const basePath = `manga/ep${ep}/ch${ch}/`;
+
+      // 이미지 파일 개수 확인 (최대 50장까지 시도)
+      for (let i = 1; i <= 50; i++) {
+        const num = String(i).padStart(4, '0');
+        const img = new Image();
+        img.src = basePath + num + '.png';
+
+        try {
+          await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+          });
+          pages.push(basePath + num + '.png');
+        } catch {
+          break;
+        }
+      }
+
+      if (pages.length === 0) {
+        alert('페이지를 찾을 수 없습니다.');
+        return;
+      }
+
+      totalPagesEl.textContent = pages.length;
+      chapterTitle.textContent = `EP.${ep} - ${parseInt(ch)}화`;
+
+      renderDots();
+      showPage(0);
+      loading.classList.add('hidden');
+
+      // Hide hint after 3 seconds
+      setTimeout(() => swipeHint.classList.add('hidden'), 3000);
+    }
+
+    function renderDots() {
+      pageDots.innerHTML = pages.map((_, i) =>
+        `<div class="dot ${i === 0 ? 'active' : ''}" data-page="${i}"></div>`
+      ).join('');
+
+      pageDots.querySelectorAll('.dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          showPage(parseInt(dot.dataset.page));
+        });
+      });
+    }
+
+    function showPage(index) {
+      if (index < 0 || index >= pages.length) return;
+
+      currentPage = index;
+      pageImg.src = pages[index];
+      currentPageEl.textContent = index + 1;
+
+      // Update dots
+      document.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextPage() {
+      if (currentPage < pages.length - 1) {
+        pageImg.classList.add('prev');
+        setTimeout(() => {
+          showPage(currentPage + 1);
+          pageImg.classList.remove('prev');
+        }, 150);
+      }
+    }
+
+    function prevPage() {
+      if (currentPage > 0) {
+        pageImg.classList.add('next');
+        setTimeout(() => {
+          showPage(currentPage - 1);
+          pageImg.classList.remove('next');
+        }, 150);
+      }
+    }
+
+    // Touch events
+    viewer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    viewer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    // Mouse drag
+    viewer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      touchStartX = e.screenX;
+    });
+
+    viewer.addEventListener('mouseup', (e) => {
+      if (isDragging) {
+        touchEndX = e.screenX;
+        handleSwipe();
+        isDragging = false;
+      }
+    });
+
+    viewer.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+
+    function handleSwipe() {
+      const diff = touchStartX - touchEndX;
+      const threshold = 50;
+
+      if (diff > threshold) {
+        nextPage();
+      } else if (diff < -threshold) {
+        prevPage();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextPage();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevPage();
+      }
+    });
+
+    // Arrow buttons
+    document.getElementById('prevBtn').addEventListener('click', prevPage);
+    document.getElementById('nextBtn').addEventListener('click', nextPage);
+
+    // Toggle header on tap
+    viewer.addEventListener('click', (e) => {
+      if (e.target.closest('.nav-arrow')) return;
+
+      header.classList.toggle('hidden');
+      pageDots.classList.toggle('hidden');
+
+      clearTimeout(headerTimeout);
+      if (!header.classList.contains('hidden')) {
+        headerTimeout = setTimeout(() => {
+          header.classList.add('hidden');
+          pageDots.classList.add('hidden');
+        }, 3000);
+      }
+    });
+
+    // Init
+    loadPages();
+  </script>
+
+</body>
+</html>

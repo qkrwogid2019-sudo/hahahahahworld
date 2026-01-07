@@ -533,4 +533,61 @@ figure img{
   max-width:640px;
 }
 
+/* =========================
+   Works - Manga Series
+========================= */
+.work-series{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-bottom:20px;
+}
+
+.series-title{
+  font-size:18px;
+  margin:0 0 4px 0;
+}
+
+.series-desc{
+  font-size:13px;
+  opacity:.6;
+  margin:0 0 16px 0;
+}
+
+.chapter-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(100px, 1fr));
+  gap:10px;
+}
+
+.chapter-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:16px 12px;
+  background:rgba(59,43,214,.04);
+  border:1px dotted var(--dot);
+  border-radius:8px;
+  text-align:center;
+  transition:background .2s, border-color .2s;
+}
+
+.chapter-card:hover{
+  background:rgba(59,43,214,.1);
+  border-color:var(--primary);
+}
+
+.chapter-num{
+  font-size:11px;
+  font-weight:600;
+  color:var(--primary);
+  margin-bottom:4px;
+}
+
+.chapter-name{
+  font-size:14px;
+  font-weight:500;
+}
+
 
