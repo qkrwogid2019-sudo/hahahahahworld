@@ -1,3 +1,55 @@
+<style>
+  .sql-post pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 16px 0;
+  }
+  .sql-post code {
+    font-family: 'SF Mono', Consolas, monospace;
+  }
+  .sql-post .inline-code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  .sql-post .quote-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .sql-post .quote-table th,
+  .sql-post .quote-table td {
+    padding: 12px 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .sql-post .quote-table th {
+    background: #f5f5f5;
+  }
+  @media (max-width: 600px) {
+    .sql-post pre {
+      font-size: 11px;
+      padding: 12px;
+    }
+    .sql-post .quote-table {
+      font-size: 12px;
+    }
+    .sql-post .quote-table th,
+    .sql-post .quote-table td {
+      padding: 8px 6px;
+    }
+  }
+</style>
+
+<div class="sql-post">
+
 <h2>오늘 배운 것</h2>
 <p>MySQL + DBeaver 설치하고 기본 쿼리 연습했다.</p>
 
@@ -9,21 +61,21 @@
 </ul>
 
 <h2>따옴표 국룰</h2>
-<table border="1" style="border-collapse: collapse; margin: 16px 0;">
+<table class="quote-table">
   <tr>
-    <th style="padding: 8px;">따옴표</th>
-    <th style="padding: 8px;">용도</th>
-    <th style="padding: 8px;">예시</th>
+    <th>따옴표</th>
+    <th>용도</th>
+    <th>예시</th>
   </tr>
   <tr>
-    <td style="padding: 8px;"><code>` `</code> 백틱</td>
-    <td style="padding: 8px;">테이블명, 컬럼명 (한글/예약어)</td>
-    <td style="padding: 8px;"><code>`상품`</code>, <code>`order`</code></td>
+    <td><code class="inline-code">` `</code> 백틱</td>
+    <td>테이블명, 컬럼명</td>
+    <td><code class="inline-code">`상품`</code></td>
   </tr>
   <tr>
-    <td style="padding: 8px;"><code>' '</code> 작은따옴표</td>
-    <td style="padding: 8px;">문자열 값</td>
-    <td style="padding: 8px;"><code>'홍길동'</code>, <code>'usa'</code></td>
+    <td><code class="inline-code">' '</code> 작은따옴표</td>
+    <td>문자열 값</td>
+    <td><code class="inline-code">'홍길동'</code></td>
   </tr>
 </table>
 
@@ -31,80 +83,58 @@
 <pre><code>-- 데이터베이스 선택
 USE 데이터베이스명;
 
--- 테이블 목록
+-- 테이블 목록 / 구조
 SHOW TABLES;
-
--- 테이블 구조
 DESC 테이블명;
 
--- 전체 조회
+-- 조회
 SELECT * FROM 테이블명;
-
--- 특정 컬럼 조회
-SELECT name, age FROM 테이블명;
-</code></pre>
+SELECT name, age FROM 테이블명;</code></pre>
 
 <h2>조건 검색 (WHERE)</h2>
-<pre><code>-- 같다
-SELECT * FROM sample21 WHERE country = 'usa';
+<pre><code>-- 같다 / 같지 않다
+WHERE country = 'usa'
+WHERE name != '홍길동'
 
--- 같지 않다
-SELECT * FROM sample21 WHERE name != '홍길동';
-
--- IS NOT은 NULL 전용!
-SELECT * FROM sample21 WHERE name IS NOT NULL;
-</code></pre>
+-- NULL은 IS NOT 사용
+WHERE name IS NOT NULL</code></pre>
 
 <h2>LIKE 패턴 검색</h2>
-<pre><code>-- ~로 시작
-SELECT * FROM customer WHERE name LIKE '홍%';
+<pre><code>-- ~로 시작 / 끝남 / 포함
+WHERE name LIKE '홍%'
+WHERE email LIKE '%gmail.com'
+WHERE name LIKE '%길%'</code></pre>
 
--- ~로 끝남
-SELECT * FROM customer WHERE email LIKE '%gmail.com';
+<h2>정렬 / 제한 / 중복제거</h2>
+<pre><code>ORDER BY name DESC
+LIMIT 10
+SELECT DISTINCT country FROM ...</code></pre>
 
--- ~포함
-SELECT * FROM customer WHERE name LIKE '%길%';
-</code></pre>
+<h2>범위 / 목록 / 집계</h2>
+<pre><code>WHERE age BETWEEN 20 AND 30
+WHERE country IN ('usa', 'korea')
 
-<h2>기타 유용한 것들</h2>
-<pre><code>-- 정렬
-SELECT * FROM sample21 ORDER BY name DESC;
-
--- 개수 제한
-SELECT * FROM sample21 LIMIT 10;
-
--- 중복 제거
-SELECT DISTINCT country FROM sample21;
-
--- 범위
-SELECT * FROM sample21 WHERE age BETWEEN 20 AND 30;
-
--- 목록 중 하나
-SELECT * FROM sample21 WHERE country IN ('usa', 'korea');
-
--- 집계 함수
-SELECT COUNT(*) FROM sample21;
-SELECT SUM(price), AVG(price) FROM sample21;
-</code></pre>
+SELECT COUNT(*) FROM ...
+SELECT SUM(price), AVG(price) FROM ...</code></pre>
 
 <h2>GROUP BY</h2>
 <pre><code>-- 그룹별 집계
-SELECT country, COUNT(*) FROM sample21 GROUP BY country;
-
--- 그룹 조건 (HAVING)
 SELECT country, COUNT(*)
 FROM sample21
 GROUP BY country
-HAVING COUNT(*) > 5;
-</code></pre>
+
+-- 그룹 조건 (HAVING)
+HAVING COUNT(*) > 5</code></pre>
 
 <h2>삽질 기록</h2>
 <ul>
-  <li>SQLite로 연결해놓고 왜 안 되지 함 → MySQL로 다시 연결</li>
+  <li>SQLite로 연결해놓고 왜 안 되지 함 → MySQL로 다시</li>
   <li>한글 깨짐 → CSV 인코딩 UTF-8로 변환</li>
-  <li>백틱 치는데 ₩ 나옴 → 영어 키보드로 전환 or <code>Option + ₩</code></li>
-  <li><code>IS NOT</code> 썼다가 에러 → 값 비교는 <code>!=</code> 써야 함</li>
-  <li>따옴표 안 감쌌다가 에러 → 문자열은 무조건 <code>'값'</code></li>
+  <li>백틱 치는데 ₩ 나옴 → <code class="inline-code">Option + ₩</code></li>
+  <li><code class="inline-code">IS NOT</code> 에러 → 값 비교는 <code class="inline-code">!=</code></li>
+  <li>따옴표 빼먹음 → 문자열은 무조건 <code class="inline-code">'값'</code></li>
 </ul>
 
 <p><strong>결론: SQL은 쉬운데 문법이 깐깐하다.</strong></p>
+
+</div>
