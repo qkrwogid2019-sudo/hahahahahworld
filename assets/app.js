@@ -443,6 +443,30 @@ document.addEventListener('selectstart', (e) => {
   return false;
 });
 
+// 개발자 도구 단축키 막기
+document.addEventListener('keydown', (e) => {
+  // F12
+  if (e.key === 'F12') {
+    e.preventDefault();
+    return false;
+  }
+  // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C (개발자 도구)
+  if (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) {
+    e.preventDefault();
+    return false;
+  }
+  // Ctrl+U (소스 보기)
+  if (e.ctrlKey && e.key.toUpperCase() === 'U') {
+    e.preventDefault();
+    return false;
+  }
+  // Cmd+Option+I (Mac 개발자 도구)
+  if (e.metaKey && e.altKey && e.key.toUpperCase() === 'I') {
+    e.preventDefault();
+    return false;
+  }
+});
+
 /* =========================
    BOOT
 ========================= */
