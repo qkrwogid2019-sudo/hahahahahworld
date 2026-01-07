@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hipster Generator v1.0</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #111;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 8px;
+      color: #111;
+    }
+
+    .window {
+      position: relative;
+      width: min(420px, 100%);
+      background: #d7d5d1;
+      border: 2px solid #888;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .floating-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .hipster {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      animation: float 12s linear infinite;
+      opacity: 0.95;
+    }
+
+    .bubble {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 6px 8px;
+      font-size: 11px;
+      color: #111;
+      max-width: 120px;
+      white-space: normal;
+      word-wrap: break-word;
+      animation: bubbleFloat 6s linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes bubbleFloat {
+      0%   { transform: translateY(0); opacity: 0; }
+      10%  { opacity: 1; }
+      60%  { transform: translateY(-40px); opacity: 1; }
+      100% { transform: translateY(-70px); opacity: 0; }
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(0) scale(1); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { transform: translateY(-60px) scale(1.05); }
+      100% { transform: translateY(-120px) scale(1); opacity: 0; }
+    }
+
+    .title-bar {
+      background: #004a8c;
+      color: #fff;
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .title-bar .controls {
+      display: flex;
+      gap: 4px;
+    }
+
+    .title-btn {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #eee;
+      background: #c0c0c0;
+      font-size: 10px;
+      line-height: 14px;
+      text-align: center;
+      cursor: default;
+    }
+
+    .menu-bar {
+      display: flex;
+      gap: 16px;
+      padding: 4px 8px;
+      font-size: 13px;
+    }
+
+    .menu-item { cursor: default; }
+    .menu-item.active { text-decoration: underline; }
+
+    .main {
+      display: grid;
+      grid-template-columns: 1.2fr 1.3fr 1.4fr;
+      gap: 8px;
+      padding: 8px;
+      font-size: 13px;
+    }
+
+    .panel {
+      border: 2px solid #b7b4b0;
+      padding: 6px;
+      background: #dcd9d5;
+    }
+
+    .panel-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      margin-top: 6px;
+      padding: 6px 8px;
+      width: 100%;
+      border: 2px solid #444;
+      background: #e3e0dc;
+      box-shadow: 1px 1px 0 #888;
+      font-size: 13px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .btn:active {
+      box-shadow: none;
+      transform: translate(1px, 1px);
+    }
+
+    .drop-zone {
+      border: 2px dashed #a2a09c;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .preset-list {
+      list-style: none;
+      margin-top: 4px;
+      border: 1px solid #b7b4b0;
+      background: #e1dfda;
+      padding: 4px;
+    }
+
+    .preset-item {
+      padding: 2px 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 2px;
+      transition: background 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+
+    .preset-item + .preset-item { margin-top: 2px; }
+
+    .preset-item input {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border: 1px solid #444;
+      background: #f3f1ed;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .preset-item input::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      background: #004a8c;
+      opacity: 0;
+    }
+
+    .preset-item.active {
+      background: #f5f3ee;
+      box-shadow: inset 0 0 0 1px #8a8783;
+    }
+
+    .preset-item.active input::after { opacity: 1; }
+
+    .preset-label { font-size: 12px; }
+
+    .style-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .status-bar {
+      display: flex;
+      gap: 8px;
+      padding: 4px 8px;
+      font-size: 12px;
+      border-top: 2px solid #b7b4b0;
+      background: #cfccc7;
+    }
+
+    .status-item { flex: 1; }
+    .status-item:last-child { text-align: right; }
+
+    #quoteBox {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      opacity: 0;
+      transition: opacity .3s;
+      max-width: 90vw;
+      text-align: center;
+      z-index: 2000;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="quoteBox"></div>
+
+  <div class="window">
+    <div class="floating-layer" id="floatingLayer"></div>
+
+    <div class="title-bar">
+      <span>Hipster Generator v1.0</span>
+      <div class="controls">
+        <div class="title-btn">−</div>
+        <div class="title-btn">□</div>
+        <div class="title-btn">×</div>
+      </div>
+    </div>
+
+    <div class="menu-bar">
+      <span class="menu-item active">File</span>
+      <span class="menu-item">Edit</span>
+      <span class="menu-item">Style</span>
+      <span class="menu-item">Help</span>
+    </div>
+
+    <div class="main">
+      <div class="panel">
+        <div class="panel-title">Base Model</div>
+        <button class="btn" id="copyBtn">Copy</button>
+
+        <div style="margin-top: 16px;" class="panel-title">Apply Preset</div>
+        <button class="btn" id="applyBtn">Apply Preset</button>
+      </div>
+
+      <div class="panel">
+        <div class="drop-zone">
+          Drag &amp; Drop<br />
+          to spawn more<br />
+          unique<br />
+          individuals
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="style-title">Style Presets</div>
+        <ul class="preset-list">
+          <li class="preset-item">
+            <input type="checkbox" />
+            <span class="preset-label">Vintage jeans</span>
+          </li>
+          <li class="preset-item">
+            <input type="checkbox" />
+            <span class="preset-label">Second-hand books</span>
+          </li>
+          <li class="preset-item">
+            <input type="checkbox" />
+            <span class="preset-label">Film camera</span>
+          </li>
+          <li class="preset-item">
+            <input type="checkbox" />
+            <span class="preset-label">Single-origin coffee</span>
+          </li>
+          <li class="preset-item">
+            <input type="checkbox" />
+            <span class="preset-label">Too-specific playlist</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-item" id="instances">Instances: 24</div>
+      <div class="status-item" id="uniqueness">Uniqueness: 3%</div>
+      <div class="status-item" id="system">System: Stable (sadly)</div>
+    </div>
+  </div>
+
+  <script>
+    const presetItems   = document.querySelectorAll('.preset-item');
+    const instancesEl   = document.getElementById('instances');
+    const uniquenessEl  = document.getElementById('uniqueness');
+    const copyBtn       = document.getElementById('copyBtn');
+    const applyBtn      = document.getElementById('applyBtn');
+    const floatingLayer = document.getElementById('floatingLayer');
+    const quoteBox      = document.getElementById('quoteBox');
+
+    const CHAR_IMAGES = [
+      "hip00.png",
+      "hip01.png",
+      "hip02.png",
+      "hip03.png",
+      "hip04.png",
+      "hip05.png"
+    ];
+
+    const hipsterLines = [
+      "아니 난 메인스트림 안가 — 난 오직 수제 가내공방만 간다고.",
+      "핸드드립도 24도에서 17초간만 추출하는 거 몰라?",
+      "대중화되면 난 흥미 잃어.",
+      "나는 빈티지만 입어… 새 옷 냄새는 공장 찌든 향이 나서 싫어.",
+      "스포티파이 추천곡? 그런 알고리즘은 내 영혼을 몰라.",
+      "홍대? 너무 유명해져서 이미 끝났고…"
+    ];
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function updateStatus() {
+      const checked = document.querySelectorAll('.preset-item input:checked');
+      const count   = checked.length;
+      const uniqueness = 3 + count * 7;
+
+      instancesEl.textContent  = `Instances: ${24 + count}`;
+      uniquenessEl.textContent = `Uniqueness: ${uniqueness}%`;
+    }
+
+    function getCurrentCharacter() {
+      const checkedCount = document.querySelectorAll('.preset-item input:checked').length;
+      return CHAR_IMAGES[Math.min(checkedCount, CHAR_IMAGES.length - 1)];
+    }
+
+    function showHipsterQuote() {
+      const idx = Math.floor(Math.random() * hipsterLines.length);
+      quoteBox.textContent = hipsterLines[idx];
+      quoteBox.style.opacity = 1;
+
+      setTimeout(() => {
+        quoteBox.style.opacity = 0;
+      }, 2000);
+    }
+
+    presetItems.forEach(item => {
+      const input = item.querySelector('input');
+
+      item.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'INPUT') {
+          input.checked = !input.checked;
+        }
+        item.classList.toggle('active', input.checked);
+        updateStatus();
+      });
+
+      input.addEventListener('change', () => {
+        item.classList.toggle('active', input.checked);
+        updateStatus();
+      });
+    });
+
+    copyBtn.addEventListener('click', () => {
+      const text  = uniquenessEl.textContent;
+      const match = text.match(/(\d+)%/);
+      let current = match ? Number(match[1]) : 3;
+      const dropped = Math.max(1, Math.round(current / 4));
+      uniquenessEl.textContent = `Uniqueness: ${dropped}%`;
+    });
+
+    function spawnHipster() {
+      const img = document.createElement('img');
+      img.src = getCurrentCharacter();
+      img.className = 'hipster';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = hipsterLines[Math.floor(Math.random() * hipsterLines.length)];
+
+      const rect = floatingLayer.getBoundingClientRect();
+      const x = random(10, rect.width - 80);
+      const y = random(rect.height * 0.4, rect.height - 90);
+
+      img.style.left = x + 'px';
+      img.style.top  = y + 'px';
+
+      bubble.style.left = (x - 40) + 'px';
+      bubble.style.top  = (y - 50) + 'px';
+
+      img.addEventListener('animationend', () => {
+        img.remove();
+        bubble.remove();
+      });
+
+      floatingLayer.appendChild(img);
+      floatingLayer.appendChild(bubble);
+    }
+
+    applyBtn.addEventListener('click', () => {
+      const count = Math.floor(random(1, 2));
+      for (let i = 0; i < count; i++) {
+        setTimeout(spawnHipster, i * 500);
+      }
+      showHipsterQuote();
+    });
+
+    updateStatus();
+
+    // 우클릭 & 드래그 방지
+    document.addEventListener('contextmenu', e => { e.preventDefault(); });
+    document.addEventListener('dragstart', e => { e.preventDefault(); });
+
+    // 개발자 도구 단축키 막기
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
+          (e.ctrlKey && e.key.toUpperCase() === 'U') ||
+          (e.metaKey && e.altKey && e.key.toUpperCase() === 'I')) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
