@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flicker – TECH POST</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #888;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+
+    .back-link:hover { color: #fff; }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .concept {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #ccc;
+      margin-bottom: 40px;
+      border-left: 3px solid #444;
+      padding-left: 20px;
+    }
+
+    .app-frame {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 16px;
+      color: #888;
+    }
+
+    .process-video {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .caption {
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="../../app.html" class="back-link">← Apps</a>
+
+    <h1>Flicker</h1>
+
+    <p class="concept">
+      빠르게 변하는 현실 속에 변하지 않는 의미.
+    </p>
+
+    <iframe
+      class="app-frame"
+      src="https://flicker-two.vercel.app"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+
+    <h2 class="section-title">Drawing Process</h2>
+    <video class="process-video" controls>
+      <source src="process.mp4" type="video/mp4">
+    </video>
+    <p class="caption">손으로 직접 그리는 과정</p>
+  </div>
+
+  <script>
+    // 우클릭 & 드래그 방지
+    document.addEventListener('contextmenu', e => { e.preventDefault(); });
+    document.addEventListener('dragstart', e => { e.preventDefault(); });
+
+    // 개발자 도구 단축키 막기
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
+          (e.ctrlKey && e.key.toUpperCase() === 'U') ||
+          (e.metaKey && e.altKey && e.key.toUpperCase() === 'I')) {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
