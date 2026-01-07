@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>살빼자 – TECH POST</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #888;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+
+    .back-link:hover { color: #fff; }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .app-link {
+      display: inline-block;
+      background: #4ade80;
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .app-link:hover { background: #22c55e; }
+
+    .screenshots {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+      overflow-x: auto;
+    }
+
+    .screenshot {
+      width: 280px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      border: 1px solid #333;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: #4ade80;
+    }
+
+    p {
+      color: #ccc;
+      margin-bottom: 16px;
+    }
+
+    ul, ol {
+      color: #ccc;
+      margin-left: 20px;
+      margin-bottom: 24px;
+    }
+
+    li { margin-bottom: 8px; }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .feature-card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: #888;
+      margin: 0;
+    }
+
+    .process-section {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .process-section h3 {
+      font-size: 16px;
+      color: #4ade80;
+      margin-bottom: 12px;
+    }
+
+    .error-box {
+      background: #2a1a1a;
+      border-left: 3px solid #f87171;
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .error-box code {
+      color: #f87171;
+      font-size: 13px;
+    }
+
+    .solution-box {
+      background: #1a2a1a;
+      border-left: 3px solid #4ade80;
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    code {
+      background: #2a2a2a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+    }
+
+    .tag {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #333;
+      font-size: 13px;
+      color: #888;
+    }
+
+    @media (max-width: 600px) {
+      .screenshot { width: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="../../app.html" class="back-link">← Apps</a>
+
+    <h1>살빼자</h1>
+    <p class="subtitle">능글맞지만 냉정한 다이어트 기록 앱</p>
+
+    <a href="https://salbbeja-db.vercel.app" target="_blank" class="app-link">앱 바로가기 →</a>
+
+    <!-- 스크린샷 -->
+    <div class="screenshots">
+      <img class="screenshot" src="screenshot1.png" alt="살빼자 앱 메인화면" />
+      <img class="screenshot" src="screenshot2.png" alt="살빼자 앱 AI 대화" />
+    </div>
+
+    <h2>왜 만들었나</h2>
+    <p>
+      다이어트 앱은 많지만, 다 복잡하고 귀찮다.<br>
+      앱 열고, 음식 검색하고, 양 입력하고... 이러다 포기함.
+    </p>
+    <p>
+      <strong>홈화면에서 한 번 탭 → 뭐 먹었는지 적기 → 끝.</strong><br>
+      이게 전부여야 한다고 생각했다.
+    </p>
+
+    <h2>주요 기능</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>iOS 단축어 연동</h3>
+        <p>홈화면 위젯에서 바로 입력. 앱 안 열어도 됨.</p>
+      </div>
+      <div class="feature-card">
+        <h3>AI 칼로리 추정</h3>
+        <p>"치킨 반마리" 치면 알아서 칼로리 계산.</p>
+      </div>
+      <div class="feature-card">
+        <h3>능글맞은 피드백</h3>
+        <p>"야식 라면? 나트륨 폭탄이야 💀" 팩트는 때림.</p>
+      </div>
+      <div class="feature-card">
+        <h3>가중평균 통계</h3>
+        <p>극단값 제외한 실제 평균. IQR 방식 사용.</p>
+      </div>
+      <div class="feature-card">
+        <h3>이상치 알람</h3>
+        <p>평소보다 많이 먹으면 "왜 이렇게 많이 처먹어?"</p>
+      </div>
+      <div class="feature-card">
+        <h3>요일별 분석</h3>
+        <p>"넌 금요일에 폭식하더라 ㅋㅋ" 패턴 파악.</p>
+      </div>
+    </div>
+
+    <h2>개발 과정 (삽질 기록)</h2>
+
+    <div class="process-section">
+      <h3>1. 기획: 뭘로 만들까?</h3>
+      <p>처음엔 모바일 홈화면 위젯을 생각했는데, 웹앱으로는 진짜 위젯을 못 만든다.</p>
+      <p>대안으로 <strong>iOS 단축어 + Vercel API</strong> 조합을 선택.</p>
+      <ul>
+        <li>단축어: 홈화면에서 탭 → 텍스트 입력</li>
+        <li>API: OpenAI로 칼로리 추정 + Supabase에 저장</li>
+        <li>웹: 기록 보기, 통계, AI 대화</li>
+      </ul>
+    </div>
+
+    <div class="process-section">
+      <h3>2. 첫 번째 오류: Vercel Postgres 없음</h3>
+      <p>Vercel Storage에 Postgres가 없고 Edge Config, Blob만 있었다.</p>
+      <div class="solution-box">
+        <strong>해결:</strong> Supabase (무료 PostgreSQL)로 변경. 코드 수정 후 정상 작동.
+      </div>
+    </div>
+
+    <div class="process-section">
+      <h3>3. 두 번째 오류: 단축어 네트워크 연결 유실</h3>
+      <p>웹에서는 잘 되는데 iOS 단축어에서 계속 "네트워크 연결이 유실되었습니다" 에러.</p>
+      <div class="error-box">
+        <code>Error: Cannot destructure property 'food' of 'req.body' as it is undefined</code>
+      </div>
+      <p>단축어가 보내는 POST 요청의 body를 서버가 못 읽고 있었다.</p>
+      <div class="solution-box">
+        <strong>해결:</strong> POST 대신 GET 방식으로 변경. URL 쿼리 파라미터로 음식 전달.<br>
+        <code>https://salbbeja-db.vercel.app/api/log?food=치킨</code>
+      </div>
+    </div>
+
+    <div class="process-section">
+      <h3>4. 세 번째 오류: 단축어 URL 변수 연결</h3>
+      <p>단축어에서 URL에 변수를 붙이는 방법이 까다로웠다.</p>
+      <div class="solution-box">
+        <strong>해결:</strong>
+        <ol>
+          <li>텍스트 액션으로 URL 베이스 작성</li>
+          <li>입력 요청으로 음식 받기</li>
+          <li>텍스트 합치기로 URL + 입력값 결합</li>
+          <li>URL의 콘텐츠 가져오기 (GET)</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="process-section">
+      <h3>5. 추가 기능: 삭제</h3>
+      <p>테스트하느라 치킨을 너무 많이 입력해서 삭제 기능 추가함 ㅋㅋㅋ</p>
+    </div>
+
+    <h2>기술 스택</h2>
+    <ul>
+      <li><strong>Frontend:</strong> Vanilla HTML/CSS/JS</li>
+      <li><strong>Backend:</strong> Vercel Serverless Functions</li>
+      <li><strong>Database:</strong> Supabase (PostgreSQL)</li>
+      <li><strong>AI:</strong> OpenAI GPT-4o-mini</li>
+      <li><strong>Mobile:</strong> iOS 단축어</li>
+    </ul>
+
+    <h2>배운 것</h2>
+    <ul>
+      <li>iOS 단축어는 POST JSON 보내기가 까다롭다. GET이 더 쉬움.</li>
+      <li>Vercel Serverless에서 body parsing 주의.</li>
+      <li>가중평균(IQR)이 극단값에 강건함.</li>
+      <li>능글맞은 AI 캐릭터가 동기부여에 효과적 (아마도).</li>
+    </ul>
+
+    <div class="tags">
+      <span class="tag">Vercel</span>
+      <span class="tag">Supabase</span>
+      <span class="tag">OpenAI</span>
+      <span class="tag">iOS 단축어</span>
+      <span class="tag">다이어트</span>
+      <span class="tag">삽질</span>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('contextmenu', e => { e.preventDefault(); });
+    document.addEventListener('dragstart', e => { e.preventDefault(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'F12' ||
+          (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) ||
+          (e.ctrlKey && e.key.toUpperCase() === 'U') ||
+          (e.metaKey && e.altKey && e.key.toUpperCase() === 'I')) {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
