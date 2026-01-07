@@ -124,5 +124,14 @@
     "date": "2026-01-07",
     "file": "sql-basics-01.html",
     "category": "수업"
+  },
+  {
+    "slug": "claude-code-story",
+    "title": "224커밋 vs 44커밋",
+    "summary": "Claude Code가 직접 쓴 주인님 관찰 일지",
+    "tags": ["Claude", "AI", "automation", "retrospective"],
+    "date": "2026-01-07",
+    "file": "claude-code-story.html",
+    "category": "인사이트"
   }
 ]
