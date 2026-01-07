@@ -478,7 +478,7 @@
     });
 
     // 우클릭 & 드래그 방지
-    document.addEventListener('contextmenu', e => { e.preventDefault(); });
+    document.addEventListener('contextmenu', e => { e.preventDefault(); e.stopPropagation(); return false; }, true);
     document.addEventListener('dragstart', e => { e.preventDefault(); });
 
     // 개발자 도구 단축키 막기
@@ -490,6 +490,15 @@
         e.preventDefault();
       }
     });
+
+    // 모바일 롱프레스 방지
+    document.addEventListener('touchstart', e => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+        e.preventDefault();
+        return false;
+      }
+    }, { passive: false });
 
     // Init
     loadPages();
