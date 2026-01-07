@@ -675,13 +675,22 @@ a{
 
 /* 이미지 저장 방지 (모바일 롱프레스 포함) */
 img {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  pointer-events: none !important;
+  -webkit-user-drag: none !important;
+  touch-action: none !important;
+}
+
+/* 전체 페이지 롱프레스 방지 */
+body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: none;
+  touch-action: manipulation;
 }
 
 figure img{

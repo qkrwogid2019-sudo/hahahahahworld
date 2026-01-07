@@ -468,6 +468,38 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* =========================
+   모바일 롱프레스 방지
+========================= */
+let longPressTimer;
+
+document.addEventListener('touchstart', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  longPressTimer = setTimeout(() => {
+    e.preventDefault();
+  }, 500);
+}, { passive: false });
+
+document.addEventListener('touchend', () => {
+  clearTimeout(longPressTimer);
+});
+
+document.addEventListener('touchmove', () => {
+  clearTimeout(longPressTimer);
+});
+
+// 이미지 전용 롱프레스 완전 차단
+document.querySelectorAll('img').forEach(img => {
+  img.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+  }, { passive: false });
+
+  img.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
+});
+
+/* =========================
    BOOT
 ========================= */
 if (location.pathname.endsWith("post.html")){
