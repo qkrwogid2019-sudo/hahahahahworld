@@ -673,6 +673,17 @@ a{
   margin:16px 0;
 }
 
+/* 이미지 저장 방지 (모바일 롱프레스 포함) */
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
 figure img{
   max-width:640px;
   margin:0 auto;
