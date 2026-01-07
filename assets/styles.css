@@ -500,12 +500,163 @@ a{
    Responsive (Mobile)
 ========================= */
 @media (max-width: 720px){
+  /* Container */
+  .container{
+    width:95%;
+    padding:16px 0;
+  }
+
+  /* Header */
+  .site-header{
+    padding:14px 16px;
+    margin-bottom:16px;
+  }
+
+  .brand{
+    font-size:20px;
+  }
+
+  /* Navigation */
+  .top-nav{
+    gap:8px;
+    margin-bottom:16px;
+  }
+
+  .tab-link{
+    padding:10px 8px;
+    font-size:13px;
+  }
+
+  /* Search */
+  .search-area{
+    margin-bottom:20px;
+  }
+
+  .search input{
+    padding:12px 14px;
+    font-size:14px;
+  }
+
+  /* Intro */
+  .intro-wrapper{
+    margin-bottom:24px;
+  }
+
+  .intro-panel{
+    padding:16px;
+  }
+
+  /* Posts */
+  .post-link{
+    padding:16px;
+    margin-bottom:12px;
+  }
+
+  .post-title{
+    font-size:16px;
+  }
+
+  .tags{
+    gap:6px;
+  }
+
+  .tag{
+    padding:4px 10px;
+    font-size:12px;
+  }
+
+  /* Archive */
+  .archive-section{
+    margin-bottom:16px;
+  }
+
+  .archive-category-btn{
+    padding:10px 0;
+    font-size:14px;
+  }
+
+  .archive-category-list{
+    padding:8px 0 8px 14px;
+  }
+
+  .archive-category-list a{
+    padding:6px 0;
+    font-size:14px;
+  }
+
+  /* Pagination */
+  .pagination-wrapper{
+    margin-top:16px;
+  }
+
+  .page-btn{
+    padding:6px 10px;
+    font-size:13px;
+  }
+
+  .page-arrow{
+    padding:8px 12px;
+  }
+
+  /* Post Layout */
   .post-layout{
     flex-direction:column;
   }
 
   .post-list{
     display:none;
+  }
+
+  .post-content h1{
+    font-size:22px;
+  }
+
+  .post-content h2{
+    font-size:18px;
+  }
+
+  /* Post Navigation */
+  .post-nav{
+    flex-direction:column;
+    gap:12px;
+    margin-top:32px;
+  }
+
+  /* Works */
+  .work-series{
+    padding:16px;
+    margin-bottom:12px;
+  }
+
+  .series-title{
+    font-size:16px;
+  }
+
+  .chapter-grid{
+    grid-template-columns:repeat(auto-fill, minmax(70px, 1fr));
+    gap:8px;
+  }
+
+  .chapter-card{
+    padding:12px 8px;
+  }
+
+  .chapter-name{
+    font-size:13px;
+  }
+
+  /* Footer */
+  .footer{
+    margin-top:32px;
+    font-size:13px;
+  }
+
+  /* Scroll to top */
+  #scrollTopBtn{
+    right:12px;
+    bottom:12px;
+    padding:10px 12px;
+    font-size:13px;
   }
 }
 
