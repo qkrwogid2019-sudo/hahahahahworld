@@ -425,6 +425,25 @@ document.querySelectorAll(".tab-link").forEach(a => {
 });
 
 /* =========================
+   우클릭 & 드래그 방지
+========================= */
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  return false;
+});
+
+document.addEventListener('dragstart', (e) => {
+  e.preventDefault();
+  return false;
+});
+
+document.addEventListener('selectstart', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  e.preventDefault();
+  return false;
+});
+
+/* =========================
    BOOT
 ========================= */
 if (location.pathname.endsWith("post.html")){

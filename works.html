@@ -158,6 +158,10 @@
   <script>
     const year = document.querySelector("#year");
     if (year) year.textContent = new Date().getFullYear();
+
+    // 우클릭 & 드래그 방지
+    document.addEventListener('contextmenu', e => { e.preventDefault(); });
+    document.addEventListener('dragstart', e => { e.preventDefault(); });
   </script>
 
 </body>
