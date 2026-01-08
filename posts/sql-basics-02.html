@@ -1,0 +1,266 @@
+<style>
+  .sql-post pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 16px 0;
+  }
+  .sql-post code {
+    font-family: 'SF Mono', Consolas, monospace;
+  }
+  .sql-post .inline-code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+  }
+  .sql-post .quote-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .sql-post .quote-table th,
+  .sql-post .quote-table td {
+    padding: 12px 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .sql-post .quote-table th {
+    background: #f5f5f5;
+  }
+  .sql-post .mistake {
+    background: #fff3f3;
+    border-left: 4px solid #ff6b6b;
+    padding: 12px 16px;
+    margin: 16px 0;
+  }
+  .sql-post .tip {
+    background: #f0fff4;
+    border-left: 4px solid #4ade80;
+    padding: 12px 16px;
+    margin: 16px 0;
+  }
+  @media (max-width: 600px) {
+    .sql-post pre {
+      font-size: 11px;
+      padding: 12px;
+    }
+    .sql-post .quote-table {
+      font-size: 12px;
+    }
+    .sql-post .quote-table th,
+    .sql-post .quote-table td {
+      padding: 8px 6px;
+    }
+  }
+</style>
+
+<div class="sql-post">
+
+<h2>오늘 배운 것</h2>
+<p>DATEDIFF, CASE WHEN, 다중 정렬 배웠다. 그리고 콤마랑 싸웠다.</p>
+
+<h2>DATEDIFF - 날짜 차이</h2>
+<pre><code>-- 두 날짜 사이 일수 계산
+SELECT DATEDIFF('2025-07-11', '2025-06-20');
+-- 결과: 21
+
+-- 입사한지 며칠?
+SELECT lastname, hiredate,
+       DATEDIFF(NOW(), hiredate) AS 근무일수
+FROM employee;</code></pre>
+<p><strong>순서:</strong> DATEDIFF(끝 날짜, 시작 날짜) = 앞 - 뒤</p>
+
+<h2>CASE WHEN - 조건별 값</h2>
+<pre><code>-- 긴 버전 (모든 비교 가능)
+SELECT
+    total,
+    CASE
+        WHEN total < 5 THEN 'low'
+        WHEN total < 10 THEN 'medium'
+        ELSE 'high'
+    END AS level
+FROM invoice;</code></pre>
+
+<pre><code>-- 짧은 버전 (= 비교만 가능!)
+SELECT
+    genreid,
+    CASE genreid
+        WHEN 1 THEN 'Rock'
+        WHEN 2 THEN 'Jazz'
+        ELSE 'Other'
+    END AS genre_name
+FROM track;</code></pre>
+
+<table class="quote-table">
+  <tr>
+    <th>문법</th>
+    <th>사용 가능</th>
+  </tr>
+  <tr>
+    <td><code class="inline-code">CASE WHEN 조건</code></td>
+    <td>=, LIKE, >, < 다 됨</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">CASE 컬럼 WHEN 값</code></td>
+    <td>= 만 됨</td>
+  </tr>
+</table>
+
+<h2>ORDER BY 정렬 응용</h2>
+<pre><code>-- CASE로 커스텀 정렬 순서
+SELECT customerid, firstname, Country
+FROM customer
+ORDER BY
+    CASE Country
+        WHEN 'France' THEN 1
+        WHEN 'Canada' THEN 2
+        ELSE 3
+    END;
+
+-- 다중 정렬 (1차, 2차)
+ORDER BY city, lastname;
+-- city로 먼저 정렬, 같은 city 안에서 lastname 정렬</code></pre>
+
+<h2>콤마 규칙</h2>
+<table class="quote-table">
+  <tr>
+    <th>상황</th>
+    <th>콤마</th>
+  </tr>
+  <tr>
+    <td>SELECT 안 컬럼 나열</td>
+    <td>O</td>
+  </tr>
+  <tr>
+    <td>ORDER BY 정렬 기준 나열</td>
+    <td>O</td>
+  </tr>
+  <tr>
+    <td>절(FROM, WHERE 등) 앞</td>
+    <td>X</td>
+  </tr>
+</table>
+
+<div class="tip">
+<strong>꿀팁:</strong> 콤마를 앞에 쓰면 빠뜨린 게 바로 보임
+<pre><code>SELECT
+    col1
+    ,col2      -- 콤마가 앞에!
+    ,col3
+FROM table</code></pre>
+</div>
+
+<h2>오늘의 삽질 기록</h2>
+
+<div class="mistake">
+<strong>콤마 누락 (5회)</strong>
+<pre><code>-- 틀림
+SELECT lastname DATEDIFF(...)
+
+-- 맞음
+SELECT lastname, DATEDIFF(...)</code></pre>
+</div>
+
+<div class="mistake">
+<strong>따옴표 안 닫음</strong>
+<pre><code>-- 틀림
+DATEDIFF('2025-07-11,'2025-06-20')
+
+-- 맞음
+DATEDIFF('2025-07-11', '2025-06-20')</code></pre>
+</div>
+
+<div class="mistake">
+<strong>ELSE = 3</strong>
+<pre><code>-- 틀림
+ELSE = 3
+
+-- 맞음 (= 필요 없음)
+ELSE 3</code></pre>
+</div>
+
+<div class="mistake">
+<strong>WHEN 컬럼명 누락</strong>
+<pre><code>-- 틀림
+WHEN <5 THEN 'low'
+
+-- 맞음
+WHEN total < 5 THEN 'low'</code></pre>
+</div>
+
+<div class="mistake">
+<strong>와일드카드 * 대신 %</strong>
+<pre><code>-- 틀림 (SQL 아님)
+LIKE '서울*'
+
+-- 맞음
+LIKE '서울%'</code></pre>
+</div>
+
+<div class="mistake">
+<strong>datedift 오타</strong>
+<p>... ㅋㅋ</p>
+</div>
+
+<h2>연습 문제</h2>
+<p>chinook 데이터베이스로 연습해보자:</p>
+
+<h3>1. DATEDIFF 연습</h3>
+<pre><code>-- 8000일 이상 근무한 직원 조회
+SELECT firstname, lastname, hiredate,
+       DATEDIFF(NOW(), hiredate) AS 근무일수
+FROM employee
+WHERE DATEDIFF(NOW(), hiredate) >= 8000;</code></pre>
+
+<h3>2. CASE WHEN 연습</h3>
+<pre><code>-- Invoice total을 등급으로 분류
+SELECT invoiceid, total,
+    CASE
+        WHEN total < 5 THEN 'Small'
+        WHEN total < 10 THEN 'Medium'
+        WHEN total < 20 THEN 'Large'
+        ELSE 'VIP'
+    END AS order_size
+FROM invoice
+ORDER BY total DESC;</code></pre>
+
+<h3>3. 커스텀 정렬 연습</h3>
+<pre><code>-- 특정 국가 우선 정렬 + 이름순
+SELECT customerid, firstname, lastname, country
+FROM customer
+ORDER BY
+    CASE country
+        WHEN 'USA' THEN 1
+        WHEN 'Canada' THEN 2
+        WHEN 'France' THEN 3
+        ELSE 4
+    END,
+    lastname;</code></pre>
+
+<h3>4. 도전 문제</h3>
+<pre><code>-- Track 테이블에서:
+-- 1. 곡 길이(Milliseconds)를 분:초로 변환
+-- 2. 3분 미만 'Short', 3-5분 'Medium', 5분 이상 'Long' 분류
+-- 3. 길이 순으로 정렬
+
+SELECT
+    name,
+    Milliseconds,
+    ROUND(Milliseconds / 60000, 1) AS 분,
+    CASE
+        WHEN Milliseconds < 180000 THEN 'Short'
+        WHEN Milliseconds < 300000 THEN 'Medium'
+        ELSE 'Long'
+    END AS length_category
+FROM track
+ORDER BY Milliseconds;</code></pre>
+
+<p><strong>결론: SQL은 엄격하다. 콤마 하나, 따옴표 하나가 목숨이다.</strong></p>
+
+</div>

@@ -133,5 +133,14 @@
     "date": "2026-01-07",
     "file": "claude-code-story.html",
     "category": "인사이트"
+  },
+  {
+    "slug": "sql-basics-02",
+    "title": "SQL 기초 #02",
+    "summary": "DATEDIFF, CASE WHEN, 그리고 콤마와의 전쟁",
+    "tags": ["SQL", "MySQL", "CASE", "DATEDIFF"],
+    "date": "2026-01-08",
+    "file": "sql-basics-02.html",
+    "category": "수업"
   }
 ]
