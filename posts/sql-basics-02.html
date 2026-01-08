@@ -208,6 +208,53 @@ LIKE '서울%'</code></pre>
 <p>... ㅋㅋ</p>
 </div>
 
+<div class="mistake">
+<strong>3then 띄어쓰기 없음</strong>
+<pre><code>-- 틀림
+WHEN 3then'c'
+
+-- 맞음
+WHEN 3 THEN 'c'</code></pre>
+</div>
+
+<div class="mistake">
+<strong>FROM 뒤에 콤마</strong>
+<pre><code>-- 틀림
+FROM employee,
+ORDER BY ...
+
+-- 맞음
+FROM employee
+ORDER BY ...</code></pre>
+</div>
+
+<div class="mistake">
+<strong>CASE WHEN 컬럼명 누락 (2)</strong>
+<pre><code>-- 틀림
+CASE WHEN 'sales support agent' THEN ...
+
+-- 맞음
+CASE WHEN title = 'sales support agent' THEN ...</code></pre>
+</div>
+
+<div class="mistake">
+<strong>COUNT (*) 공백</strong>
+<pre><code>-- 틀림
+COUNT (*)
+
+-- 맞음
+COUNT(*)</code></pre>
+</div>
+
+<div class="mistake">
+<strong>SELECT * + 집계함수</strong>
+<pre><code>-- 틀림
+SELECT * COUNT(*) AS total
+
+-- 맞음 (둘 중 하나만)
+SELECT COUNT(*) AS total</code></pre>
+</div>
+
 <h2>단위 변환</h2>
 
 <h3>시간 변환 (milliseconds)</h3>
@@ -304,59 +351,6 @@ FROM track;</code></pre>
 <pre><code>COUNT (*)  -- ❌ 에러
 COUNT(*)   -- ✅ 정상</code></pre>
 </div>
-
-<h2>연습 문제</h2>
-<p>chinook 데이터베이스로 연습해보자:</p>
-
-<h3>1. DATEDIFF 연습</h3>
-<pre><code>-- 8000일 이상 근무한 직원 조회
-SELECT firstname, lastname, hiredate,
-       DATEDIFF(NOW(), hiredate) AS 근무일수
-FROM employee
-WHERE DATEDIFF(NOW(), hiredate) >= 8000;</code></pre>
-
-<h3>2. CASE WHEN 연습</h3>
-<pre><code>-- Invoice total을 등급으로 분류
-SELECT invoiceid, total,
-    CASE
-        WHEN total < 5 THEN 'Small'
-        WHEN total < 10 THEN 'Medium'
-        WHEN total < 20 THEN 'Large'
-        ELSE 'VIP'
-    END AS order_size
-FROM invoice
-ORDER BY total DESC;</code></pre>
-
-<h3>3. 커스텀 정렬 연습</h3>
-<pre><code>-- 특정 국가 우선 정렬 + 이름순
-SELECT customerid, firstname, lastname, country
-FROM customer
-ORDER BY
-    CASE country
-        WHEN 'USA' THEN 1
-        WHEN 'Canada' THEN 2
-        WHEN 'France' THEN 3
-        ELSE 4
-    END,
-    lastname;</code></pre>
-
-<h3>4. 도전 문제</h3>
-<pre><code>-- Track 테이블에서:
--- 1. 곡 길이(Milliseconds)를 분:초로 변환
--- 2. 3분 미만 'Short', 3-5분 'Medium', 5분 이상 'Long' 분류
--- 3. 길이 순으로 정렬
-
-SELECT
-    name,
-    Milliseconds,
-    ROUND(Milliseconds / 60000, 1) AS 분,
-    CASE
-        WHEN Milliseconds < 180000 THEN 'Short'
-        WHEN Milliseconds < 300000 THEN 'Medium'
-        ELSE 'Long'
-    END AS length_category
-FROM track
-ORDER BY Milliseconds;</code></pre>
 
 <p><strong>결론: SQL은 엄격하다. 콤마 하나, 따옴표 하나가 목숨이다.</strong></p>
 
