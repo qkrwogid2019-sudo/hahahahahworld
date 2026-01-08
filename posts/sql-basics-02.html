@@ -208,6 +208,103 @@ LIKE '서울%'</code></pre>
 <p>... ㅋㅋ</p>
 </div>
 
+<h2>단위 변환</h2>
+
+<h3>시간 변환 (milliseconds)</h3>
+<table class="quote-table">
+  <tr>
+    <th>변환</th>
+    <th>계산</th>
+  </tr>
+  <tr>
+    <td>밀리초 → 초</td>
+    <td><code class="inline-code">÷ 1000</code></td>
+  </tr>
+  <tr>
+    <td>밀리초 → 분</td>
+    <td><code class="inline-code">÷ 1000 ÷ 60</code></td>
+  </tr>
+</table>
+
+<pre><code>-- 밀리초 → 초
+SELECT ROUND(milliseconds / 1000, 2) AS seconds FROM track;
+
+-- 밀리초 → 분
+SELECT ROUND(milliseconds / 1000 / 60, 2) AS minutes FROM track;</code></pre>
+
+<h3>용량 변환 (bytes)</h3>
+<table class="quote-table">
+  <tr>
+    <th>변환</th>
+    <th>계산</th>
+  </tr>
+  <tr>
+    <td>bytes → KB</td>
+    <td><code class="inline-code">÷ 1024</code></td>
+  </tr>
+  <tr>
+    <td>bytes → MB</td>
+    <td><code class="inline-code">÷ 1024 ÷ 1024</code></td>
+  </tr>
+  <tr>
+    <td>bytes → GB</td>
+    <td><code class="inline-code">÷ 1024 ÷ 1024 ÷ 1024</code></td>
+  </tr>
+</table>
+
+<pre><code>-- 트랙 전체 용량 (MB)
+SELECT
+    ROUND(SUM(bytes) / 1024 / 1024, 2) AS total_MB,
+    ROUND(AVG(bytes) / 1024 / 1024, 2) AS avg_MB
+FROM track;</code></pre>
+
+<h2>집계 함수</h2>
+<pre><code>SELECT
+    COUNT(*) AS total_track,
+    SUM(milliseconds) AS total_ms,
+    ROUND(AVG(milliseconds)/1000, 2) AS avg_sec,
+    ROUND(MIN(milliseconds)/1000, 2) AS min_sec,
+    ROUND(MAX(milliseconds)/1000/60, 2) AS max_min,
+    ROUND(SUM(bytes)/1024/1024, 2) AS total_MB
+FROM track;</code></pre>
+
+<table class="quote-table">
+  <tr>
+    <th>함수</th>
+    <th>의미</th>
+  </tr>
+  <tr>
+    <td><code class="inline-code">COUNT(*)</code></td>
+    <td>전체 행 수</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">COUNT(컬럼)</code></td>
+    <td>NULL 제외 개수</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">COUNT(DISTINCT 컬럼)</code></td>
+    <td>중복 제거 개수</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">SUM()</code></td>
+    <td>합계</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">AVG()</code></td>
+    <td>평균</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">MIN() / MAX()</code></td>
+    <td>최소 / 최대</td>
+  </tr>
+</table>
+
+<div class="tip">
+<strong>주의:</strong> 함수랑 괄호 사이에 공백 넣으면 에러!
+<pre><code>COUNT (*)  -- ❌ 에러
+COUNT(*)   -- ✅ 정상</code></pre>
+</div>
+
 <h2>연습 문제</h2>
 <p>chinook 데이터베이스로 연습해보자:</p>
 
