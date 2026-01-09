@@ -142,5 +142,14 @@
     "date": "2026-01-08",
     "file": "sql-basics-02.html",
     "category": "수업"
+  },
+  {
+    "slug": "sql-basics-03",
+    "title": "SQL 기초 #03",
+    "summary": "GROUP BY, HAVING, 그리고 소화기계로 이해하는 SQL",
+    "tags": ["SQL", "MySQL", "GROUP BY", "HAVING"],
+    "date": "2026-01-09",
+    "file": "sql-basics-03.html",
+    "category": "수업"
   }
 ]

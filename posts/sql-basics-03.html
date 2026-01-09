@@ -1,0 +1,442 @@
+<style>
+  .sql-post {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .sql-post h2 {
+    font-size: 1.3em;
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    color: #333;
+    border-bottom: 2px solid #ff8fa3;
+    padding-bottom: 0.3em;
+  }
+  .sql-post h3 {
+    font-size: 1.1em;
+    margin-top: 1.5em;
+    color: #555;
+  }
+  .sql-post p {
+    line-height: 1.7;
+    margin: 0.8em 0;
+  }
+  .sql-post pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 16px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sql-post code {
+    font-family: 'SF Mono', Consolas, 'Courier New', monospace;
+  }
+  .sql-post .inline-code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    word-break: break-all;
+  }
+  .sql-post .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 16px 0;
+  }
+  .sql-post .quote-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 280px;
+  }
+  .sql-post .quote-table th,
+  .sql-post .quote-table td {
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .sql-post .quote-table th {
+    background: #f5f5f5;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .sql-post .mistake {
+    background: #fff3f3;
+    border-left: 4px solid #ff6b6b;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .sql-post .mistake strong {
+    color: #d63031;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .sql-post .tip {
+    background: #f0fff4;
+    border-left: 4px solid #4ade80;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .sql-post .tip strong {
+    color: #00b894;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .sql-post .analogy {
+    background: #f0f7ff;
+    border-left: 4px solid #3b82f6;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .sql-post .analogy strong {
+    color: #2563eb;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* 모바일 최적화 */
+  @media (max-width: 600px) {
+    .sql-post h2 {
+      font-size: 1.15em;
+      margin-top: 1.5em;
+    }
+    .sql-post h3 {
+      font-size: 1em;
+    }
+    .sql-post p {
+      font-size: 14px;
+    }
+    .sql-post pre {
+      font-size: 11px;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 12px -8px;
+      width: calc(100% + 16px);
+    }
+    .sql-post .inline-code {
+      font-size: 11px;
+      padding: 1px 4px;
+    }
+    .sql-post .quote-table {
+      font-size: 12px;
+    }
+    .sql-post .quote-table th,
+    .sql-post .quote-table td {
+      padding: 8px 6px;
+    }
+    .sql-post .mistake,
+    .sql-post .tip,
+    .sql-post .analogy {
+      padding: 10px 12px;
+      margin: 12px -4px;
+      font-size: 13px;
+    }
+    .sql-post .mistake pre,
+    .sql-post .tip pre,
+    .sql-post .analogy pre {
+      margin: 8px 0;
+      font-size: 10px;
+      padding: 10px;
+    }
+  }
+</style>
+
+<div class="sql-post">
+
+<h2>오늘 배운 것</h2>
+<p>GROUP BY, HAVING, 집계함수 심화. 그리고 소화기계로 SQL 이해하기.</p>
+
+<h2>WHERE vs HAVING</h2>
+
+<pre><code>-- WHERE: 그룹 만들기 전에 필터
+SELECT BillingCountry, SUM(Total)
+FROM invoice
+WHERE Total > 5              -- 개별 행 필터 (먼저!)
+GROUP BY BillingCountry;
+
+-- HAVING: 그룹 만든 후에 필터
+SELECT BillingCountry, SUM(Total)
+FROM invoice
+GROUP BY BillingCountry
+HAVING SUM(Total) > 100;     -- 그룹 결과 필터 (나중!)</code></pre>
+
+<h3>SQL 실행 순서</h3>
+<pre><code>FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY
+        ↑                    ↑
+     개별 행              그룹 결과</code></pre>
+
+<table class="quote-table">
+  <tr>
+    <th>구분</th>
+    <th>WHERE</th>
+    <th>HAVING</th>
+  </tr>
+  <tr>
+    <td>필터 시점</td>
+    <td>그룹 전</td>
+    <td>그룹 후</td>
+  </tr>
+  <tr>
+    <td>대상</td>
+    <td>개별 행</td>
+    <td>그룹 결과</td>
+  </tr>
+  <tr>
+    <td>집계함수</td>
+    <td>X (못 씀)</td>
+    <td>O (가능)</td>
+  </tr>
+  <tr>
+    <td>GROUP BY</td>
+    <td>없어도 됨</td>
+    <td>보통 같이 씀</td>
+  </tr>
+</table>
+
+<h2>소화기계로 이해하는 SQL</h2>
+
+<div class="analogy">
+<strong>소화 과정 = SQL 쿼리</strong>
+<pre><code>음식(FROM) → 위(WHERE) → 소장 흡수(GROUP BY) → 간 대사(HAVING) → 혈류(SELECT)</code></pre>
+</div>
+
+<table class="quote-table">
+  <tr>
+    <th>SQL</th>
+    <th>소화기관</th>
+    <th>역할</th>
+  </tr>
+  <tr>
+    <td>FROM</td>
+    <td>입/식도</td>
+    <td>데이터 입력</td>
+  </tr>
+  <tr>
+    <td>WHERE</td>
+    <td>위</td>
+    <td>못 소화하는 거 거부 (섬유소)</td>
+  </tr>
+  <tr>
+    <td>GROUP BY</td>
+    <td>소장 융모</td>
+    <td>탄단지 분류 흡수</td>
+  </tr>
+  <tr>
+    <td>HAVING</td>
+    <td>간</td>
+    <td>총량 보고 저장/배출 결정</td>
+  </tr>
+  <tr>
+    <td>SELECT</td>
+    <td>혈류</td>
+    <td>필요한 것만 전신으로</td>
+  </tr>
+  <tr>
+    <td>ORDER BY</td>
+    <td>우선순위</td>
+    <td>에너지 급한 순</td>
+  </tr>
+</table>
+
+<pre><code>-- 과식 판정 쿼리ㅋㅋ
+SELECT
+    영양소
+    ,SUM(kcal) AS 총칼로리
+FROM 오늘_먹은거
+WHERE 흡수율 > 0.5              -- 흡수 안 되는 건 제외
+GROUP BY 영양소
+HAVING SUM(kcal) > TDEE         -- 초과하면 지방 저장
+;</code></pre>
+
+<div class="tip">
+<strong>외우기:</strong> WHERE = 재료 고르기 (요리 전) / HAVING = 완성품 고르기 (요리 후)
+</div>
+
+<h2>COUNT vs SUM vs AVG</h2>
+
+<table class="quote-table">
+  <tr>
+    <th>함수</th>
+    <th>* 사용</th>
+    <th>컬럼 필요</th>
+    <th>의미</th>
+  </tr>
+  <tr>
+    <td><code class="inline-code">COUNT(*)</code></td>
+    <td>O</td>
+    <td>X</td>
+    <td>행 개수</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">COUNT(컬럼)</code></td>
+    <td>-</td>
+    <td>O</td>
+    <td>NULL 제외 개수</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">SUM(컬럼)</code></td>
+    <td>X</td>
+    <td>O</td>
+    <td>값 합계</td>
+  </tr>
+  <tr>
+    <td><code class="inline-code">AVG(컬럼)</code></td>
+    <td>X</td>
+    <td>O</td>
+    <td>값 평균</td>
+  </tr>
+</table>
+
+<pre><code>-- 국가별 매출 합계와 평균
+SELECT
+    BillingCountry AS `빌링컨트리`
+    ,SUM(Total) AS `토탈세일즈`
+    ,ROUND(AVG(Total), 1) AS `세일즈평균`
+FROM invoice
+GROUP BY BillingCountry
+;</code></pre>
+
+<h2>네이밍 컨벤션</h2>
+
+<table class="quote-table">
+  <tr>
+    <th>스타일</th>
+    <th>예시</th>
+    <th>사용처</th>
+  </tr>
+  <tr>
+    <td>snake_case</td>
+    <td><code class="inline-code">billing_country</code></td>
+    <td>SQL (국룰)</td>
+  </tr>
+  <tr>
+    <td>camelCase</td>
+    <td><code class="inline-code">billingCountry</code></td>
+    <td>JavaScript, Java</td>
+  </tr>
+  <tr>
+    <td>PascalCase</td>
+    <td><code class="inline-code">BillingCountry</code></td>
+    <td>테이블명, 클래스명</td>
+  </tr>
+</table>
+
+<h3>SQL 대소문자 규칙</h3>
+<pre><code>-- 키워드는 대소문자 상관없음
+SELECT * FROM invoice;
+select * from INVOICE;  -- 둘 다 작동
+
+-- 문자열 값은 대소문자 구분!
+WHERE country = 'Korea'   -- O
+WHERE country = 'korea'   -- X 다른 값</code></pre>
+
+<h3>컬럼 별명 바꾸기</h3>
+<pre><code>-- AS: 결과에서만 바뀜 (원본 그대로)
+SELECT
+    BillingCountry AS billing_country
+FROM invoice;
+
+-- ALTER TABLE: 진짜로 바뀜 (위험!)
+ALTER TABLE invoice
+RENAME COLUMN BillingCountry TO billing_country;</code></pre>
+
+<div class="tip">
+<strong>추천:</strong> 연습용 DB는 AS로 보기 좋게만 바꿔서 쓰기. 남의 DB는 건드리지 말 것ㅋㅋ
+</div>
+
+<h2>오늘의 삽질 기록</h2>
+
+<div class="mistake">
+<strong>>= 띄어쓰기</strong>
+<pre><code>-- 틀림
+HAVING COUNT(*) > = 10   -- 공백 있음
+
+-- 맞음
+HAVING COUNT(*) >= 10    -- 붙여야 함</code></pre>
+<p>비교 연산자는 붙여써야 함: <code class="inline-code">>=</code> <code class="inline-code"><=</code> <code class="inline-code">!=</code> <code class="inline-code"><></code></p>
+</div>
+
+<div class="mistake">
+<strong>세미콜론 중간에 넣음</strong>
+<pre><code>-- 틀림
+GROUP BY billingcity;      -- 여기서 쿼리 끝남
+HAVING COUNT(*) >= 10;     -- 따로 노는 문장
+
+-- 맞음
+GROUP BY BillingCity
+HAVING COUNT(*) >= 10
+;                          -- 맨 끝에만!</code></pre>
+</div>
+
+<div class="mistake">
+<strong>콤마 중복</strong>
+<pre><code>-- 틀림
+,Total, AS `토탈세일즈`    -- 콤마 2개
+
+-- 맞음
+,SUM(Total) AS `토탈세일즈`</code></pre>
+</div>
+
+<div class="mistake">
+<strong>AVG(*) 안 됨</strong>
+<pre><code>-- 틀림
+ROUND(AVG(*), 1)           -- * 못 씀
+
+-- 맞음
+ROUND(AVG(Total), 1)       -- 컬럼명 필요</code></pre>
+<p>COUNT만 * 가능. SUM, AVG, MIN, MAX는 컬럼 필수!</p>
+</div>
+
+<div class="mistake">
+<strong>ELSE = 또 함 (3회차)</strong>
+<pre><code>-- 틀림
+ELSE = 0
+
+-- 맞음
+ELSE 0                     -- = 필요 없음!</code></pre>
+<p>이제 진짜 기억해라...</p>
+</div>
+
+<div class="mistake">
+<strong>AS 별명 위치 꼬임</strong>
+<pre><code>-- 틀림
+,count(total)as`빌링컨트리`,`인보이스카운트`
+-- 뭐가 뭔지 모르겠음
+
+-- 맞음
+SELECT
+    BillingCountry AS `빌링컨트리`
+    ,COUNT(*) AS `인보이스카운트`
+FROM invoice
+GROUP BY BillingCountry
+;</code></pre>
+<p>AS 규칙: <code class="inline-code">컬럼명 AS 별명</code></p>
+</div>
+
+<div class="mistake">
+<strong>millseconds 오타</strong>
+<p>milliseconds인데 i 빠짐... 오타 주의</p>
+</div>
+
+<div class="tip">
+<strong>세미콜론 따로 쓰기</strong>
+<pre><code>SELECT
+    BillingCity
+    ,COUNT(*) AS `총합`
+FROM invoice
+WHERE BillingCountry = 'usa'
+GROUP BY BillingCity
+HAVING COUNT(*) >= 10
+;   -- 따로 쓰면 실수 안 함</code></pre>
+<p>콤마 앞에 쓰는 거랑 같은 원리. 눈에 바로 보임!</p>
+</div>
+
+<p><strong>결론: WHERE는 재료 고르기, HAVING은 완성품 고르기. 그리고 ELSE 뒤에 = 쓰지 마라.</strong></p>
+
+</div>
