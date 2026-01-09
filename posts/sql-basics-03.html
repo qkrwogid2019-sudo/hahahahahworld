@@ -437,6 +437,254 @@ HAVING COUNT(*) >= 10
 <p>콤마 앞에 쓰는 거랑 같은 원리. 눈에 바로 보임!</p>
 </div>
 
-<p><strong>결론: WHERE는 재료 고르기, HAVING은 완성품 고르기. 그리고 ELSE 뒤에 = 쓰지 마라.</strong></p>
+<h2>ROUND 읽는 법</h2>
+<p>수학 아니고 순서대로 안에서 바깥으로 읽으면 됨.</p>
+
+<pre><code>,ROUND(AVG(milliseconds) / 1000, 2) AS avg_sec
+
+-- 1단계: AVG(milliseconds)
+-- 모든 milliseconds의 평균 → 예: 230000
+
+-- 2단계: / 1000
+-- 밀리초 → 초 변환 → 230000 / 1000 = 230
+
+-- 3단계: ROUND(..., 2)
+-- 소수점 2자리까지 반올림 → 230.00</code></pre>
+
+<div class="tip">
+<strong>ROUND 문법:</strong> ROUND(숫자, 자릿수)
+<pre><code>ROUND(123.456, 2) → 123.46
+ROUND(123.456, 1) → 123.5
+ROUND(123.456, 0) → 123</code></pre>
+</div>
+
+<h2>COUNT vs 컬럼 차이</h2>
+<pre><code>-- COUNT(*) = 숫자 (행 개수)
+10, 25, 3
+
+-- composer = 문자열 (작곡가 이름)
+'Angus Young', 'Jimmy Page', NULL
+
+-- 그래서 이건 안 됨
+WHEN composer >= 10  -- 문자열 >= 숫자??</code></pre>
+
+<h2>서브쿼리</h2>
+<p>쿼리 안에 쿼리. 위치에 따라 역할이 다름.</p>
+
+<h3>SELECT 안에 서브쿼리</h3>
+<pre><code>SELECT
+    name
+    ,milliseconds
+    ,CASE
+        WHEN milliseconds > (SELECT AVG(milliseconds) FROM track)
+        THEN 'high'
+        ELSE 'low'
+    END AS level
+FROM track
+;</code></pre>
+
+<h3>WHERE 안에 서브쿼리</h3>
+<pre><code>-- 평균보다 큰 트랙 개수
+SELECT COUNT(*) AS big_track_count
+FROM track
+WHERE Bytes > (
+    SELECT AVG(Bytes)
+    FROM track
+)
+;</code></pre>
+
+<h3>HAVING 안에 서브쿼리</h3>
+<pre><code>-- USA 고객 수보다 고객이 많은 나라
+SELECT
+    Country
+    ,COUNT(*) AS customer_count
+FROM customer
+GROUP BY Country
+HAVING customer_count > (
+    SELECT COUNT(*)
+    FROM customer
+    WHERE Country = 'USA'
+)
+ORDER BY customer_count DESC
+;</code></pre>
+
+<h3>FROM 안에 서브쿼리 (인라인 뷰)</h3>
+<pre><code>SELECT
+    customerid
+    ,totalspent
+FROM (
+    SELECT
+        customerid
+        ,SUM(total) AS totalspent
+    FROM invoice
+    GROUP BY customerid
+) AS salessummary
+WHERE totalspent >= 40
+;</code></pre>
+
+<table class="quote-table">
+  <tr>
+    <th>서브쿼리 위치</th>
+    <th>역할</th>
+  </tr>
+  <tr>
+    <td>SELECT 안</td>
+    <td>값 계산</td>
+  </tr>
+  <tr>
+    <td>WHERE 안</td>
+    <td>행 필터 (개별)</td>
+  </tr>
+  <tr>
+    <td>HAVING 안</td>
+    <td>그룹 필터 (집계 후)</td>
+  </tr>
+  <tr>
+    <td>FROM 안</td>
+    <td>임시 테이블처럼 사용</td>
+  </tr>
+</table>
+
+<h2>연습문제 (Claude 출제)</h2>
+<p>아래 문제들은 Claude가 낸 거임.</p>
+
+<h3>문제 1: GROUP BY + CASE WHEN</h3>
+<div class="analogy">
+<strong>문제:</strong> invoice 테이블에서 국가별(BillingCountry) 주문 건수를 구하고, 건수가 5건 이상인 국가만 출력하세요. 건수 7건 이상이면 '우수', 아니면 '보통'.
+</div>
+<pre><code>-- 정답
+SELECT
+    BillingCountry
+    ,COUNT(*) AS order_count
+    ,CASE
+        WHEN COUNT(*) >= 7 THEN '우수'
+        ELSE '보통'
+    END AS order_level
+FROM invoice
+GROUP BY BillingCountry
+HAVING order_count >= 5
+;</code></pre>
+
+<h3>문제 2: 여러 집계함수 + CASE WHEN</h3>
+<div class="analogy">
+<strong>문제:</strong> invoice 테이블에서 국가별 주문 건수, 매출 합계, 평균 매출을 구하세요. 매출 합계 100 이상 'A', 50 이상 'B', 나머지 'C'. 매출 합계 40 이상만 출력, 내림차순.
+</div>
+<pre><code>-- 정답
+SELECT
+    BillingCountry
+    ,COUNT(*) AS order_count
+    ,SUM(Total) AS total_sales
+    ,ROUND(AVG(Total), 1) AS avg_sales
+    ,CASE
+        WHEN SUM(Total) >= 100 THEN 'A'
+        WHEN SUM(Total) >= 50 THEN 'B'
+        ELSE 'C'
+    END AS sales_grade
+FROM invoice
+GROUP BY BillingCountry
+HAVING total_sales >= 40
+ORDER BY total_sales DESC
+;</code></pre>
+
+<div class="mistake">
+<strong>흔한 실수:</strong> COUNT vs SUM 헷갈림
+<pre><code>-- 틀림: 건수로 등급 매김
+WHEN COUNT(*) >= 100 THEN 'A'
+
+-- 맞음: 매출 합계로 등급 매김
+WHEN SUM(Total) >= 100 THEN 'A'</code></pre>
+<p>"매출 합계 기준"이면 SUM, "건수 기준"이면 COUNT!</p>
+</div>
+
+<h3>문제 3: 서브쿼리 (SELECT)</h3>
+<div class="analogy">
+<strong>문제:</strong> invoice 테이블에서 각 주문의 Total이 전체 평균보다 높으면 '평균이상', 낮으면 '평균이하'.
+</div>
+<pre><code>-- 정답
+SELECT
+    InvoiceId
+    ,BillingCountry
+    ,Total
+    ,CASE
+        WHEN Total > (SELECT AVG(Total) FROM invoice)
+        THEN '평균이상'
+        ELSE '평균이하'
+    END AS avg_compare
+FROM Invoice
+;</code></pre>
+
+<h3>문제 4: 서브쿼리 (WHERE)</h3>
+<div class="analogy">
+<strong>문제:</strong> track 테이블에서 용량(Bytes)이 전체 평균보다 큰 트랙이 몇 개인지 세세요.
+</div>
+<pre><code>-- 정답
+SELECT COUNT(*) AS big_track_count
+FROM track
+WHERE Bytes > (
+    SELECT AVG(Bytes)
+    FROM track
+)
+;</code></pre>
+
+<div class="mistake">
+<strong>흔한 실수:</strong> "몇 개"인데 COUNT 안 씀
+<pre><code>-- 틀림: 목록 출력
+SELECT bytes AS big_track_count ...
+
+-- 맞음: 개수 1개
+SELECT COUNT(*) AS big_track_count ...</code></pre>
+</div>
+
+<h3>문제 5: 서브쿼리 (HAVING)</h3>
+<div class="analogy">
+<strong>문제:</strong> customer 테이블에서 USA 고객 수보다 고객이 많은 나라를 구하세요. 고객 수 내림차순.
+</div>
+<pre><code>-- 정답
+SELECT
+    Country
+    ,COUNT(*) AS customer_count
+FROM customer
+GROUP BY Country
+HAVING customer_count > (
+    SELECT COUNT(*)
+    FROM customer
+    WHERE Country = 'USA'
+)
+ORDER BY customer_count DESC
+;</code></pre>
+
+<h2>추가 삽질</h2>
+
+<div class="mistake">
+<strong>GROUP BY 쓰면서 집계 안 한 컬럼 단독 사용</strong>
+<pre><code>-- 틀림
+SELECT
+    BillingCountry
+    ,Total              -- 이거 안 됨!
+    ,SUM(Total)
+FROM invoice
+GROUP BY BillingCountry
+
+-- 맞음: Total 빼거나 집계함수로 감싸기
+SELECT
+    BillingCountry
+    ,SUM(Total)
+FROM invoice
+GROUP BY BillingCountry</code></pre>
+<p>GROUP BY 쓰면 SELECT에는 그룹 컬럼이나 집계함수만!</p>
+</div>
+
+<div class="mistake">
+<strong>SELECT 뒤에 컬럼 안 씀</strong>
+<pre><code>-- 틀림
+SELECT
+FROM (서브쿼리) AS alias
+
+-- 맞음
+SELECT customerid, totalspent
+FROM (서브쿼리) AS alias</code></pre>
+</div>
+
+<p><strong>결론: WHERE는 재료 고르기, HAVING은 완성품 고르기. 서브쿼리는 위치에 따라 역할이 다르다. 그리고 ELSE 뒤에 = 쓰지 마라.</strong></p>
 
 </div>
