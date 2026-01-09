@@ -1,4 +1,25 @@
 <style>
+  .sql-post {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .sql-post h2 {
+    font-size: 1.3em;
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    color: #333;
+    border-bottom: 2px solid #ff8fa3;
+    padding-bottom: 0.3em;
+  }
+  .sql-post h3 {
+    font-size: 1.1em;
+    margin-top: 1.5em;
+    color: #555;
+  }
+  .sql-post p {
+    line-height: 1.7;
+    margin: 0.8em 0;
+  }
   .sql-post pre {
     background: #1e1e1e;
     color: #d4d4d4;
@@ -8,47 +29,87 @@
     font-size: 13px;
     line-height: 1.5;
     margin: 16px 0;
+    -webkit-overflow-scrolling: touch;
   }
   .sql-post code {
-    font-family: 'SF Mono', Consolas, monospace;
+    font-family: 'SF Mono', Consolas, 'Courier New', monospace;
   }
   .sql-post .inline-code {
     background: #f0f0f0;
     padding: 2px 6px;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 12px;
+    word-break: break-all;
+  }
+  .sql-post .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 16px 0;
   }
   .sql-post .quote-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 16px 0;
     font-size: 14px;
+    min-width: 280px;
   }
   .sql-post .quote-table th,
   .sql-post .quote-table td {
-    padding: 12px 8px;
+    padding: 12px 10px;
     border: 1px solid #ddd;
     text-align: left;
   }
   .sql-post .quote-table th {
     background: #f5f5f5;
+    font-weight: 600;
+    white-space: nowrap;
   }
   .sql-post .mistake {
     background: #fff3f3;
     border-left: 4px solid #ff6b6b;
     padding: 12px 16px;
     margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .sql-post .mistake strong {
+    color: #d63031;
+    display: block;
+    margin-bottom: 8px;
   }
   .sql-post .tip {
     background: #f0fff4;
     border-left: 4px solid #4ade80;
     padding: 12px 16px;
     margin: 16px 0;
+    border-radius: 0 8px 8px 0;
   }
+  .sql-post .tip strong {
+    color: #00b894;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* 모바일 최적화 */
   @media (max-width: 600px) {
+    .sql-post h2 {
+      font-size: 1.15em;
+      margin-top: 1.5em;
+    }
+    .sql-post h3 {
+      font-size: 1em;
+    }
+    .sql-post p {
+      font-size: 14px;
+    }
     .sql-post pre {
       font-size: 11px;
       padding: 12px;
+      border-radius: 6px;
+      margin: 12px -8px;
+      width: calc(100% + 16px);
+    }
+    .sql-post .inline-code {
+      font-size: 11px;
+      padding: 1px 4px;
     }
     .sql-post .quote-table {
       font-size: 12px;
@@ -56,6 +117,18 @@
     .sql-post .quote-table th,
     .sql-post .quote-table td {
       padding: 8px 6px;
+    }
+    .sql-post .mistake,
+    .sql-post .tip {
+      padding: 10px 12px;
+      margin: 12px -4px;
+      font-size: 13px;
+    }
+    .sql-post .mistake pre,
+    .sql-post .tip pre {
+      margin: 8px 0;
+      font-size: 10px;
+      padding: 10px;
     }
   }
 </style>
