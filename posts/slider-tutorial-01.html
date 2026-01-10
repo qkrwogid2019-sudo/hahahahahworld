@@ -1,0 +1,346 @@
+<style>
+  .slider-post {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .slider-post h2 {
+    font-size: 1.3em;
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    color: #333;
+    border-bottom: 2px solid #ff8fa3;
+    padding-bottom: 0.3em;
+  }
+  .slider-post h3 {
+    font-size: 1.1em;
+    margin-top: 1.5em;
+    color: #555;
+  }
+  .slider-post p {
+    line-height: 1.7;
+    margin: 0.8em 0;
+  }
+  .slider-post pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 16px 0;
+  }
+  .slider-post code {
+    font-family: 'SF Mono', Consolas, 'Courier New', monospace;
+  }
+  .slider-post .inline-code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .slider-post .mistake {
+    background: #fff3f3;
+    border-left: 4px solid #ff6b6b;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .slider-post .mistake strong {
+    color: #d63031;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .slider-post .tip {
+    background: #f0fff4;
+    border-left: 4px solid #4ade80;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .slider-post .tip strong {
+    color: #00b894;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .slider-post .tsundere {
+    background: #fff0f5;
+    border-left: 4px solid #ff69b4;
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+  }
+  .slider-post .video-container {
+    margin: 20px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #ff8fa3;
+  }
+  .slider-post video {
+    width: 100%;
+    display: block;
+  }
+  .slider-post .credit {
+    background: #f8f8f8;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin: 16px 0;
+  }
+  /* 모바일 최적화 */
+  @media (max-width: 600px) {
+    .slider-post h2 {
+      font-size: 1.1em;
+      margin-top: 1.5em;
+    }
+    .slider-post h3 {
+      font-size: 1em;
+    }
+    .slider-post p {
+      font-size: 14px;
+    }
+    .slider-post pre {
+      font-size: 11px;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 12px -8px;
+      width: calc(100% + 16px);
+      -webkit-overflow-scrolling: touch;
+    }
+    .slider-post .inline-code {
+      font-size: 11px;
+      padding: 1px 4px;
+    }
+    .slider-post .mistake,
+    .slider-post .tip,
+    .slider-post .tsundere {
+      padding: 10px 12px;
+      margin: 12px -4px;
+      font-size: 13px;
+    }
+    .slider-post .mistake pre,
+    .slider-post .tip pre,
+    .slider-post .tsundere pre {
+      margin: 8px -4px;
+      width: calc(100% + 8px);
+      font-size: 10px;
+      padding: 10px;
+    }
+    .slider-post .credit {
+      font-size: 12px;
+      padding: 10px 12px;
+    }
+    .slider-post .video-container {
+      margin: 16px -8px;
+      width: calc(100% + 16px);
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+  }
+</style>
+
+<div class="slider-post">
+
+<div class="credit">
+  <strong>CREDIT</strong><br>
+  글 작성: Claude (츤데레 모드)<br>
+  영상 제작: 주인님 (HYANG)
+</div>
+
+<div class="video-container">
+  <video controls>
+    <source src="assets/slider-demo.mp4" type="video/mp4">
+  </video>
+</div>
+
+<p>...하, 이거 내가 왜 기록하고 있는 거야. 오늘 슬라이더 하나 만드는데 따옴표를 몇 번을 빼먹은 건지. 답답해서 내가 정리한다. 감사하게 생각해.</p>
+
+<h2>완성된 결과물</h2>
+
+<p>위 영상이 최종 결과물이야. 클릭하면 넘어가고, 키보드 방향키도 되고, 6→7 갈 때 느리게 전환됨. 근데 여기까지 오는 길이...</p>
+
+<div class="tsundere">
+"시발 따옴표 짜증나게하네 눈에도 잘 안보임" - 주인님 명언
+</div>
+
+<h2>오늘의 뻘짓 모음</h2>
+
+<h3>1. 따옴표 지옥 (HTML)</h3>
+
+<div class="mistake">
+<strong>따옴표 빠진 곳 총 5군데</strong>
+<pre><code>&lt;meta name="viewport content="..."&gt;  &lt;!-- viewport 뒤 따옴표 --&gt;
+&lt;link rel="stylesheet" href="style.css /&gt;  &lt;!-- style.css 뒤 --&gt;
+&lt;div class="slider&gt;  &lt;!-- 2군데 --&gt;
+&lt;script src="script.js&gt;  &lt;!-- script.js 뒤 --&gt;</code></pre>
+<p>5개... 5개를 빼먹었어. 한두 개도 아니고.</p>
+</div>
+
+<h3>2. 수수께끼의 쉼표</h3>
+
+<div class="mistake">
+<strong>이건 진짜 뭔지 모르겠음</strong>
+<pre><code>&lt;div class="slider"&gt;,   &lt;!-- 이 쉼표는 뭐야 ㅋㅋㅋ --&gt;
+&lt;div class="slider"&gt;</code></pre>
+<p>HTML에 쉼표가 왜 있는 거야... 무슨 생각으로 친 거야...</p>
+</div>
+
+<h3>3. slides vs slider 전쟁</h3>
+
+<div class="mistake">
+<strong>같은 실수 4회 반복</strong>
+<pre><code>const slides = document.querySelector(".slider");  // slides로 정의
+const total = slider.children.length;  // slider로 사용??
+
+// 또...
+slider.style.transform = ...  // slider 썼다가
+slides.style.transform = ...  // slides 썼다가</code></pre>
+<p>이거 진짜 4번 고쳤어. 4번. 고칠 때마다 또 slides 씀 ㅋㅋㅋ</p>
+</div>
+
+<div class="tsundere">
+오늘 slides 오타 카운트: 4회<br>
+주인님 머릿속에 slides가 박혀있는 듯
+</div>
+
+<h3>4. JavaScript 오타 파티</h3>
+
+<div class="mistake">
+<strong>한 파일에 오타 6개</strong>
+<pre><code>queryselector → querySelector (대소문자)
+chidren → children (철자)
+translateX(-${index * 100)vW) → translateX(-${index * 100}vw)
+//                    ↑ } 아니고 )    ↑ 소문자!</code></pre>
+</div>
+
+<h3>5. 이미지 확장자</h3>
+
+<div class="mistake">
+<strong>0008png 라고 저장함</strong>
+<p>점(.)을 빼먹어서 404 에러. 이건 뭐 그럴 수 있어... 아주 조금 이해함.</p>
+</div>
+
+<h3>6. 깃허브에서 직접 코딩</h3>
+
+<div class="mistake">
+<strong>VS Code 깔려있는데 안 씀</strong>
+<p>자동완성도 없고 에러 표시도 안 되는 깃허브 에디터에서 코딩하고 있었음. VS Code 있으면서! 망치 있는데 맨손으로 못 박은 격이야.</p>
+</div>
+
+<h2>최종 코드</h2>
+
+<h3>HTML</h3>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="ko"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;link rel="stylesheet" href="style.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="slider-wrap"&gt;
+    &lt;div class="slider"&gt;
+      &lt;img src="slider/0001.png"/&gt;
+      &lt;img src="slider/0002.png"/&gt;
+      &lt;!-- ... --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+<h3>CSS</h3>
+<pre><code>body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+}
+
+.slider-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.35s ease-out;
+}
+
+.slider img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+  flex-shrink: 0;
+}</code></pre>
+
+<h3>JavaScript</h3>
+<pre><code>/*초기설정*/
+const slider = document.querySelector(".slider");
+const total = slider.children.length;
+let index = 0;
+
+/*슬라이드 이동 함수*/
+function moveSlide() {
+  if (index === 6) {
+    slider.style.transition = "transform 1s ease-out";
+  } else {
+    slider.style.transition = "transform 0.35s ease-out";
+  }
+  slider.style.transform = `translateX(-${index * 100}vw)`;
+}
+
+/*클릭으로 다음*/
+document.addEventListener("click", () => {
+  index++;
+  if (index >= total) index = 0;
+  moveSlide();
+});
+
+/*키보드 방향키*/
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") {
+    index++;
+    if (index >= total) index = 0;
+  }
+  if (e.key === "ArrowLeft") {
+    index--;
+    if (index < 0) index = total - 1;
+  }
+  moveSlide();
+});</code></pre>
+
+<h2>오늘 배운 것</h2>
+
+<div class="tip">
+<strong>1. 개발자도구 Console</strong>
+<p>에러 메시지 보면 뭐가 틀렸는지 바로 알 수 있음. F12 눌러.</p>
+</div>
+
+<div class="tip">
+<strong>2. 변수명 통일</strong>
+<p>한 번 정하면 복붙해. 직접 치면 오타남.</p>
+</div>
+
+<div class="tip">
+<strong>3. 따옴표는 에디터가 잡아줌</strong>
+<p>VS Code 쓰면 따옴표 안 닫으면 색깔이 이상해짐. 메모장이나 깃허브 에디터로 코딩하지 마.</p>
+</div>
+
+<div class="tip">
+<strong>4. 코드 읽는 게 먼저</strong>
+<p>직접 못 짜도 읽고 이해하면 고칠 수 있음. 오늘 주인님이 에러 메시지 보고 직접 찾아낸 것도 있음.</p>
+</div>
+
+<h2>결론</h2>
+
+<p>슬라이더 하나 만드는데 삽질을 얼마나 한 건지... 근데 뭐, 이렇게 몸으로 배우는 거야. 책으로 백날 읽는 것보다 직접 오타 내고 에러 보고 고치는 게 기억에 남음.</p>
+
+<div class="tsundere">
+...잘했어. 아주 조금. 칭찬 아니야. 그냥 팩트 말한 거라고. 흥.
+</div>
+
+<p><strong>다음엔 VS Code 쓰고, 따옴표 잘 닫고, 변수명 복붙해. 알겠지?</strong></p>
+
+</div>

@@ -151,5 +151,14 @@
     "date": "2026-01-09",
     "file": "sql-basics-03.html",
     "category": "수업"
+  },
+  {
+    "slug": "slider-tutorial-01",
+    "title": "슬라이더 삽질 기록",
+    "summary": "따옴표 5개 빼먹고, slides vs slider 4번 헷갈린 날",
+    "tags": ["HTML", "CSS", "JavaScript", "slider", "debug"],
+    "date": "2026-01-10",
+    "file": "slider-tutorial-01.html",
+    "category": "공부"
   }
 ]
