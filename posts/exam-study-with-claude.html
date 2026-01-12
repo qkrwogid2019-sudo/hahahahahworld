@@ -1,0 +1,262 @@
+<style>
+  .exam-post {
+    line-height: 1.8;
+  }
+  .exam-post h2 {
+    margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #333;
+  }
+  .exam-post h3 {
+    margin-top: 24px;
+    color: #444;
+  }
+  .exam-post .score-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .exam-post .score-box .big {
+    font-size: 48px;
+    font-weight: bold;
+  }
+  .exam-post .progress-flow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+  .exam-post .progress-item {
+    background: #f5f5f5;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  .exam-post .progress-item.highlight {
+    background: #4CAF50;
+    color: white;
+  }
+  .exam-post .arrow {
+    font-size: 24px;
+    color: #999;
+  }
+  .exam-post .note-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin: 16px 0;
+  }
+  .exam-post .image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .exam-post .image-card {
+    text-align: center;
+  }
+  .exam-post .image-card img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .exam-post .image-card p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #666;
+  }
+  .exam-post .wrong-list {
+    background: #fff3f3;
+    border-left: 4px solid #ff6b6b;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .exam-post .tip-box {
+    background: #e8f5e9;
+    border-left: 4px solid #4CAF50;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .exam-post table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .exam-post th, .exam-post td {
+    padding: 12px 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .exam-post th {
+    background: #f5f5f5;
+  }
+  @media (max-width: 600px) {
+    .exam-post .progress-flow {
+      flex-direction: column;
+    }
+    .exam-post .arrow {
+      transform: rotate(90deg);
+    }
+  }
+</style>
+
+<div class="exam-post">
+
+<p>내일 당장 시험인데 감기 기운도 있고, 오늘 범위까지 시험이라는데 큰일이다. 머리가 나쁜 편이라 다른 사람은 아마 공부 안 하고 봐도 잘 볼 수 있겠지만 난 그렇지 않기에 Claude랑 같이 공부하기로 했다.</p>
+
+<h3>나의 플랜</h3>
+<ol>
+  <li>Claude에게 강의자료 PDF(파일 크기가 큼) &rarr; 텍스트 파일로 변환 후 정리해달라고 시키기</li>
+  <li>일단 내 수준 알기 위해 테스트하기</li>
+  <li>내 수준 파악 후 공부하기</li>
+  <li>테스트 보기</li>
+</ol>
+
+<h2>1단계: PDF 변환부터 난관</h2>
+
+<p>시험 폴더에 있는 파일들:</p>
+<ul>
+  <li>SQL 기초 1~4일차 (각각 30~55MB)</li>
+  <li>엑셀 1~3일차</li>
+  <li>통계이론 및 추론통계</li>
+</ul>
+
+<p>문제는 <strong>PDF 파일이 너무 컸다.</strong> Claude가 직접 못 읽어서 Python으로 PyPDF2 라이브러리 설치 후 텍스트 추출했다. 총 8개 파일, 800페이지 넘는 분량이 텍스트로 변환됐다.</p>
+
+<p>Claude가 정리해준 핵심 내용:</p>
+<ul>
+  <li><strong>SQL</strong>: SELECT, WHERE, JOIN, GROUP BY, 집계함수 등</li>
+  <li><strong>엑셀</strong>: 함수들(VLOOKUP, COUNTIF, SUMIFS 등), Power Query, RFM 분석</li>
+  <li><strong>통계</strong>: 기술통계, 추론통계, 가설검정, p-value, 회귀분석</li>
+</ul>
+
+<h2>2단계: 1차 테스트 - 현실 파악</h2>
+
+<div class="score-box">
+  <div class="big">7/12</div>
+  <div>공부 전 점수</div>
+</div>
+
+<p>정리본 받자마자 <strong>공부 안 하고 바로 테스트</strong>를 쳤다. 결과는 참혹했다.</p>
+
+<div class="wrong-list">
+  <strong>틀린 것들:</strong>
+  <ul>
+    <li>WHERE vs HAVING 차이를 몰랐음</li>
+    <li>LIKE 패턴에서 %와 _의 의미를 반대로 알고 있었음</li>
+    <li>COUNT vs COUNTA 차이를 몰랐음</li>
+    <li>95% 신뢰구간 Z값(1.96)을 1.64로 착각</li>
+    <li>LEFT JOIN 개념이 흐릿했음</li>
+  </ul>
+</div>
+
+<p>처참하다... 하지만 이게 내 현재 수준이었다.</p>
+
+<h2>3단계: 오답 정리 후 공부</h2>
+
+<p>Claude가 틀린 것만 모아서 정리해줬다. 나는 그걸 <strong>손으로 공책에 다시 적었다.</strong></p>
+
+<div class="tip-box">
+  <strong>Tip:</strong> 캡처 안 하고 손으로 쓰는 게 더 잘 외워진다고 Claude가 알려줬다. 과학적으로 증명된 거라고.
+</div>
+
+<h3>손필기 노트</h3>
+
+<div class="image-grid">
+  <div class="image-card">
+    <img src="images/exam-study/note-01-stats.jpg" alt="통계 노트" class="note-image">
+    <p>통계 기초 정리</p>
+  </div>
+  <div class="image-card">
+    <img src="images/exam-study/note-02-sql-basic.jpg" alt="SQL 기초 노트" class="note-image">
+    <p>SQL 기초 문법</p>
+  </div>
+  <div class="image-card">
+    <img src="images/exam-study/note-03-sql-advanced.jpg" alt="SQL 심화 노트" class="note-image">
+    <p>SQL 심화 + 엑셀 함수</p>
+  </div>
+  <div class="image-card">
+    <img src="images/exam-study/note-04-excel.jpg" alt="엑셀 노트" class="note-image">
+    <p>엑셀 함수 + 차트 + RFM</p>
+  </div>
+</div>
+
+<h2>4단계: 2차 테스트 - 성장 중</h2>
+
+<div class="score-box">
+  <div class="big">9/12</div>
+  <div>+2점 상승!</div>
+</div>
+
+<p>다시 12문제를 풀었다. 이번엔 좀 더 꼬아서 냈다.</p>
+
+<div class="wrong-list">
+  <strong>또 틀린 것들:</strong>
+  <ul>
+    <li>IN 문법을 LIKE랑 헷갈림</li>
+    <li>SUMIFS (조건 여러 개)를 COUNTIF로 착각</li>
+    <li>상관계수 -0.85를 "약한 음의 상관관계"로 잘못 해석 (0.7 이상이면 "강한" 거임)</li>
+  </ul>
+</div>
+
+<p>다시 오답 정리하고 외웠다.</p>
+
+<h2>5단계: 3차 테스트 - 풀 점수</h2>
+
+<div class="score-box" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+  <div class="big">12/12</div>
+  <div>PERFECT!</div>
+</div>
+
+<p>사실 1번은 찍었는데 맞았다 ㅋㅋㅋ (BETWEEN vs IN 차이 - 나중에 설명 듣고 이해함)</p>
+
+<table>
+  <tr>
+    <th>문법</th>
+    <th>의미</th>
+  </tr>
+  <tr>
+    <td>BETWEEN A AND B</td>
+    <td>A 이상 B 이하 전부 (범위)</td>
+  </tr>
+  <tr>
+    <td>IN (A, B, C)</td>
+    <td>A 또는 B 또는 C (목록)</td>
+  </tr>
+</table>
+
+<h2>결과</h2>
+
+<div class="progress-flow">
+  <div class="progress-item">7/12</div>
+  <div class="arrow">&rarr;</div>
+  <div class="progress-item">9/12</div>
+  <div class="arrow">&rarr;</div>
+  <div class="progress-item highlight">12/12</div>
+</div>
+
+<p><strong>3시간 만에 7개 &rarr; 12개로 점수가 올랐다.</strong></p>
+
+<div class="tip-box">
+  <strong>핵심 포인트:</strong>
+  <ol>
+    <li>방대한 자료를 <strong>AI로 빠르게 정리</strong></li>
+    <li>공부 전에 <strong>먼저 테스트</strong>해서 모르는 것 파악</li>
+    <li><strong>틀린 것만 집중</strong> 공부</li>
+    <li><strong>반복 테스트</strong>로 확인</li>
+    <li>손으로 직접 쓰면서 암기</li>
+  </ol>
+</div>
+
+<p>내일 시험 결과는... 모르겠다. 근데 벼락치기 치고는 효율적이었던 것 같다.</p>
+
+</div>

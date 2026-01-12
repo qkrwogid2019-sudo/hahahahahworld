@@ -160,5 +160,14 @@
     "date": "2026-01-10",
     "file": "slider-tutorial-01.html",
     "category": "공부"
+  },
+  {
+    "slug": "exam-study-with-claude",
+    "title": "시험 전날 벼락치기, Claude랑 같이한 후기",
+    "summary": "PDF 800페이지를 3시간 만에 정리하고 7점에서 12점으로",
+    "tags": ["study", "Claude", "SQL", "Excel", "statistics"],
+    "date": "2026-01-13",
+    "file": "exam-study-with-claude.html",
+    "category": "공부"
   }
 ]
