@@ -1,0 +1,156 @@
+<style>
+  .analysis-post {
+    line-height: 1.8;
+  }
+  .analysis-post h2 {
+    margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #333;
+  }
+  .analysis-post .image-container {
+    margin: 20px 0;
+  }
+  .analysis-post .image-container img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin: 12px 0;
+  }
+  .analysis-post .insight-box {
+    background: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .analysis-post .danger-box {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .analysis-post .success-box {
+    background: #e8f5e9;
+    border-left: 4px solid #4CAF50;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .analysis-post .quote {
+    font-size: 1.2em;
+    font-style: italic;
+    color: #555;
+    border-left: 4px solid #333;
+    padding-left: 16px;
+    margin: 20px 0;
+  }
+</style>
+
+<div class="analysis-post">
+
+<p><strong>연습</strong>으로 Northwind Traders라는 가상 회사의 데이터 분석가가 되어 매출 둔화 원인을 파악해봤다. Claude랑 대화하면서 분석한 과정을 기록.</p>
+
+<h2>배경</h2>
+
+<p>Northwind Traders는 B2B 식품 유통 회사. 음료, 육류, 해산물 등을 레스토랑이나 슈퍼마켓에 납품한다. 근데 매출이 둔화되고 있어서 원인을 찾아야 했다.</p>
+
+<div class="image-container">
+  <img src="posts/images/sql-analysis/img-01.jpg" alt="분석 시작">
+</div>
+
+<h2>분석 과정</h2>
+
+<h3>1. 성장 중인 업체 찾기</h3>
+
+<p>주고객 말고 최근 주문이 증가한 업체를 먼저 찾아봤다.</p>
+
+<div class="image-container">
+  <img src="posts/images/sql-analysis/img-02.jpg" alt="성장 업체 분석">
+  <img src="posts/images/sql-analysis/img-03.jpg" alt="성장 업체 결과">
+</div>
+
+<div class="insight-box">
+  <strong>발견:</strong> Company I와 Z는 둘 다 미국 업체, 둘 다 Clam Chowder 구매. 신규 고객 사이에서 공통점 발견!
+</div>
+
+<h3>2. 주고객 분석 + 매출 추이</h3>
+
+<p>그 다음 주고객들이 뭘 샀는지, 그리고 왜 매출이 둔화됐는지 파봤다.</p>
+
+<div class="image-container">
+  <img src="posts/images/sql-analysis/img-04.jpg" alt="주고객 분석">
+  <img src="posts/images/sql-analysis/img-05.jpg" alt="매출 추이">
+  <img src="posts/images/sql-analysis/img-06.jpg" alt="주고객 TOP5와 월별 매출">
+</div>
+
+<div class="danger-box">
+  <strong>문제 발견:</strong><br>
+  - 3월 매출 32,609 (피크) → 5월 1,789 (바닥)<br>
+  - Company BB: -88%, Company G: -100% 이탈
+</div>
+
+<h3>3. 3월 매출 폭발의 정체</h3>
+
+<p>3월에 뭐가 있었길래 매출이 폭발했는지 확인했다.</p>
+
+<div class="image-container">
+  <img src="posts/images/sql-analysis/img-07.jpg" alt="3월 분석">
+  <img src="posts/images/sql-analysis/img-08.jpg" alt="3월 상세">
+</div>
+
+<div class="danger-box">
+  <strong>3월 매출 85% = BB와 G의 커피 대량 주문 2건이 전부</strong>
+</div>
+
+<h3>4. Company G와 BB 추적</h3>
+
+<p>이탈한 주고객들이 뭘 샀는지 추적했다.</p>
+
+<div class="image-container">
+  <img src="posts/images/sql-analysis/img-09.jpg" alt="Company G 분석">
+  <img src="posts/images/sql-analysis/img-10.jpg" alt="Company BB 분석">
+</div>
+
+<p><strong>Company G:</strong> 커피 300개 딱 1번 사고 사라짐 (일회성 고객)</p>
+<p><strong>Company BB:</strong> 커피 300개 → 5개로 98% 감소. 해산물로 갈아탐.</p>
+
+<h3>5. 왜 4월부터 커피가 안 팔렸을까?</h3>
+
+<p>외부 요인을 생각해봤다. 커피 시장의 계절성!</p>
+
+<div class="image-container">
+  <img src="posts/images/sql-analysis/img-11.jpg" alt="커피 계절성 가설">
+  <img src="posts/images/sql-analysis/img-12.jpg" alt="가설 정리">
+</div>
+
+<div class="insight-box">
+  <strong>가설:</strong> 중남미 커피 수확은 11월~3월. 4월부터 단경기 시작 → 가격 인상 or 공급 불안정으로 고객 이탈?
+</div>
+
+<h2>결론</h2>
+
+<p class="quote">"커피 팔던 큰손 2명 나가니까 회사가 흔들림"<br>
+→ 상품도 고객도 분산시켜야 생존</p>
+
+<div class="danger-box">
+  <strong>핵심 문제:</strong><br>
+  1. 커피 의존 - 3월 매출 85%가 커피 단일 상품<br>
+  2. 주고객 의존 - TOP 3 = 전체 매출 55%
+</div>
+
+<div class="success-box">
+  <strong>액션 아이템:</strong><br>
+  1. 커피 의존도 낮추기 (상품 다변화)<br>
+  2. 주고객 의존도 낮추기 (40% 이하로)<br>
+  3. Company G 연락해서 재구매 유도<br>
+  4. 커피 계절성 대응 (선주문, 재고 확보)<br>
+  5. 신규 영업 강화
+</div>
+
+<h2>배운 점</h2>
+
+<p>SQL 쿼리 짜는 게 중요한 게 아니라, <strong>"그래서 뭐 해야 하는데?"</strong>를 생각하면서 분석하는 게 진짜 데이터 분석이었다.</p>
+
+</div>

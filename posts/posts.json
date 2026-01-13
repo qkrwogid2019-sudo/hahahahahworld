@@ -169,5 +169,14 @@
     "date": "2026-01-13",
     "file": "exam-study-with-claude.html",
     "category": "공부"
+  },
+  {
+    "slug": "sql-analysis-practice",
+    "title": "SQL 분석 연습: 매출 둔화 원인 찾기",
+    "summary": "Northwind 데이터로 커피 의존성과 주고객 이탈 문제 발견",
+    "tags": ["SQL", "data-analysis", "practice", "Claude"],
+    "date": "2026-01-13",
+    "file": "sql-analysis-practice.html",
+    "category": "공부"
   }
 ]
