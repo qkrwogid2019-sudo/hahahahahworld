@@ -178,5 +178,14 @@
     "date": "2026-01-13",
     "file": "sql-analysis-practice.html",
     "category": "공부"
+  },
+  {
+    "slug": "tableau-correlation",
+    "title": "Tableau로 상관관계 분석하기",
+    "summary": "추세선, p-value, R² 해석법과 '상관관계 ≠ 인과관계' 배우기",
+    "tags": ["Tableau", "statistics", "correlation", "data-analysis"],
+    "date": "2026-01-14",
+    "file": "tableau-correlation.html",
+    "category": "수업"
   }
 ]

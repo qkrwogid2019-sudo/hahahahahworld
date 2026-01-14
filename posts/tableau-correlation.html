@@ -1,0 +1,238 @@
+<style>
+  .tableau-post {
+    line-height: 1.8;
+  }
+  .tableau-post h2 {
+    margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #333;
+  }
+  .tableau-post h3 {
+    margin-top: 24px;
+    color: #2196F3;
+  }
+  .tableau-post .image-container {
+    margin: 20px 0;
+  }
+  .tableau-post .image-container img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin: 12px 0;
+  }
+  .tableau-post .insight-box {
+    background: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .tableau-post .warning-box {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .tableau-post .code-box {
+    background: #263238;
+    color: #aed581;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: monospace;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .tableau-post table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  .tableau-post th, .tableau-post td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  .tableau-post th {
+    background: #f5f5f5;
+  }
+</style>
+
+<div class="tableau-post">
+
+<p>Tableau로 추세선과 상관관계를 분석하면서 배운 것들. 특히 "상관관계 ≠ 인과관계"라는 걸 데이터로 직접 확인했다.</p>
+
+<h2>분석 방법 선택하기</h2>
+
+<p>뭘 보고 싶냐에 따라 분석 방법이 다르다.</p>
+
+<div class="image-container">
+  <img src="posts/images/tableau-correlation/01-analysis-methods.jpg" alt="분석 방법 선택">
+</div>
+
+<table>
+  <tr>
+    <th>목적</th>
+    <th>방법</th>
+  </tr>
+  <tr>
+    <td>관계 보기</td>
+    <td>산점도 + 추세선, 상관계수(r), R²</td>
+  </tr>
+  <tr>
+    <td>인과관계 증명</td>
+    <td>회귀분석, A/B 테스트, 시계열 분석</td>
+  </tr>
+  <tr>
+    <td>패턴/이상치</td>
+    <td>박스플롯, 히트맵</td>
+  </tr>
+</table>
+
+<h2>p-value와 R² 해석하기</h2>
+
+<div class="image-container">
+  <img src="posts/images/tableau-correlation/02-p-value-r2.jpg" alt="p-value와 R² 해석">
+</div>
+
+<h3>p-value (유의확률)</h3>
+<table>
+  <tr>
+    <th>값</th>
+    <th>의미</th>
+  </tr>
+  <tr>
+    <td>p < 0.05</td>
+    <td>유의미함</td>
+  </tr>
+  <tr>
+    <td>p < 0.01</td>
+    <td>꽤 유의미함</td>
+  </tr>
+  <tr>
+    <td>p < 0.0001</td>
+    <td>매우 유의미함 (우연일 확률 0.01% 미만)</td>
+  </tr>
+</table>
+
+<h3>R² (결정계수)</h3>
+<table>
+  <tr>
+    <th>값</th>
+    <th>설명력</th>
+  </tr>
+  <tr>
+    <td>0.3 이하</td>
+    <td>약함</td>
+  </tr>
+  <tr>
+    <td>0.3~0.5</td>
+    <td>보통</td>
+  </tr>
+  <tr>
+    <td>0.5~0.7</td>
+    <td>괜찮음</td>
+  </tr>
+  <tr>
+    <td>0.7 이상</td>
+    <td>강함</td>
+  </tr>
+</table>
+
+<div class="insight-box">
+  <strong>예시:</strong> p < 0.0001, R² = 0.513이면?<br>
+  → "상관관계는 확실히 있고(p), 변동의 51.3%를 설명함(R²). 나머지 48.7%는 다른 요인."
+</div>
+
+<h2>응용 1: 이익률 vs 판매량</h2>
+
+<p>수업 데이터로 개인적으로 분석해봤다.</p>
+
+<h3>이익률 추세</h3>
+<div class="image-container">
+  <img src="posts/images/tableau-correlation/03-profit-ratio.jpg" alt="이익률 하락 추세">
+</div>
+
+<p><strong>발견:</strong> 이익률이 시간에 따라 급감하는 음의 상관관계.</p>
+
+<h3>판매량 추세</h3>
+<div class="image-container">
+  <img src="posts/images/tableau-correlation/04-sales-flat.jpg" alt="판매량 일정">
+</div>
+
+<p><strong>발견:</strong> 판매량은 거의 일정함. 추세선이 평평.</p>
+
+<div class="insight-box">
+  <strong>인사이트:</strong><br>
+  판매량은 유지되는데 이익률만 떨어진다 = "팔리는 양은 똑같은데 마진이 줄고 있다"<br><br>
+  <strong>가능한 원인:</strong>
+  <ul>
+    <li>원가 상승 (재료비, 인건비)</li>
+    <li>할인/프로모션 증가</li>
+    <li>저마진 상품 비중 증가</li>
+    <li>경쟁 심화로 가격 인하</li>
+  </ul>
+</div>
+
+<h2>응용 2: 부모 학력 vs 자녀 성적</h2>
+
+<div class="image-container">
+  <img src="posts/images/tableau-correlation/05-education-correlation.jpg" alt="부모학력과 성적 상관관계">
+</div>
+
+<p>문학/비문학 점수와 부모 최종학력의 상관관계를 봤더니... 양의 상관관계가 뚜렷했다.</p>
+
+<div class="warning-box">
+  <strong>주의:</strong> 상관관계 ≠ 인과관계<br><br>
+  부모 학력이 높다고 "직접" 성적을 올리는 게 아닐 수 있음. 숨은 변수들:
+  <ul>
+    <li>경제력 → 사교육</li>
+    <li>교육 중시 문화</li>
+    <li>학습 환경/정보력</li>
+  </ul>
+</div>
+
+<h2>이상치와 가중치</h2>
+
+<p>박스플롯으로 이상치를 발견했을 때, 어떻게 처리할지는 목적에 따라 다르다.</p>
+
+<table>
+  <tr>
+    <th>상황</th>
+    <th>처리</th>
+  </tr>
+  <tr>
+    <td>이상치 = 노이즈</td>
+    <td>가중치 낮춤 / 제외</td>
+  </tr>
+  <tr>
+    <td>이상치 = 관심 대상</td>
+    <td>가중치 높임 / 집중 분석</td>
+  </tr>
+</table>
+
+<div class="insight-box">
+  <strong>예시:</strong><br>
+  - 평균 나이 25-26세인데 36세 1명 → 늦깎이 학습자 or 데이터 오류<br>
+  - 사기 탐지에서 이상 거래 → 이상치가 핵심이므로 가중치 높임
+</div>
+
+<h2>정리</h2>
+
+<div class="code-box">
+p-value < 0.05  → 유의미함 (관계 있음)<br>
+p-value < 0.0001 → 매우 유의미함<br>
+<br>
+R² 해석:<br>
+0.3 이하  → 약함<br>
+0.3~0.5   → 보통<br>
+0.5~0.7   → 괜찮음<br>
+0.7 이상  → 강함<br>
+<br>
+상관관계 ≠ 인과관계 (항상 기억!)
+</div>
+
+<p>Tableau로 추세선 그리는 건 쉬운데, 그걸 어떻게 해석하느냐가 진짜 분석이다.</p>
+
+</div>
