@@ -187,5 +187,14 @@
     "date": "2026-01-14",
     "file": "tableau-correlation.html",
     "category": "수업"
+  },
+  {
+    "slug": "tableau-talent",
+    "title": "데이터분석으로 보는 이시대 인재상",
+    "summary": "취업 설명회에서 강조하는 기준을 태블로로 시각화해봤다",
+    "tags": ["Tableau", "data-analysis", "hiring", "visualization"],
+    "date": "2026-01-16",
+    "file": "tableau-talent.html",
+    "category": "공부"
   }
 ]

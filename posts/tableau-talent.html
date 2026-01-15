@@ -1,0 +1,183 @@
+<style>
+  .talent-post {
+    line-height: 1.8;
+  }
+  .talent-post h2 {
+    margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #333;
+  }
+  .talent-post h3 {
+    margin-top: 24px;
+    color: #2196F3;
+  }
+  .talent-post .image-container {
+    margin: 20px 0;
+  }
+  .talent-post .image-container img {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin: 12px 0;
+  }
+  .talent-post video {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    margin: 20px 0;
+  }
+  .talent-post .insight-box {
+    background: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .talent-post .warning-box {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .talent-post .person-card {
+    background: #f5f5f5;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+  }
+  .talent-post .person-card.filtered {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+  }
+  .talent-post .person-card.passed {
+    background: #e8f5e9;
+    border-left: 4px solid #4caf50;
+  }
+</style>
+
+<div class="talent-post">
+
+<p>오늘 취업 설명을 해주시는 분이 오셨다. 취업설명 강의에서 강조하는 부분을 데이터를 배우는 학생답게 수업시간에 배운 태블로로 시각화해보았다.</p>
+
+<h2>필터가 작동하는 모습</h2>
+
+<p>대기업 채용 기준을 필터로 만들어서 하나씩 적용해보았다. 학점 3.0 이하 제외, 학교순위 50위 밖 제외, SNS활동지수 70 이상 제외.</p>
+
+<video controls>
+  <source src="posts/images/tableau-talent/연습1.MP4" type="video/mp4">
+</video>
+
+<p>필터를 하나씩 켤 때마다 점들이 사라진다. 빨간색 점들은 탈락자, 회색 점들은 합격자다.</p>
+
+<h2>탈락한 사람들</h2>
+
+<h3>추독립 - 네트워크 823, 학점 1.5</h3>
+
+<div class="image-container">
+  <img src="posts/images/tableau-talent/연습1_네트워크_높지만_탈락.jpg" alt="추독립">
+</div>
+
+<div class="person-card filtered">
+  <strong>이름:</strong> 추독립<br>
+  <strong>전공:</strong> 자유전공<br>
+  <strong>학점:</strong> 1.5<br>
+  <strong>네트워크점수:</strong> 823 (최상위)<br>
+  <strong>빅파이브 개방성:</strong> 98 (최상위)<br>
+  <strong>결과:</strong> 탈락
+</div>
+
+<p>네트워크 점수가 823으로 가장 높고, 개방성(창의성)도 98로 최상위다. 하지만 학점이 1.5라서 첫 번째 필터에서 탈락했다.</p>
+
+<h3>구변화 - 언론학, 개방성 88</h3>
+
+<div class="image-container">
+  <img src="posts/images/tableau-talent/연습1_탈락자.jpg" alt="구변화">
+</div>
+
+<div class="person-card filtered">
+  <strong>이름:</strong> 구변화<br>
+  <strong>전공:</strong> 언론학<br>
+  <strong>학점:</strong> 2.3<br>
+  <strong>네트워크점수:</strong> 489<br>
+  <strong>빅파이브 개방성:</strong> 88<br>
+  <strong>결과:</strong> 탈락
+</div>
+
+<p>언론학 전공에 개방성 88. 변화를 추구하는 사람이지만, 학점 2.3으로 필터에 걸렸다.</p>
+
+<h3>민자율 - 예술학, 개방성 96</h3>
+
+<div class="image-container">
+  <img src="posts/images/tableau-talent/연습1_탈락자2.jpg" alt="민자율">
+</div>
+
+<div class="person-card filtered">
+  <strong>이름:</strong> 민자율<br>
+  <strong>전공:</strong> 예술학<br>
+  <strong>학점:</strong> 1.9<br>
+  <strong>네트워크점수:</strong> 645<br>
+  <strong>빅파이브 개방성:</strong> 96<br>
+  <strong>결과:</strong> 탈락
+</div>
+
+<p>예술학 전공, 개방성 96으로 창의성이 매우 높다. 네트워크 점수도 645로 상위권이다. 하지만 학점 1.9로 탈락.</p>
+
+<h2>합격한 사람들</h2>
+
+<h3>박성실 - 회계학, 개방성 32</h3>
+
+<div class="image-container">
+  <img src="posts/images/tableau-talent/연습1_네트워크_낮은_회색인간.jpg" alt="박성실">
+</div>
+
+<div class="person-card passed">
+  <strong>이름:</strong> 박성실<br>
+  <strong>전공:</strong> 회계학<br>
+  <strong>학점:</strong> 3.9<br>
+  <strong>네트워크점수:</strong> 89 (하위권)<br>
+  <strong>빅파이브 개방성:</strong> 32 (하위권)<br>
+  <strong>결과:</strong> 합격
+</div>
+
+<p>학점 3.9로 우수하지만, 네트워크 점수 89, 개방성 32로 낮다. 차트에서 회색으로 표시된 "안전한" 인재다.</p>
+
+<h3>전논리 - 컴퓨터공학, AI리터러시 92</h3>
+
+<div class="image-container">
+  <img src="posts/images/tableau-talent/연습1_협업왕_전논리.jpg" alt="전논리">
+</div>
+
+<div class="person-card passed">
+  <strong>이름:</strong> 전논리<br>
+  <strong>전공:</strong> 컴퓨터공학<br>
+  <strong>학점:</strong> 4.4<br>
+  <strong>AI리터러시:</strong> 92<br>
+  <strong>협업점수:</strong> 84<br>
+  <strong>네트워크점수:</strong> 112 (하위권)<br>
+  <strong>결과:</strong> 합격
+</div>
+
+<p>학점 4.4, AI리터러시 92, 협업점수 84. 모든 수치가 높지만 네트워크 점수는 112로 낮다. 대기업이 원하는 "이상적인" 인재상이다.</p>
+
+<h2>종합 대시보드</h2>
+
+<div class="image-container">
+  <img src="posts/images/tableau-talent/연습2.jpg" alt="종합 대시보드">
+</div>
+
+<p>여러 지표를 한 화면에 배치해서 필터 적용에 따른 변화를 볼 수 있게 만들었다. AI리터러시, 면접점수, 슬랙반응속도, 학점 등 다양한 축으로 인재들의 분포를 확인할 수 있다.</p>
+
+<div class="warning-box">
+  <strong>관찰 결과:</strong><br><br>
+  필터를 적용할수록 빨간 점(개성 있는 인재)들이 사라지고, 회색 점(안전한 인재)들만 남는다. 네트워크 점수가 높고 개방성이 높은 사람들, 즉 창의적이고 인맥이 넓은 사람들이 먼저 탈락한다.
+</div>
+
+<div class="insight-box">
+  <strong>생각해볼 점:</strong><br><br>
+  데이터의 양이 많아지면 정말 오류가 적어지는걸까? 필터 자체가 잘못 설계되어 있다면, 데이터가 많아질수록 오히려 잘못된 판단이 더 확고해지는 것 아닐까.
+</div>
+
+</div>
