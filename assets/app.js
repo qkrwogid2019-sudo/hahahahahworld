@@ -45,6 +45,8 @@ async function mountIndex(){
 
   try{
     allPostsCache = await fetchJSON("posts/posts.json");
+    // 최신순 정렬
+    allPostsCache.sort((a, b) => new Date(b.date) - new Date(a.date));
   } catch {
     postsEl.innerHTML = "<p>포스트를 불러오지 못했어</p>";
     return;
