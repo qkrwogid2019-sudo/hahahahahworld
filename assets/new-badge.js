@@ -1,6 +1,6 @@
-// NEW 배지 자동 표시 (최근 5일 이내 업데이트)
+// NEW 배지 자동 표시 (최근 6일 이내 업데이트)
 (function() {
-  const NEW_DAYS = 5;
+  const NEW_DAYS = 6;
 
   // 탭 이름 → href 매핑
   const tabMap = {
