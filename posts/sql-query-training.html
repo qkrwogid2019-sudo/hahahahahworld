@@ -1,0 +1,294 @@
+<style>
+  .query-post {
+    line-height: 1.8;
+  }
+  .query-post h2 {
+    margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #333;
+  }
+  .query-post h3 {
+    margin-top: 24px;
+    color: #1976D2;
+  }
+  .query-post .situation-box {
+    background: #fff3e0;
+    border-left: 4px solid #FF9800;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .query-post .code-block {
+    background: #263238;
+    color: #aed581;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    overflow-x: auto;
+    margin: 12px 0;
+  }
+  .query-post .result-box {
+    background: #e8f5e9;
+    border-left: 4px solid #4CAF50;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .query-post .insight-box {
+    background: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .query-post .warning-box {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .query-post .tip-box {
+    background: #f3e5f5;
+    border-left: 4px solid #9C27B0;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .query-post table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  .query-post th, .query-post td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  .query-post th {
+    background: #f5f5f5;
+  }
+  .query-post .dialogue {
+    background: #fafafa;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 12px 0;
+    font-style: italic;
+  }
+</style>
+
+<div class="query-post">
+
+<p><strong>직접 DB 만들고, 비즈니스 상황 설정하고, 쿼리 짜면서 연습했다.</strong> 주제는 "GLP-1 다이어트 약물 vs 운동" 데이터로 헬스트레이너 영업 포인트 만들기.</p>
+
+<h2>연습 환경</h2>
+
+<p>어제 Claude랑 만든 <code>wegovy_exercise_study.db</code> SQLite DB를 사용했다. 테이블 구성:</p>
+
+<table>
+  <tr><th>테이블</th><th>내용</th></tr>
+  <tr><td>yoyo_rates</td><td>약물/운동별 요요 현상 데이터</td></tr>
+  <tr><td>muscle_loss</td><td>감량 시 근손실 비율</td></tr>
+  <tr><td>side_effects</td><td>약물 부작용 데이터</td></tr>
+</table>
+
+<h2>Step 1: 기본 조회 + 필터링</h2>
+
+<div class="situation-box">
+  <strong>상황:</strong> PT팀장이 물어봄<br>
+  "위고비 끊으면 살 다시 찐다고 설득하고 싶어. 근데 정확히 얼마나 찌는 건지 숫자로 알려줘."
+</div>
+
+<h3>문제 정의</h3>
+<p>"GLP-1 약물 중단 후 체중 회복률(요요)이 몇 %인지 수치로 파악한다"</p>
+
+<p>처음에 "돈 벌려고"라고 썼다가 피드백 받음. 그건 <strong>비즈니스 목표</strong>고, <strong>문제 정의</strong>는 쿼리로 답할 수 있는 질문이어야 한다.</p>
+
+<h3>쿼리</h3>
+
+<div class="code-block">
+SELECT method, timeframe, weight_regain_percent<br>
+FROM yoyo_rates<br>
+WHERE method LIKE 'GLP-1%';
+</div>
+
+<div class="result-box">
+  <strong>결과:</strong> 67%, 40%, 40% (기간별로 다름)
+</div>
+
+<div class="tip-box">
+  <strong>배운 점:</strong> <code>LIKE 'G%'</code>보다 <code>LIKE 'GLP-1%'</code>가 안전함. 'Gastric bypass' 같은 것도 잡힐 수 있으니까.
+</div>
+
+<h2>Step 2: ORDER BY 정렬</h2>
+
+<div class="situation-box">
+  <strong>상황:</strong> "그 67% 요요가 1년 후 데이터야? 2년 후 데이터도 있어? 기간별로 정리해줘."
+</div>
+
+<div class="code-block">
+SELECT method, timeframe, weight_regain_percent<br>
+FROM yoyo_rates<br>
+WHERE method LIKE 'GLP-1%'<br>
+ORDER BY timeframe DESC;
+</div>
+
+<h2>Step 3: AND/OR 복합 조건</h2>
+
+<div class="situation-box">
+  <strong>상황:</strong> 영업팀 요청<br>
+  "운동이랑 약물 둘 다 비교하고 싶어. 근데 요요율 50% 이상인 것만 보여줘."
+</div>
+
+<h3>처음 짠 쿼리 (틀림)</h3>
+
+<div class="code-block">
+WHERE (method LIKE 'GLP-1%' OR 'Exercise')  -- X
+</div>
+
+<div class="warning-box">
+  <strong>에러:</strong> 'Exercise'가 그냥 떠다니고 있음. SQL은 "뭘 Exercise랑 비교하라는 건지" 모름.
+</div>
+
+<h3>수정된 쿼리</h3>
+
+<div class="code-block">
+SELECT method, weight_regain_percent<br>
+FROM yoyo_rates<br>
+WHERE (method LIKE 'GLP-1%' OR method LIKE 'Exercise%')<br>
+  AND weight_regain_percent >= 50;
+</div>
+
+<div class="result-box">
+  <strong>결과:</strong> GLP-1만 67%로 나옴. Exercise는 50% 미만이라 필터에서 탈락!
+</div>
+
+<div class="insight-box">
+  <strong>인사이트:</strong> 운동은 요요율이 50%도 안 되는데, 약물은 67%. 장기적으로 운동이 지속가능.
+</div>
+
+<h2>Step 4: JOIN (테이블 연결)</h2>
+
+<div class="situation-box">
+  <strong>상황:</strong> 마케팅팀 요청<br>
+  "GLP-1 약물의 요요율이랑 근손실 비율을 한 눈에 보고 싶어."
+</div>
+
+<h3>처음 짠 쿼리</h3>
+
+<div class="code-block">
+SELECT y.method, y.weight_regain_percent, m.lean_mass_loss_percent<br>
+FROM yoyo_rates y<br>
+JOIN muscle_loss m ON y.method = m.method;
+</div>
+
+<div class="warning-box">
+  <strong>결과: 빈칸!</strong><br>
+  양쪽 테이블의 method 값이 다르게 써져 있었음.<br>
+  - yoyo_rates: "GLP-1 약물만"<br>
+  - muscle_loss: "GLP-1 일반"
+</div>
+
+<h3>해결: LIKE로 부분 매칭</h3>
+
+<div class="code-block">
+SELECT y.method, y.weight_regain_percent, m.lean_mass_loss_percent<br>
+FROM yoyo_rates y<br>
+JOIN muscle_loss m<br>
+  ON y.method LIKE '%GLP-1%'<br>
+  AND m.method LIKE '%GLP-1%';
+</div>
+
+<div class="tip-box">
+  <strong>실무 팁:</strong> JOIN 안 되면 80%는 키 값 불일치 문제. 대소문자, 공백, 표기 차이 확인!
+</div>
+
+<h2>Step 5: GROUP BY + 집계함수</h2>
+
+<div class="situation-box">
+  <strong>상황:</strong> "method별로 평균 요요율 구해줘. 약물이랑 운동이랑 어떤 게 더 높아?"
+</div>
+
+<div class="code-block">
+SELECT method, AVG(weight_regain_percent) as avg_yoyo<br>
+FROM yoyo_rates<br>
+GROUP BY method;
+</div>
+
+<div class="result-box">
+  <table>
+    <tr><th>method</th><th>avg_yoyo</th></tr>
+    <tr><td>운동만</td><td>25%</td></tr>
+    <tr><td>GLP-1+운동 병행</td><td>40%</td></tr>
+    <tr><td>Tirzepatide</td><td>50%</td></tr>
+    <tr><td>GLP-1 약물만</td><td>53.5%</td></tr>
+    <tr><td>Liraglutide</td><td>70%</td></tr>
+  </table>
+</div>
+
+<h2>Step 6: HAVING (그룹화 후 필터)</h2>
+
+<div class="situation-box">
+  <strong>상황:</strong> "평균 요요율 50% 넘는 method만 보여줘. 그게 문제가 되는 애들이니까."
+</div>
+
+<div class="code-block">
+SELECT method, AVG(weight_regain_percent) as avg_yoyo<br>
+FROM yoyo_rates<br>
+GROUP BY method<br>
+HAVING AVG(weight_regain_percent) > 50;
+</div>
+
+<div class="result-box">
+  <strong>결과:</strong><br>
+  - GLP-1 약물만: 53.5%<br>
+  - Liraglutide: 70%
+</div>
+
+<div class="tip-box">
+  <strong>WHERE vs HAVING:</strong><br>
+  - WHERE: 그룹화 <strong>전에</strong> 개별 행 필터<br>
+  - HAVING: 그룹화 <strong>후에</strong> 집계 결과 필터
+</div>
+
+<h2>종합 문제: 팀장 보고서</h2>
+
+<div class="situation-box">
+  <strong>상황:</strong> "내일 본사 미팅인데, GLP-1 약물의 문제점을 한 장으로 정리해줘."
+</div>
+
+<p>3개 쿼리로 데이터 추출:</p>
+
+<table>
+  <tr><th>항목</th><th>쿼리</th><th>결과</th></tr>
+  <tr><td>요요율</td><td>GROUP BY + HAVING > 50</td><td>53.5%</td></tr>
+  <tr><td>근손실</td><td>WHERE LIKE 'GLP%'</td><td>26%</td></tr>
+  <tr><td>부작용 TOP 3</td><td>ORDER BY DESC + LIMIT 3</td><td>설사, 메스꺼움, 위장장애</td></tr>
+</table>
+
+<h2>오늘 배운 문법 정리</h2>
+
+<table>
+  <tr><th>문법</th><th>용도</th></tr>
+  <tr><td>SELECT ... FROM ... WHERE</td><td>기본 조회 + 필터</td></tr>
+  <tr><td>LIKE '%문자%'</td><td>부분 매칭</td></tr>
+  <tr><td>AND / OR</td><td>복합 조건 (괄호 중요)</td></tr>
+  <tr><td>ORDER BY ... DESC</td><td>정렬</td></tr>
+  <tr><td>JOIN ... ON</td><td>테이블 연결</td></tr>
+  <tr><td>GROUP BY</td><td>그룹화</td></tr>
+  <tr><td>AVG(), COUNT()</td><td>집계함수</td></tr>
+  <tr><td>HAVING</td><td>그룹화 후 필터</td></tr>
+  <tr><td>LIMIT</td><td>상위 N개</td></tr>
+</table>
+
+<h2>실무 감각</h2>
+
+<div class="insight-box">
+  <strong>쿼리 짜는 게 끝이 아니다:</strong><br><br>
+  1. JOIN 안 되면 → 키 값 불일치 의심<br>
+  2. 숫자 + 스토리 = 설득력<br>
+  3. "효율적입니다" 같은 모호한 말 X → 구체적 수치 O<br>
+  4. 문제 정의는 "쿼리로 답할 수 있는 질문"이어야 함
+</div>
+
+</div>

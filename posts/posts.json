@@ -196,5 +196,14 @@
     "date": "2026-01-16",
     "file": "tableau-talent.html",
     "category": "공부"
+  },
+  {
+    "slug": "sql-query-training",
+    "title": "SQL 쿼리 훈련: 비즈니스 상황별 접근법",
+    "summary": "위고비 vs 운동 DB로 SELECT부터 JOIN, GROUP BY까지 실전 연습",
+    "tags": ["SQL", "data-analysis", "practice", "SQLite"],
+    "date": "2026-01-20",
+    "file": "sql-query-training.html",
+    "category": "공부"
   }
 ]
