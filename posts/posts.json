@@ -205,5 +205,14 @@
     "date": "2026-01-20",
     "file": "sql-query-training.html",
     "category": "공부"
+  },
+  {
+    "slug": "wegovy-analysis",
+    "title": "위고비 파헤치기: 제약회사는 왜 완치제를 안 만들까",
+    "summary": "피트니스 사업자 관점에서 GLP-1 약물과 제약 비즈니스 모델을 데이터로 분석",
+    "tags": ["data-analysis", "fitness", "pharma", "wegovy", "business"],
+    "date": "2026-01-20",
+    "file": "wegovy-analysis.html",
+    "category": "인사이트"
   }
 ]
