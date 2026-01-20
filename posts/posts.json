@@ -214,5 +214,14 @@
     "date": "2026-01-20",
     "file": "wegovy-analysis.html",
     "category": "인사이트"
+  },
+  {
+    "slug": "sql-analysis-practice-02",
+    "title": "SQL 분석 연습 #2: 위고비 vs 운동 상관관계 분석",
+    "summary": "직접 만든 DB로 요요율, 근손실, BMI 상관관계를 SQL로 검증",
+    "tags": ["SQL", "data-analysis", "wegovy", "correlation", "practice"],
+    "date": "2026-01-20",
+    "file": "sql-analysis-practice-02.html",
+    "category": "공부"
   }
 ]

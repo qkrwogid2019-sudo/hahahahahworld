@@ -1,0 +1,510 @@
+<style>
+  .sql-post {
+    line-height: 1.8;
+  }
+  .sql-post h2 {
+    margin-top: 32px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #333;
+  }
+  .sql-post h3 {
+    margin-top: 24px;
+    color: #1976D2;
+  }
+  .sql-post .question-box {
+    background: #fff3e0;
+    border-left: 4px solid #FF9800;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+  }
+  .sql-post .hypothesis-box {
+    background: #e8f5e9;
+    border-left: 4px solid #4CAF50;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .sql-post .insight-box {
+    background: #e3f2fd;
+    border-left: 4px solid #2196F3;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .sql-post .warning-box {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+  }
+  .sql-post pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.9em;
+  }
+  .sql-post code {
+    font-family: 'SF Mono', Monaco, monospace;
+  }
+  .sql-post .keyword { color: #569cd6; }
+  .sql-post .function { color: #dcdcaa; }
+  .sql-post .string { color: #ce9178; }
+  .sql-post .number { color: #b5cea8; }
+  .sql-post .comment { color: #6a9955; }
+  .sql-post table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  .sql-post th, .sql-post td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  .sql-post th {
+    background: #333;
+    color: white;
+  }
+  .sql-post tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  .sql-post .highlight {
+    background: #fff59d;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .sql-post .result-table {
+    font-size: 0.9em;
+  }
+  .sql-post .source {
+    color: #888;
+    font-size: 0.85em;
+    margin-top: 8px;
+  }
+</style>
+
+<article class="sql-post">
+
+<h2>1. 이번 분석의 배경</h2>
+
+<p>이전 포스트에서 Northwind 데이터로 매출 둔화 원인을 찾아봤다. 이번엔 다른 질문이다.</p>
+
+<div class="question-box">
+"위고비 같은 다이어트 약, 진짜 운동보다 효과적인 거 맞아?"<br>
+"헬스장 사업자 입장에서 이 약이 위협인지 기회인지 알고 싶다."
+</div>
+
+<p>이 질문에 답하려면 데이터가 필요하다. 직접 DB를 만들어서 분석했다.</p>
+
+<h2>2. 데이터 준비: 직접 만든 DB</h2>
+
+<h3>테이블 구조</h3>
+
+<table>
+  <tr>
+    <th>테이블명</th>
+    <th>내용</th>
+    <th>레코드 수</th>
+  </tr>
+  <tr>
+    <td>yoyo_rates</td>
+    <td>요요율 (방법별)</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td>muscle_loss</td>
+    <td>근손실 비율</td>
+    <td>6</td>
+  </tr>
+  <tr>
+    <td>side_effects</td>
+    <td>부작용 데이터</td>
+    <td>8</td>
+  </tr>
+  <tr>
+    <td>drug_persistence</td>
+    <td>약물 지속률</td>
+    <td>7</td>
+  </tr>
+  <tr>
+    <td>exercise_bmi</td>
+    <td>운동량 vs BMI</td>
+    <td>4</td>
+  </tr>
+  <tr>
+    <td>sarcopenia_qol</td>
+    <td>근감소증 → 삶의 질</td>
+    <td>5</td>
+  </tr>
+</table>
+
+<p class="source">데이터 출처: STEP 1 Trial, S-LiTE Trial, SURMOUNT-4, JMCP 2024, NHANES 2021-2023</p>
+
+<h2>3. 가설 세우기</h2>
+
+<div class="hypothesis-box">
+<strong>가설 1:</strong> 약물만 쓰면 요요율이 운동보다 높을 것이다.<br>
+<strong>가설 2:</strong> 약물로 감량하면 근손실 비율이 높을 것이다.<br>
+<strong>가설 3:</strong> 운동량과 BMI는 음의 상관관계가 있을 것이다.<br>
+<strong>가설 4:</strong> 근손실 → 삶의 질 저하로 이어질 것이다.
+</strong>
+</div>
+
+<h2>4. SQL로 검증: 가설 1 (요요율)</h2>
+
+<h3>쿼리</h3>
+
+<pre><code><span class="keyword">SELECT</span>
+    method,
+    timeframe,
+    weight_regain_percent <span class="keyword">AS</span> yoyo_rate,
+    source
+<span class="keyword">FROM</span> yoyo_rates
+<span class="keyword">WHERE</span> timeframe <span class="keyword">LIKE</span> <span class="string">'%1년%'</span>
+<span class="keyword">ORDER BY</span> weight_regain_percent <span class="keyword">DESC</span>;</code></pre>
+
+<h3>결과</h3>
+
+<table class="result-table">
+  <tr>
+    <th>방법</th>
+    <th>요요율</th>
+    <th>출처</th>
+  </tr>
+  <tr>
+    <td>Liraglutide</td>
+    <td><span class="highlight">70%</span></td>
+    <td>S-LiTE Trial</td>
+  </tr>
+  <tr>
+    <td>GLP-1 약물만</td>
+    <td><span class="highlight">67%</span></td>
+    <td>STEP 1 Extension</td>
+  </tr>
+  <tr>
+    <td>GLP-1 + 운동</td>
+    <td>40%</td>
+    <td>S-LiTE Trial</td>
+  </tr>
+  <tr>
+    <td>운동만</td>
+    <td><strong>25%</strong></td>
+    <td>S-LiTE Trial</td>
+  </tr>
+</table>
+
+<div class="insight-box">
+<strong>검증 결과:</strong> 가설 1 채택<br>
+약물만 쓰면 67-70% 요요, 운동만 하면 25%. <strong>2.7배 차이.</strong>
+</div>
+
+<h2>5. SQL로 검증: 가설 2 (근손실)</h2>
+
+<h3>쿼리</h3>
+
+<pre><code><span class="keyword">SELECT</span>
+    method,
+    weight_loss_kg,
+    lean_mass_loss_kg,
+    lean_mass_loss_percent,
+    <span class="comment">-- 감량 1kg당 근손실량 계산</span>
+    <span class="function">ROUND</span>(lean_mass_loss_kg / weight_loss_kg, <span class="number">2</span>) <span class="keyword">AS</span> muscle_per_kg
+<span class="keyword">FROM</span> muscle_loss
+<span class="keyword">ORDER BY</span> lean_mass_loss_percent <span class="keyword">DESC</span>;</code></pre>
+
+<h3>결과</h3>
+
+<table class="result-table">
+  <tr>
+    <th>방법</th>
+    <th>총 감량</th>
+    <th>근손실</th>
+    <th>근손실 비율</th>
+  </tr>
+  <tr>
+    <td>Semaglutide (STEP 1)</td>
+    <td>15.3kg</td>
+    <td>6.92kg</td>
+    <td><span class="highlight">45.2%</span></td>
+  </tr>
+  <tr>
+    <td>Semaglutide (일반)</td>
+    <td>10kg</td>
+    <td>3.9kg</td>
+    <td>39%</td>
+  </tr>
+  <tr>
+    <td>GLP-1 일반</td>
+    <td>10kg</td>
+    <td>2.6kg</td>
+    <td>26%</td>
+  </tr>
+  <tr>
+    <td>식단만</td>
+    <td>10kg</td>
+    <td>2.5kg</td>
+    <td>25%</td>
+  </tr>
+  <tr>
+    <td>식단 + 근력운동</td>
+    <td>10kg</td>
+    <td>1.0kg</td>
+    <td><strong>10%</strong></td>
+  </tr>
+</table>
+
+<div class="insight-box">
+<strong>검증 결과:</strong> 가설 2 채택<br>
+약물: 26-45% 근손실 vs 식단+운동: 10%. <strong>운동이 근육 보존에 4배 효과적.</strong>
+</div>
+
+<h2>6. SQL로 검증: 가설 3 (운동 ↔ BMI)</h2>
+
+<h3>쿼리: 상관관계 확인</h3>
+
+<pre><code><span class="keyword">SELECT</span>
+    exercise_level,
+    sample_size,
+    mean_bmi,
+    obesity_rate_percent,
+    <span class="comment">-- 운동 안하는 그룹 대비 차이</span>
+    <span class="function">ROUND</span>(<span class="number">31.3</span> - mean_bmi, <span class="number">1</span>) <span class="keyword">AS</span> bmi_diff,
+    <span class="function">ROUND</span>(<span class="number">50.1</span> - obesity_rate_percent, <span class="number">1</span>) <span class="keyword">AS</span> obesity_diff
+<span class="keyword">FROM</span> exercise_bmi
+<span class="keyword">ORDER BY</span> mean_bmi <span class="keyword">DESC</span>;</code></pre>
+
+<h3>결과</h3>
+
+<table class="result-table">
+  <tr>
+    <th>운동 수준</th>
+    <th>표본</th>
+    <th>평균 BMI</th>
+    <th>비만율</th>
+    <th>BMI 차이</th>
+  </tr>
+  <tr>
+    <td>거의 안함</td>
+    <td>1,358</td>
+    <td>31.3</td>
+    <td>50.1%</td>
+    <td>기준</td>
+  </tr>
+  <tr>
+    <td>가벼운 운동</td>
+    <td>1,795</td>
+    <td>30.2</td>
+    <td>44.4%</td>
+    <td>-1.1</td>
+  </tr>
+  <tr>
+    <td>적정 운동</td>
+    <td>1,393</td>
+    <td>29.0</td>
+    <td>35.5%</td>
+    <td>-2.3</td>
+  </tr>
+  <tr>
+    <td>고강도 운동</td>
+    <td>1,689</td>
+    <td><strong>28.3</strong></td>
+    <td><strong>32.7%</strong></td>
+    <td><span class="highlight">-3.0</span></td>
+  </tr>
+</table>
+
+<div class="insight-box">
+<strong>검증 결과:</strong> 가설 3 채택<br>
+운동량 ↑ → BMI ↓ (명확한 음의 상관관계)<br>
+고강도 운동 그룹은 비만율이 <strong>17.4%p 낮음</strong> (50.1% → 32.7%)
+</div>
+
+<h2>7. SQL로 검증: 가설 4 (근손실 → 삶의 질)</h2>
+
+<h3>쿼리</h3>
+
+<pre><code><span class="keyword">SELECT</span>
+    metric,
+    sarcopenia_group <span class="keyword">AS</span> with_sarcopenia,
+    non_sarcopenia_group <span class="keyword">AS</span> without,
+    difference <span class="keyword">AS</span> gap
+<span class="keyword">FROM</span> sarcopenia_qol
+<span class="keyword">WHERE</span> difference <span class="keyword">IS NOT NULL</span>
+<span class="keyword">ORDER BY</span> <span class="function">ABS</span>(difference) <span class="keyword">DESC</span>;</code></pre>
+
+<h3>결과</h3>
+
+<table class="result-table">
+  <tr>
+    <th>지표</th>
+    <th>근감소증 O</th>
+    <th>근감소증 X</th>
+    <th>차이</th>
+  </tr>
+  <tr>
+    <td>삶의 질 점수</td>
+    <td>-12.32</td>
+    <td>기준</td>
+    <td><span class="highlight">-12.32점</span></td>
+  </tr>
+  <tr>
+    <td>우울증 유병률</td>
+    <td>42.6%</td>
+    <td>30%</td>
+    <td>+12.6%p</td>
+  </tr>
+  <tr>
+    <td>낙상 위험</td>
+    <td>2배</td>
+    <td>1배</td>
+    <td>2배</td>
+  </tr>
+</table>
+
+<div class="warning-box">
+<strong>검증 결과:</strong> 가설 4 채택<br>
+근감소증 → 삶의 질 12점 하락, 우울증 1.57배, 낙상 2배<br>
+<strong>약물로 뺀 살의 45%가 근육이면? 이 리스크가 현실이 된다.</strong>
+</div>
+
+<h2>8. 추가 분석: 약물 지속률</h2>
+
+<p>약이 효과가 있어도, 계속 먹어야 의미가 있다. 현실은?</p>
+
+<pre><code><span class="keyword">SELECT</span>
+    drug,
+    timeframe,
+    persistence_rate_percent <span class="keyword">AS</span> keep_taking,
+    <span class="number">100</span> - persistence_rate_percent <span class="keyword">AS</span> stopped
+<span class="keyword">FROM</span> drug_persistence
+<span class="keyword">ORDER BY</span> persistence_rate_percent <span class="keyword">DESC</span>;</code></pre>
+
+<table class="result-table">
+  <tr>
+    <th>약물</th>
+    <th>기간</th>
+    <th>지속률</th>
+    <th>중단률</th>
+  </tr>
+  <tr>
+    <td>Semaglutide (Ozempic)</td>
+    <td>1년</td>
+    <td>47.1%</td>
+    <td>52.9%</td>
+  </tr>
+  <tr>
+    <td>GLP-1 전체</td>
+    <td>6개월</td>
+    <td>46.3%</td>
+    <td>53.7%</td>
+  </tr>
+  <tr>
+    <td>GLP-1 전체</td>
+    <td>1년</td>
+    <td>32.3%</td>
+    <td><span class="highlight">67.7%</span></td>
+  </tr>
+  <tr>
+    <td>Wegovy</td>
+    <td>2년</td>
+    <td>24%</td>
+    <td>76%</td>
+  </tr>
+  <tr>
+    <td>GLP-1 전체</td>
+    <td>2년</td>
+    <td>15%</td>
+    <td><span class="highlight">85%</span></td>
+  </tr>
+</table>
+
+<div class="warning-box">
+<strong>현실:</strong> 2년 후 85%가 약을 끊는다.<br>
+끊으면 67% 요요. <strong>결국 돌아온다.</strong>
+</div>
+
+<h2>9. 종합: 상관관계 맵</h2>
+
+<table>
+  <tr>
+    <th>변수 A</th>
+    <th>→</th>
+    <th>변수 B</th>
+    <th>관계</th>
+    <th>강도</th>
+  </tr>
+  <tr>
+    <td>약물 의존도</td>
+    <td>→</td>
+    <td>요요율</td>
+    <td>양(+)</td>
+    <td><strong>강함</strong></td>
+  </tr>
+  <tr>
+    <td>약물 사용</td>
+    <td>→</td>
+    <td>근손실</td>
+    <td>양(+)</td>
+    <td><strong>강함</strong></td>
+  </tr>
+  <tr>
+    <td>운동량</td>
+    <td>→</td>
+    <td>BMI</td>
+    <td>음(-)</td>
+    <td><strong>강함</strong></td>
+  </tr>
+  <tr>
+    <td>근감소증</td>
+    <td>→</td>
+    <td>삶의 질</td>
+    <td>음(-)</td>
+    <td><strong>강함</strong></td>
+  </tr>
+  <tr>
+    <td>복용 기간</td>
+    <td>→</td>
+    <td>중단률</td>
+    <td>양(+)</td>
+    <td>중간</td>
+  </tr>
+</table>
+
+<h2>10. 결론: 데이터가 말하는 것</h2>
+
+<div class="insight-box">
+<strong>위고비는 "위협"이 아니라 "기회"다.</strong>
+
+<p><strong>왜?</strong></p>
+<ul>
+  <li>약물만 쓰면 67% 요요 → 결국 헬스장으로 돌아온다</li>
+  <li>약물로 뺀 살의 45%가 근육 → 근력운동 필요성 증가</li>
+  <li>2년 후 85%가 약 중단 → 유지 방법 필요</li>
+</ul>
+
+<p><strong>헬스장 포지션:</strong></p>
+<p>"약 쓰지 마세요" (X) → "약 쓰든 안 쓰든, 운동은 보험입니다" (O)</p>
+</div>
+
+<h3>배운 것</h3>
+
+<ol>
+  <li><strong>가설 → 쿼리 → 검증</strong> 순서가 중요하다</li>
+  <li>상관관계를 찾으려면 <strong>비교 대상</strong>이 있어야 한다</li>
+  <li>숫자만 보면 안 된다. <strong>"그래서 뭐?"</strong>까지 가야 인사이트다</li>
+  <li>데이터가 없으면? <strong>직접 DB를 만들면 된다</strong></li>
+</ol>
+
+<hr>
+
+<p class="source">
+<strong>사용 DB:</strong> wegovy_exercise_study.db (직접 구축)<br>
+<strong>데이터 출처:</strong> STEP 1 Trial, S-LiTE Trial, SURMOUNT-4, JMCP 2024, NHANES 2021-2023, PMC 논문들
+</p>
+
+</article>
