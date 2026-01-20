@@ -223,5 +223,14 @@
     "date": "2026-01-20",
     "file": "sql-analysis-practice-02.html",
     "category": "공부"
+  },
+  {
+    "slug": "sql-query-training-02",
+    "title": "SQL 쿼리 훈련 #2: 인사이트 검증하기",
+    "summary": "위고비 포스트의 67%, 45%, 85% 숫자들을 SQL로 직접 검증",
+    "tags": ["SQL", "data-analysis", "wegovy", "verification", "practice"],
+    "date": "2026-01-20",
+    "file": "sql-query-training-02.html",
+    "category": "공부"
   }
 ]
