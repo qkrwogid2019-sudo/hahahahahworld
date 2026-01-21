@@ -232,5 +232,14 @@
     "date": "2026-01-20",
     "file": "sql-query-training-02.html",
     "category": "공부"
+  },
+  {
+    "slug": "wegovy-counterargument",
+    "title": "위고비 포스트 셀프 반박",
+    "summary": "내가 쓴 글을 Claude한테 까라고 시켜봤다 (본인 요청)",
+    "tags": ["wegovy", "critical-thinking", "Claude", "self-critique"],
+    "date": "2026-01-21",
+    "file": "wegovy-counterargument.html",
+    "category": "인사이트"
   }
 ]
