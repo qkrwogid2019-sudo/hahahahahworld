@@ -1,5 +1,14 @@
 [
   {
+    "slug": "team-project-reflection",
+    "title": "팀프로젝트를 진행하며",
+    "summary": "의사소통 부재의 한계를 느끼고, 논리력 30점에서 배운 것",
+    "tags": ["teamwork", "communication", "retrospective"],
+    "date": "2026-01-26",
+    "file": "team-project-reflection.html",
+    "category": "인사이트"
+  },
+  {
     "slug": "hello-world",
     "title": "Hello, Tech Blog",
     "summary": "GitHub Pages 기반 초간단 정적 블로그.",
